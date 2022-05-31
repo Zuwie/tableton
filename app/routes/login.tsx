@@ -45,7 +45,7 @@ export const action: ActionFunction = async ({ request }) => {
     );
   }
 
-  if (password.length < 8) {
+  if (password.length < 6) {
     return json<ActionData>(
       { errors: { password: "Password is too short" } },
       { status: 400 }
@@ -64,7 +64,7 @@ export const action: ActionFunction = async ({ request }) => {
   return createUserSession({
     request,
     userId: user.id,
-    remember: remember === "on" ? true : false,
+    remember: remember === "on",
     redirectTo,
   });
 };

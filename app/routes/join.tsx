@@ -163,7 +163,7 @@ export default function Join() {
                 className="text-blue-500 underline"
                 to={{
                   pathname: "/login",
-                  search: searchParams.toString(,
+                  search: searchParams.toString(),
                 }}
               >
                 Log in
