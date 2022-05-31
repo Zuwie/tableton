@@ -11,6 +11,7 @@ import { createUserSession, getUserId } from "~/session.server";
 
 import { createUser, getUserByEmail } from "~/models/user.server";
 import { safeRedirect, validateEmail } from "~/utils";
+import { ROUTES } from "~/constants";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request);
@@ -29,7 +30,7 @@ export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
   const email = formData.get("email");
   const password = formData.get("password");
-  const redirectTo = safeRedirect(formData.get("redirectTo"), "/");
+  const redirectTo = safeRedirect(formData.get("redirectTo"), ROUTES.DASHBOARD);
 
   if (!validateEmail(email)) {
     return json<ActionData>(

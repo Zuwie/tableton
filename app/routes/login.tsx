@@ -10,6 +10,7 @@ import * as React from "react";
 import { createUserSession, getUserId } from "~/session.server";
 import { verifyLogin } from "~/models/user.server";
 import { safeRedirect, validateEmail } from "~/utils";
+import { ROUTES } from "~/constants";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request);
@@ -28,7 +29,7 @@ export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
   const email = formData.get("email");
   const password = formData.get("password");
-  const redirectTo = safeRedirect(formData.get("redirectTo"), "/notes");
+  const redirectTo = safeRedirect(formData.get("redirectTo"), ROUTES.DASHBOARD);
   const remember = formData.get("remember");
 
   if (!validateEmail(email)) {
