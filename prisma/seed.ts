@@ -48,6 +48,34 @@ async function seed() {
     },
   });
 
+  // BOARD
+  await prisma.boardEntry.create({
+    data: {
+      title: "My first boardEntry",
+      body: "Hello, world!",
+      date: new Date(),
+      userId: user.id,
+    },
+  });
+
+  await prisma.boardEntry.create({
+    data: {
+      title: "My second boardEntry",
+      body: "Hello, world!",
+      date: new Date(),
+      userId: user.id,
+    },
+  });
+
+  await prisma.boardEntry.create({
+    data: {
+      title: "My third boardEntry",
+      body: "Hello, world!",
+      date: new Date(),
+      userId: user.id,
+    },
+  });
+
   console.log(`Database has been seeded. 🌱`);
 }
 
