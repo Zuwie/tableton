@@ -6,7 +6,6 @@ import { requireUserId } from "~/session.server";
 import { useUser } from "~/utils";
 import { getNoteListItems } from "~/models/note.server";
 import LogoutButton from "~/components/LogoutButton";
-import { ROUTES } from "~/constants";
 
 type LoaderData = {
   noteListItems: Awaited<ReturnType<typeof getNoteListItems>>;
