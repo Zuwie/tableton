@@ -44,7 +44,7 @@ async function seed() {
     data: {
       title: "My third note",
       body: "Hello, world!",
-      userId: user.d,
+      userId: user.id,
     },
   });
 
