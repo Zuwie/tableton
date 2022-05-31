@@ -1,12 +1,6 @@
-# Remix Indie Stack
+# Tableton
 
-![The Remix Indie Stack](https://repository-images.githubusercontent.com/465928257/a241fa49-bd4d-485a-a2a5-5cb8e4ee0abf)
-
-Learn more about [Remix Stacks](https://remix.run/stacks).
-
-```
-npx create-remix --template remix-run/indie-stack
-```
+Find tabletop-games within your area.
 
 ## What's in the stack
 
@@ -26,17 +20,9 @@ npx create-remix --template remix-run/indie-stack
 - Linting with [ESLint](https://eslint.org)
 - Static Types with [TypeScript](https://typescriptlang.org)
 
-Not a fan of bits of the stack? Fork it, change it, and use `npx create-remix --template your/repo`! Make it your own.
-
-## Quickstart
-
-Click this button to create a [Gitpod](https://gitpod.io) workspace with the project set up and Fly pre-installed
-
-[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/from-referrer/)
-
 ## Development
 
-- Initial setup: _If you just generated this project, this step has been done for you._
+- Initial setup
 
   ```sh
   npm run setup
@@ -56,9 +42,6 @@ The database seed script creates a new user with some data you can use to get st
 - Password: `racheliscool`
 
 ### Relevant code:
-
-This is a pretty simple note-taking app, but it's a good example of how you can build a full stack app with Prisma and
-Remix. The main functionality is creating users, logging in and out, and creating and deleting notes.
 
 - creating users, and logging in and out [./app/models/user.server.ts](./app/models/user.server.ts)
 - user sessions, and verifying them [./app/session.server.ts](./app/session.server.ts)
@@ -90,18 +73,6 @@ Prior to your first deployment, you'll need to do a few things:
   fly create indie-stack-template-staging
   ```
 
-    - Initialize Git.
-
-  ```sh
-  git init
-  ```
-
-- Create a new [GitHub Repository](https://repo.new), and then add it as the remote for your project. **Do not push your
-  app yet!**
-
-  ```sh
-  git remote add origin <ORIGIN_URL>
-  ```
 
 - Add a `FLY_API_TOKEN` to your GitHub repo. To do this, go to your user settings on Fly and create a
   new [token](https://web.fly.io/user/personal_access_tokens/new), then add it
@@ -135,12 +106,6 @@ your staging environment.
 The sqlite database lives at `/data/sqlite.db` in your deployed application. You can connect to the live database by
 running `fly ssh console -C database-cli`.
 
-### Getting Help with Deployment
-
-If you run into any issues deploying to Fly, make sure you've followed all of the steps above and if you have, then post
-as many details about your deployment (including your app name) to [the Fly support community](https://community.fly.io)
-. They're normally pretty responsive over there and hopefully can help resolve any of your deployment issues and
-questions.
 
 ## GitHub Actions
 
@@ -184,8 +149,7 @@ via [`@testing-library/jest-dom`](https://testing-library.com/jest-dom).
 
 ### Type Checking
 
-This project uses TypeScript. It's recommended to get TypeScript set up for your editor to get a really great in-editor
-experience with type checking and auto-complete. To run type checking across the whole project, run `npm run typecheck`.
+To run type checking across the whole project, run `npm run typecheck`.
 
 ### Linting
 
