@@ -5,7 +5,6 @@ import { Link, NavLink, Outlet, useLoaderData } from "@remix-run/react";
 import { requireUserId } from "~/session.server";
 import { useUser } from "~/utils";
 import { getNoteListItems } from "~/models/note.server";
-import LogoutButton from "~/components/LogoutButton";
 import Header from "~/components/Header";
 
 type LoaderData = {
@@ -29,7 +28,7 @@ export default function BoardPage() {
       <main className="flex h-full bg-white">
         <div className="h-full w-80 border-r bg-gray-50">
           <Link to="new" className="block p-4 text-xl text-blue-500">
-            + New Note
+            + New Entry
           </Link>
 
           <hr />
