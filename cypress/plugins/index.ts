@@ -8,7 +8,7 @@ module.exports = (
     baseUrl: `http://localhost:${port}`,
     integrationFolder: "cypress/e2e",
     video: !process.env.CI,
-    screenshotOnRunFailure: !process.env.CI
+    screenshotOnRunFailure: !process.env.CI,
   };
   Object.assign(config, configOverrides);
 
@@ -18,7 +18,7 @@ module.exports = (
     log(message) {
       console.log(message);
       return null;
-    }
+    ,
   });
 
   return config;

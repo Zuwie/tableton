@@ -1,4 +1,8 @@
-import type { ActionFunction, LoaderFunction, MetaFunction } from "@remix-run/node";
+import type {
+  ActionFunction,
+  LoaderFunction,
+  MetaFunction,
+} from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { Form, Link, useActionData, useSearchParams } from "@remix-run/react";
 import * as React from "react";
@@ -62,13 +66,13 @@ export const action: ActionFunction = async ({ request }) => {
     request,
     userId: user.id,
     remember: false,
-    redirectTo
+    redirectT,
   });
 };
 
 export const meta: MetaFunction = () => {
   return {
-    title: "Sign Up"
+    title: "Sign Up",
   };
 };
 
@@ -159,7 +163,7 @@ export default function Join() {
                 className="text-blue-500 underline"
                 to={{
                   pathname: "/login",
-                  search: searchParams.toString()
+                  search: searchParams.toString(,
                 }}
               >
                 Log in

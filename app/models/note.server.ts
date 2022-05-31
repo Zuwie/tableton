@@ -5,17 +5,17 @@ import { prisma } from "~/db.server";
 export type { Note } from "@prisma/client";
 
 export function getNote({
-                          id,
-                          userId
-                        }: Pick<Note, "id"> & {
+  id,
+  userId,
+}: Pick<Note, "id"> & {
   userId: User["id"];
 }) {
   return prisma.note.findFirst({
-    where: { id, userId }
+    where: { id, userId },
   });
 }
 
-export function getNoteListItems({ userId }: { userId: User["id"] }) {
+export function getNoteListItems({ userId }: { userId: User[id"] }) {
   return prisma.note.findMany({
     where: { userId },
     select: { id: true, title: true },

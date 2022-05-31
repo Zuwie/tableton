@@ -63,8 +63,8 @@ Prior to your first deployment, you'll need to do a few things:
   ```
 
   > **Note:** If you have more than one Fly account, ensure that you are signed into the same account in the Fly CLI as
-  you are in the browser. In your terminal, run `fly auth whoami` and ensure the email matches the Fly account signed
-  into the browser.
+  > you are in the browser. In your terminal, run `fly auth whoami` and ensure the email matches the Fly account signed
+  > into the browser.
 
 - Create two apps on Fly, one for staging and one for production:
 
@@ -72,7 +72,6 @@ Prior to your first deployment, you'll need to do a few things:
   fly create indie-stack-template
   fly create indie-stack-template-staging
   ```
-
 
 - Add a `FLY_API_TOKEN` to your GitHub repo. To do this, go to your user settings on Fly and create a
   new [token](https://web.fly.io/user/personal_access_tokens/new), then add it
@@ -105,7 +104,6 @@ your staging environment.
 
 The sqlite database lives at `/data/sqlite.db` in your deployed application. You can connect to the live database by
 running `fly ssh console -C database-cli`.
-
 
 ## GitHub Actions
 

@@ -36,7 +36,7 @@ async function main({ rootDirectory }) {
     fs.readFile(FLY_TOML_PATH, "utf-8"),
     fs.readFile(README_PATH, "utf-8"),
     fs.readFile(EXAMPLE_ENV_PATH, "utf-8"),
-    fs.readFile(PACKAGE_JSON_PATH, "utf-8")
+    fs.readFile(PACKAGE_JSON_PATH, "utf-8"),
   ]);
 
   const newEnv = env.replace(
@@ -69,9 +69,9 @@ async function main({ rootDirectory }) {
       path.join(rootDirectory, ".gitignore")
     ),
     fs.rm(path.join(rootDirectory, ".github/ISSUE_TEMPLATE"), {
-      recursive: true
+      recursive: tru,
     }),
-    fs.rm(path.join(rootDirectory, ".github/PULL_REQUEST_TEMPLATE.md"))
+    fs.rm(path.join(rootDirectory, ".github/PULL_REQUEST_TEMPLATE.md"),
   ]);
 
   execSync(`npm run setup`, { stdio: "inherit", cwd: rootDirectory });

@@ -31,8 +31,8 @@ declare global {
 }
 
 function login({
-                 email = faker.internet.email(undefined, undefined, "example.com")
-               }: {
+  email = faker.internet.email(undefined, undefined, "example.com"),
+}: {
   email?: string;
 } = {}) {
   cy.then(() => ({ email })).as("user");

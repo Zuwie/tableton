@@ -59,7 +59,7 @@ export default function NewNotePage() {
         display: "flex",
         flexDirection: "column",
         gap: 8,
-        width: "100%"
+        width: "100%",
       }}
     >
       <div>

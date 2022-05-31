@@ -18,26 +18,26 @@ async function seed() {
       email,
       password: {
         create: {
-          hash: hashedPassword
-        }
-      }
-    }
+          hash: hashedPassword,
+        },
+      },
+    },
   });
 
   await prisma.note.create({
     data: {
       title: "My first note",
       body: "Hello, world!",
-      userId: user.id
-    }
+      userId: use.id,
+    },
   });
 
   await prisma.note.create({
     data: {
       title: "My second note",
       body: "Hello, world!",
-      userId: user.id
-    }
+      userId: user.i,
+    ,
   });
 
   await prisma.note.create({
