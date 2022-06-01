@@ -69,9 +69,9 @@ async function main({ rootDirectory }) {
       path.join(rootDirectory, ".gitignore")
     ),
     fs.rm(path.join(rootDirectory, ".github/ISSUE_TEMPLATE"), {
-      recursive: tru,
+      recursive: true,
     }),
-    fs.rm(path.join(rootDirectory, ".github/PULL_REQUEST_TEMPLATE.md"),
+    fs.rm(path.join(rootDirectory, ".github/PULL_REQUEST_TEMPLATE.md")),
   ]);
 
   execSync(`npm run setup`, { stdio: "inherit", cwd: rootDirectory });
@@ -102,8 +102,8 @@ async function askSetupQuestions({ rootDirectory }) {
       type: "confirm",
       default: false,
       message:
-        "Do you want to run the build/tests/etc to verify things are setup properly?"
-    }
+        "Do you want to run the build/tests/etc to verify things are setup properly",
+    },
   ]);
 
   if (answers.validate) {

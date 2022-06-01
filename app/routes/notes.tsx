@@ -1,10 +1,11 @@
 import type { LoaderFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { Form, Link, NavLink, Outlet, useLoaderData } from "@remix-run/react";
+import { Link, NavLink, Outlet, useLoaderData } from "@remix-run/react";
 
 import { requireUserId } from "~/session.server";
 import { useUser } from "~/utils";
 import { getNoteListItems } from "~/models/note.server";
+import LogoutButton from "~/components/LogoutButton";
 
 type LoaderData = {
   noteListItems: Awaited<ReturnType<typeof getNoteListItems>>;
@@ -27,14 +28,7 @@ export default function NotesPage() {
           <Link to=".">Notes</Link>
         </h1>
         <p>{user.email}</p>
-        <Form action="/logout" method="post">
-          <button
-            type="submit"
-            className="rounded bg-slate-600 py-2 px-4 text-blue-100 hover:bg-blue-500 active:bg-blue-600"
-          >
-            Logout
-          </button>
-        </Form>
+        <LogoutButton />
       </header>
 
       <main className="flex h-full bg-white">

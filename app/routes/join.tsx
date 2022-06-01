@@ -11,6 +11,8 @@ import { createUserSession, getUserId } from "~/session.server";
 
 import { createUser, getUserByEmail } from "~/models/user.server";
 import { safeRedirect, validateEmail } from "~/utils";
+import { ROUTES } from "~/constants";
+import Header from "~/components/Header";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request);
@@ -29,7 +31,7 @@ export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
   const email = formData.get("email");
   const password = formData.get("password");
-  const redirectTo = safeRedirect(formData.get("redirectTo"), "/");
+  const redirectTo = safeRedirect(formData.get("redirectTo"), ROUTES.DASHBOARD);
 
   if (!validateEmail(email)) {
     return json<ActionData>(
@@ -66,7 +68,7 @@ export const action: ActionFunction = async ({ request }) => {
     request,
     userId: user.id,
     remember: false,
-    redirectT,
+    redirectTo,
   });
 };
 
@@ -93,6 +95,7 @@ export default function Join() {
 
   return (
     <div className="flex min-h-full flex-col justify-center">
+      <Header />
       <div className="mx-auto w-full max-w-md px-8">
         <Form method="post" className="space-y-6">
           <div>
@@ -163,7 +166,7 @@ export default function Join() {
                 className="text-blue-500 underline"
                 to={{
                   pathname: "/login",
-                  search: searchParams.toString(,
+                  search: searchParams.toString(),
                 }}
               >
                 Log in

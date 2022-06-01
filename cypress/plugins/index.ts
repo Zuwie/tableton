@@ -18,7 +18,7 @@ module.exports = (
     log(message) {
       console.log(message);
       return null;
-    ,
+    },
   });
 
   return config;
