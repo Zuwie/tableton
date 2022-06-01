@@ -21,9 +21,14 @@ import {
   ChevronDownIcon,
   ChevronRightIcon,
 } from "@chakra-ui/icons";
+import { ROUTES } from "~/constants";
+import { useOptionalUser } from "~/utils";
+import LogoutButton from "~/components/LogoutButton";
+import { NavLink } from "@remix-run/react";
 
 export default function Header() {
   const { isOpen, onToggle } = useDisclosure();
+  const user = useOptionalUser();
 
   return (
     <Box>
@@ -53,13 +58,15 @@ export default function Header() {
           />
         </Flex>
         <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
-          <Text
-            textAlign={useBreakpointValue({ base: "center", md: "left" })}
-            fontFamily={"heading"}
-            color={useColorModeValue("gray.800", "white")}
-          >
-            Logo
-          </Text>
+          <NavLink to={ROUTES.ROOT}>
+            <Text
+              textAlign={useBreakpointValue({ base: "center", md: "left" })}
+              fontFamily={"heading"}
+              color={useColorModeValue("gray.800", "white")}
+            >
+              Logo
+            </Text>
+          </NavLink>
 
           <Flex display={{ base: "none", md: "flex" }} ml={10}>
             <DesktopNav />
@@ -72,28 +79,33 @@ export default function Header() {
           direction={"row"}
           spacing={6}
         >
-          <Button
-            as={"a"}
-            fontSize={"sm"}
-            fontWeight={400}
-            variant={"link"}
-            href={"#"}
-          >
-            Sign In
-          </Button>
-          <Button
-            display={{ base: "none", md: "inline-flex" }}
-            fontSize={"sm"}
-            fontWeight={600}
-            color={"white"}
-            bg={"pink.400"}
-            href={"#"}
-            _hover={{
-              bg: "pink.300",
-            }}
-          >
-            Sign Up
-          </Button>
+          {user ? (
+            <LogoutButton />
+          ) : (
+            <>
+              <Button
+                as={"a"}
+                href={ROUTES.LOGIN}
+                fontWeight={400}
+                variant={"link"}
+              >
+                Sign In
+              </Button>
+              <Button
+                as={"a"}
+                href={ROUTES.JOIN}
+                display={{ base: "none", md: "inline-flex" }}
+                fontWeight={600}
+                color={"white"}
+                bg={"green.600"}
+                _hover={{
+                  bg: "green.700",
+                }}
+              >
+                Sign Up
+              </Button>
+            </>
+          )}
         </Stack>
       </Flex>
 
@@ -116,9 +128,8 @@ const DesktopNav = () => {
           <Popover trigger={"hover"} placement={"bottom-start"}>
             <PopoverTrigger>
               <Link
-                p={2}
+                p={4}
                 href={navItem.href ?? "#"}
-                fontSize={"sm"}
                 fontWeight={500}
                 color={linkColor}
                 _hover={{
@@ -266,41 +277,11 @@ interface NavItem {
 
 const NAV_ITEMS: Array<NavItem> = [
   {
-    label: "Inspiration",
-    children: [
-      {
-        label: "Explore Design Work",
-        subLabel: "Trending Design to inspire you",
-        href: "#",
-      },
-      {
-        label: "New & Noteworthy",
-        subLabel: "Up-and-coming Designers",
-        href: "#",
-      },
-    ],
+    label: "Find match",
+    href: ROUTES.DASHBOARD,
   },
   {
-    label: "Find Work",
-    children: [
-      {
-        label: "Job Board",
-        subLabel: "Find your dream design job",
-        href: "#",
-      },
-      {
-        label: "Freelance Projects",
-        subLabel: "An exclusive list for contract work",
-        href: "#",
-      },
-    ],
-  },
-  {
-    label: "Learn Design",
-    href: "#",
-  },
-  {
-    label: "Hire Designers",
-    href: "#",
+    label: "Find players",
+    href: ROUTES.ACCOUNT,
   },
 ];
