@@ -1,14 +1,18 @@
 import { Form } from "@remix-run/react";
+import { Button } from "@chakra-ui/react";
 
 export default function LogoutButton() {
   return (
     <Form action="/logout" method="post">
-      <button
-        type="submit"
-        className="rounded bg-slate-600 py-2 px-4 text-blue-100 hover:bg-blue-500 active:bg-blue-600"
+      <Button
+        type={"submit"}
+        fontWeight={600}
+        color={"white"}
+        bg={"green.600"}
+        _hover={{ bg: "green.700" }}
       >
         Logout
-      </button>
+      </Button>
     </Form>
   );
 }
