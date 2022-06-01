@@ -18,6 +18,7 @@ import { useContext, useEffect } from "react";
 import { ClientStyleContext, ServerStyleContext } from "~/context";
 import { ChakraProvider } from "@chakra-ui/provider";
 import { withEmotionCache } from "@emotion/react";
+import { extendTheme } from "@chakra-ui/react";
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
@@ -83,6 +84,16 @@ const Document = withEmotionCache(
   }
 );
 
+const colors = {
+  brand: {
+    900: "#1a365d",
+    800: "#153e75",
+    700: "#2a69ac",
+  },
+};
+
+const theme = extendTheme({ colors });
+
 type LoaderData = {
   user: Awaited<ReturnType<typeof getUser>>;
 };
@@ -96,7 +107,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 export default function App() {
   return (
     <Document>
-      <ChakraProvider>
+      <ChakraProvider theme={theme}>
         <Outlet />
       </ChakraProvider>
     </Document>
