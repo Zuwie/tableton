@@ -1,4 +1,4 @@
-import { useLoaderData } from "@remix-run/react";
+import { NavLink, useLoaderData } from "@remix-run/react";
 import type { LoaderFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { getBoardEntryListItems } from "~/models/board.server";
@@ -25,7 +25,16 @@ export default function DashboardIndexPage() {
       ) : (
         <ol>
           {loader.userBoardEntries.map((entry) => (
-            <li key={entry.id}>{entry.title}</li>
+            <li key={entry.id}>
+              <NavLink
+                to={entry.id}
+                className={({ isActive }) =>
+                  `block border-b p-4 text-xl ${isActive ? "bg-white" : ""}`
+                }
+              >
+                {entry.title}
+              </NavLink>
+            </li>
           ))}
         </ol>
       )}
