@@ -596,16 +596,16 @@ Ensure the default browser behavior of the `hidden` attribute.
   display: none;
 }
 
-.h-full{
-  height: 100%;
-}
-
 .h-8{
   height: 2rem;
 }
 
 .h-6{
   height: 1.5rem;
+}
+
+.h-full{
+  height: 100%;
 }
 
 .h-4{
