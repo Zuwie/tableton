@@ -6,7 +6,7 @@ import invariant from "tiny-invariant";
 import { deleteNote } from "~/models/note.server";
 import { requireUserId } from "~/session.server";
 import type { BoardEntry } from "@prisma/client";
-import { getBoardEntry } from "~/models/board.server";
+import { deleteBoardEntry, getBoardEntry } from "~/models/board.server";
 import { ROUTES } from "~/constants";
 import * as React from "react";
 
@@ -29,7 +29,7 @@ export const action: ActionFunction = async ({ request, params }) => {
   const userId = await requireUserId(request);
   invariant(params.boardEntryId, "boardEntryId not found");
 
-  await deleteNote({ userId, id: params.boardEntryId });
+  await deleteBoardEntry({ userId, id: params.boardEntryId });
 
   return redirect("/dashboard");
 };
