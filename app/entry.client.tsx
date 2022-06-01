@@ -1,6 +1,6 @@
-// entry.client.tsx
 import React, { useState } from "react";
-import { hydrate } from "react-dom";
+// @ts-ignore
+import { hydrateRoot } from "react-dom/client";
 import { CacheProvider } from "@emotion/react";
 import { RemixBrowser } from "@remix-run/react";
 
@@ -25,7 +25,7 @@ function ClientCacheProvider({ children }: ClientCacheProviderProps) {
   );
 }
 
-hydrate(
+hydrateRoot(
   <ClientCacheProvider>
     <RemixBrowser />
   </ClientCacheProvider>,
