@@ -12,6 +12,7 @@ import { createUserSession, getUserId } from "~/session.server";
 import { createUser, getUserByEmail } from "~/models/user.server";
 import { safeRedirect, validateEmail } from "~/utils";
 import { ROUTES } from "~/constants";
+import Header from "~/components/Header";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request);
@@ -94,6 +95,7 @@ export default function Join() {
 
   return (
     <div className="flex min-h-full flex-col justify-center">
+      <Header />
       <div className="mx-auto w-full max-w-md px-8">
         <Form method="post" className="space-y-6">
           <div>
