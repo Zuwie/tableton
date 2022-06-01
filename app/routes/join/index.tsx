@@ -8,7 +8,8 @@ import { Form, Link, useActionData, useSearchParams } from "@remix-run/react";
 import * as React from "react";
 
 import { createUserSession, getUserId } from "~/session.server";
-import { verifyLogin } from "~/models/user.server";
+
+import { createUser, getUserByEmail } from "~/models/user.server";
 import { safeRedirect, validateEmail } from "~/utils";
 import { ROUTES } from "~/constants";
 import Header from "~/components/Header";
@@ -18,15 +19,19 @@ import {
   Box,
   FormControl,
   FormLabel,
-  FormErrorMessage,
   Input,
-  Checkbox,
+  InputGroup,
+  HStack,
+  InputRightElement,
   Stack,
   Button,
   Heading,
   Text,
   useColorModeValue,
+  FormErrorMessage,
 } from "@chakra-ui/react";
+import { useState } from "react";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request);
@@ -35,7 +40,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 };
 
 interface ActionData {
-  errors?: {
+  errors: {
     email?: string;
     password?: string;
   };
@@ -46,7 +51,6 @@ export const action: ActionFunction = async ({ request }) => {
   const email = formData.get("email");
   const password = formData.get("password");
   const redirectTo = safeRedirect(formData.get("redirectTo"), ROUTES.DASHBOARD);
-  const remember = formData.get("remember");
 
   if (!validateEmail(email)) {
     return json<ActionData>(
@@ -62,39 +66,41 @@ export const action: ActionFunction = async ({ request }) => {
     );
   }
 
-  if (password.length < 6) {
+  if (password.length < 8) {
     return json<ActionData>(
       { errors: { password: "Password is too short" } },
       { status: 400 }
     );
   }
 
-  const user = await verifyLogin(email, password);
-
-  if (!user) {
+  const existingUser = await getUserByEmail(email);
+  if (existingUser) {
     return json<ActionData>(
-      { errors: { email: "Invalid email or password" } },
+      { errors: { email: "A user already exists with this email" } },
       { status: 400 }
     );
   }
 
+  const user = await createUser(email, password);
+
   return createUserSession({
     request,
     userId: user.id,
-    remember: remember === "on",
+    remember: false,
     redirectTo,
   });
 };
 
 export const meta: MetaFunction = () => {
   return {
-    title: "Login",
+    title: "Sign Up",
   };
 };
 
-export default function LoginPage() {
+export default function JoinIndexPage() {
+  const [showPassword, setShowPassword] = useState(false);
   const [searchParams] = useSearchParams();
-  const redirectTo = searchParams.get("redirectTo") || ROUTES.DASHBOARD;
+  const redirectTo = searchParams.get("redirectTo") ?? undefined;
   const actionData = useActionData() as ActionData;
   const emailRef = React.useRef<HTMLInputElement>(null);
   const passwordRef = React.useRef<HTMLInputElement>(null);
@@ -119,15 +125,14 @@ export default function LoginPage() {
       >
         <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
           <Stack align={"center"}>
-            <Heading fontSize={"4xl"}>Sign in to your account</Heading>
+            <Heading fontSize={"4xl"} textAlign={"center"}>
+              Sign up
+            </Heading>
             <Text fontSize={"lg"} color={"gray.600"}>
-              to enjoy all of our cool{" "}
-              <Link to={ROUTES.FEATURES} color={"blue.400"}>
-                features
-              </Link>{" "}
-              ✌️
+              to enjoy all of our cool features ✌️
             </Text>
           </Stack>
+
           <Box
             rounded={"lg"}
             bg={useColorModeValue("white", "gray.700")}
@@ -137,6 +142,21 @@ export default function LoginPage() {
             <Form method="post">
               <input type="hidden" name="redirectTo" value={redirectTo} />
               <Stack spacing={4}>
+                <HStack>
+                  <Box>
+                    <FormControl id="firstName" isRequired>
+                      <FormLabel>First Name</FormLabel>
+                      <Input type="text" name="firstName" />
+                    </FormControl>
+                  </Box>
+                  <Box>
+                    <FormControl id="lastName">
+                      <FormLabel>Last Name</FormLabel>
+                      <Input type="text" name="lastName" />
+                    </FormControl>
+                  </Box>
+                </HStack>
+
                 <FormControl
                   id="email"
                   isRequired
@@ -162,12 +182,23 @@ export default function LoginPage() {
                   isInvalid={!!actionData?.errors?.password}
                 >
                   <FormLabel>Password</FormLabel>
-                  <Input
-                    ref={passwordRef}
-                    autoComplete="current-password"
-                    type="password"
-                    name="password"
-                  />
+                  <InputGroup>
+                    <Input
+                      ref={passwordRef}
+                      type={showPassword ? "text" : "password"}
+                      name="password"
+                    />
+                    <InputRightElement h={"full"}>
+                      <Button
+                        variant={"ghost"}
+                        onClick={() =>
+                          setShowPassword((showPassword) => !showPassword)
+                        }
+                      >
+                        {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                      </Button>
+                    </InputRightElement>
+                  </InputGroup>
                   {actionData?.errors?.password && (
                     <FormErrorMessage id="password-error">
                       {actionData.errors.password}
@@ -175,38 +206,31 @@ export default function LoginPage() {
                   )}
                 </FormControl>
 
-                <Stack spacing={10}>
-                  <Stack
-                    direction={{ base: "column", sm: "row" }}
-                    align={"start"}
-                    justify={"space-between"}
-                  >
-                    <Checkbox name="remember">Remember me</Checkbox>
-                    <Link to={ROUTES.RESET_PASSWORD} color={"blue.400"}>
-                      Forgot password?
-                    </Link>
-                  </Stack>
+                <Stack spacing={10} pt={2}>
                   <Button
                     type="submit"
+                    loadingText="Submitting"
+                    size="lg"
                     bg={"blue.400"}
                     color={"white"}
                     _hover={{
                       bg: "blue.500",
                     }}
                   >
-                    Sign in
+                    Sign up
                   </Button>
                 </Stack>
-                <Stack>
-                  <Text fontSize={"sm"} align={"center"}>
-                    Don't have an account?{" "}
+                <Stack pt={6}>
+                  <Text align={"center"}>
+                    Already a user?{" "}
                     <Link
                       to={{
-                        pathname: ROUTES.JOIN,
+                        pathname: ROUTES.LOGIN,
                         search: searchParams.toString(),
                       }}
+                      color={"blue.400"}
                     >
-                      Sign up
+                      Login
                     </Link>
                   </Text>
                 </Stack>
