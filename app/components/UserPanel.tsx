@@ -1,26 +1,15 @@
 import type { ReactNode } from "react";
 import React from "react";
-import type { BoxProps, FlexProps } from "@chakra-ui/react";
+import type { BoxProps } from "@chakra-ui/react";
 import {
-  IconButton,
-  Avatar,
   Box,
   CloseButton,
   Flex,
-  HStack,
-  VStack,
-  Icon,
   useColorModeValue,
-  Link,
   Drawer,
   DrawerContent,
   Text,
   useDisclosure,
-  Menu,
-  MenuButton,
-  MenuDivider,
-  MenuItem,
-  MenuList,
 } from "@chakra-ui/react";
 import {
   FiHome,
@@ -28,17 +17,11 @@ import {
   FiCompass,
   FiStar,
   FiSettings,
-  FiMenu,
-  FiBell,
-  FiChevronDown,
 } from "react-icons/fi";
 import type { IconType } from "react-icons";
-import type { ReactText } from "react";
 import { ROUTES } from "~/constants";
-import RemixLink from "~/components/RemixLink";
-import LogoutButton from "~/components/LogoutButton";
-import { useUser } from "~/utils";
 import MobileNav from "~/components/MobileNav";
+import NavItem from "./NavItem";
 
 interface LinkItemProps {
   name: string;
@@ -107,52 +90,12 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         </Text>
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>
+
       {LinkItems.map((link) => (
         <NavItem key={link.name} icon={link.icon}>
           {link.name}
         </NavItem>
       ))}
     </Box>
-  );
-};
-
-interface NavItemProps extends FlexProps {
-  icon: IconType;
-  children: ReactText;
-}
-
-const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
-  return (
-    <Link
-      href="#"
-      style={{ textDecoration: "none" }}
-      _focus={{ boxShadow: "none" }}
-    >
-      <Flex
-        align="center"
-        p="4"
-        mx="4"
-        borderRadius="lg"
-        role="group"
-        cursor="pointer"
-        _hover={{
-          bg: "cyan.400",
-          color: "white",
-        }}
-        {...rest}
-      >
-        {icon && (
-          <Icon
-            mr="4"
-            fontSize="16"
-            _groupHover={{
-              color: "white",
-            }}
-            as={icon}
-          />
-        )}
-        {children}
-      </Flex>
-    </Link>
   );
 };
