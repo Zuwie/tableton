@@ -3,6 +3,7 @@ import type { LoaderFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { getBoardEntryListItems } from "~/models/board.server";
 import { requireUserId } from "~/session.server";
+import { Button, Heading, Text } from "@chakra-ui/react";
 
 type LoaderData = {
   userBoardEntries: Awaited<ReturnType<typeof getBoardEntryListItems>>;
@@ -18,10 +19,11 @@ export default function DashboardIndexPage() {
   const loader = useLoaderData() as LoaderData;
 
   return (
-    <div>
-      <h1>This is the board</h1>
+    <>
+      <Heading as="h1">This is the board</Heading>
+
       {loader.userBoardEntries.length === 0 ? (
-        <p className="p-4">No board-entries yet</p>
+        <Text>No board-entries yet</Text>
       ) : (
         <ol>
           {loader.userBoardEntries.map((entry) => (
@@ -38,6 +40,9 @@ export default function DashboardIndexPage() {
           ))}
         </ol>
       )}
-    </div>
+      <NavLink to="new">
+        <Button as={"span"}>+ New Entry</Button>
+      </NavLink>
+    </>
   );
 }
