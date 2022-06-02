@@ -13,7 +13,6 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 import { getUser } from "./session.server";
-import styles from "./styles/app.css";
 import { useContext, useEffect } from "react";
 import { ClientStyleContext, ServerStyleContext } from "~/context";
 import { ChakraProvider } from "@chakra-ui/provider";
