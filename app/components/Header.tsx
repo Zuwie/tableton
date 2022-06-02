@@ -276,6 +276,6 @@ const NAV_ITEMS: Array<NavItem> = [
   },
   {
     label: "Find players",
-    href: ROUTES.ACCOUNT,
+    href: ROUTES.SETTINGS,
   },
 ];

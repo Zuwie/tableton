@@ -231,8 +231,9 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
               borderColor={useColorModeValue("gray.200", "gray.700")}
             >
               <MenuItem>Profile</MenuItem>
-              <MenuItem>Settings</MenuItem>
-              <MenuItem>Billing</MenuItem>
+              <MenuItem>
+                <RemixLink to={ROUTES.SETTINGS}>Settings</RemixLink>
+              </MenuItem>
               <MenuDivider />
               <MenuItem>
                 <LogoutButton />
