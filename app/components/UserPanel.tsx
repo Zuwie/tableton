@@ -37,6 +37,7 @@ import type { ReactText } from "react";
 import { ROUTES } from "~/constants";
 import RemixLink from "~/components/RemixLink";
 import LogoutButton from "~/components/LogoutButton";
+import { useUser } from "~/utils";
 
 interface LinkItemProps {
   name: string;
@@ -160,6 +161,8 @@ interface MobileProps extends FlexProps {
 }
 
 const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
+  const user = useUser();
+
   return (
     <Flex
       ml={{ base: 0, md: 60 }}
@@ -216,7 +219,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
                   spacing="1px"
                   ml="2"
                 >
-                  <Text fontSize="sm">Justina Clark</Text>
+                  <Text fontSize="sm">{user.email}</Text>
                   <Text fontSize="xs" color="gray.600">
                     Admin
                   </Text>
@@ -230,7 +233,9 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
               bg={useColorModeValue("white", "gray.900")}
               borderColor={useColorModeValue("gray.200", "gray.700")}
             >
-              <MenuItem>Profile</MenuItem>
+              <MenuItem>
+                <RemixLink to={ROUTES.PROFILE}>Profile</RemixLink>
+              </MenuItem>
               <MenuItem>
                 <RemixLink to={ROUTES.SETTINGS}>Settings</RemixLink>
               </MenuItem>
