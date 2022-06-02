@@ -32,6 +32,7 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import Footer from "~/components/Footer";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request);
@@ -239,6 +240,8 @@ export default function JoinIndexPage() {
           </Box>
         </Stack>
       </Flex>
+
+      <Footer />
     </>
   );
 }

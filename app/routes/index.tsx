@@ -1,5 +1,7 @@
 import Header from "~/components/Header";
 import { Box, Button, Container, Heading, Stack, Text } from "@chakra-ui/react";
+import LandingFeatures from "~/components/LandingFeatures";
+import Footer from "~/components/Footer";
 
 export default function LoginIndexPage() {
   return (
@@ -53,6 +55,8 @@ export default function LoginIndexPage() {
           </Stack>
         </Stack>
       </Container>
+      <LandingFeatures />
+      <Footer />
     </>
   );
 }

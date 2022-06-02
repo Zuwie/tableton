@@ -27,6 +27,7 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
+import Footer from "~/components/Footer";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request);
@@ -215,6 +216,8 @@ export default function LoginPage() {
           </Box>
         </Stack>
       </Flex>
+
+      <Footer />
     </>
   );
 }

@@ -6,6 +6,8 @@ import { requireUserId } from "~/session.server";
 import { useUser } from "~/utils";
 import { getNoteListItems } from "~/models/note.server";
 import Header from "~/components/Header";
+import Footer from "~/components/Footer";
+import { Container } from "@chakra-ui/react";
 
 type LoaderData = {
   noteListItems: Awaited<ReturnType<typeof getNoteListItems>>;
@@ -22,17 +24,19 @@ export default function BoardPage() {
   const user = useUser();
 
   return (
-    <div className="flex h-full min-h-screen flex-col">
+    <>
       <Header />
-
-      <main className="h-full bg-white p-6">
-        <div className="container mx-auto flex flex-col">
-          <Link to="new" className="ml-auto block p-4 text-xl text-blue-500">
-            + New Entry
-          </Link>
-          <Outlet />
-        </div>
-      </main>
-    </div>
+      <Container maxW={"6xl"} minH={"100vh"}>
+        <main className="h-full bg-white p-6">
+          <div className="container mx-auto flex flex-col">
+            <Link to="new" className="ml-auto block p-4 text-xl text-blue-500">
+              + New Entry
+            </Link>
+            <Outlet />
+          </div>
+        </main>
+      </Container>
+      <Footer />
+    </>
   );
 }
