@@ -15,9 +15,10 @@ import {
 import { getUser } from "./session.server";
 import { useContext, useEffect } from "react";
 import { ClientStyleContext, ServerStyleContext } from "~/context";
-import { ChakraProvider } from "@chakra-ui/provider";
 import { withEmotionCache } from "@emotion/react";
-import { extendTheme } from "@chakra-ui/react";
+import { ColorModeScript } from "@chakra-ui/react";
+import { ChakraProvider } from "@chakra-ui/provider";
+import { theme } from "~/chakra-theme";
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
@@ -82,21 +83,6 @@ const Document = withEmotionCache(
     );
   }
 );
-
-const theme = extendTheme({
-  colors: {
-    brand: {
-      900: "#1a365d",
-      800: "#153e75",
-      700: "#2a69ac",
-    },
-  },
-  fonts: {
-    body: "system-ui, sans-serif",
-    heading: "Poppins, serif",
-    mono: "Menlo, monospace",
-  },
-});
 
 type LoaderData = {
   user: Awaited<ReturnType<typeof getUser>>;
