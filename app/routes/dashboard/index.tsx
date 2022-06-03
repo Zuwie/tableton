@@ -3,7 +3,7 @@ import type { LoaderFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { getBoardEntryListItems } from "~/models/board.server";
 import { requireUserId } from "~/session.server";
-import { Button, Heading, Text } from "@chakra-ui/react";
+import { Box, Button, Grid, GridItem, Heading, Text } from "@chakra-ui/react";
 
 type LoaderData = {
   userBoardEntries: Awaited<ReturnType<typeof getBoardEntryListItems>>;
@@ -20,25 +20,34 @@ export default function DashboardIndexPage() {
 
   return (
     <>
-      <Heading as="h1">This is the board</Heading>
+      <Heading as="h1">Find matches</Heading>
 
       {loader.userBoardEntries.length === 0 ? (
         <Text>No board-entries yet</Text>
       ) : (
-        <ol>
+        <Grid templateColumns="repeat(4, 1fr)" gap={6}>
           {loader.userBoardEntries.map((entry) => (
-            <li key={entry.id}>
+            <GridItem
+              w="100%"
+              bg="white"
+              key={entry.id}
+              maxW="sm"
+              borderWidth="1px"
+              borderRadius="lg"
+            >
               <NavLink
                 to={entry.id}
                 className={({ isActive }) =>
                   `block border-b p-4 text-xl ${isActive ? "bg-white" : ""}`
                 }
               >
-                {entry.title}
+                <Box p="6">
+                  <Heading as="h3">{entry.title}</Heading>
+                </Box>
               </NavLink>
-            </li>
+            </GridItem>
           ))}
-        </ol>
+        </Grid>
       )}
       <NavLink to="new">
         <Button as={"span"}>+ New Entry</Button>
