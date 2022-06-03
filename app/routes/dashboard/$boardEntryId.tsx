@@ -1,9 +1,8 @@
 import type { ActionFunction, LoaderFunction } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
-import { Form, Link, NavLink, useCatch, useLoaderData } from "@remix-run/react";
+import { Form, NavLink, useCatch, useLoaderData } from "@remix-run/react";
 import invariant from "tiny-invariant";
 
-import { deleteNote } from "~/models/note.server";
 import { requireUserId } from "~/session.server";
 import type { BoardEntry } from "@prisma/client";
 import { deleteBoardEntry, getBoardEntry } from "~/models/board.server";
@@ -18,6 +17,7 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { useUser } from "~/utils";
 
 type LoaderData = {
   boardEntry: BoardEntry;
@@ -44,7 +44,9 @@ export const action: ActionFunction = async ({ request, params }) => {
 };
 
 export default function BoardEntryDetailsPage() {
+  const { id } = useUser();
   const data = useLoaderData() as LoaderData;
+
   return (
     <>
       <Box mt="10" mb="20">
@@ -69,20 +71,17 @@ export default function BoardEntryDetailsPage() {
 
           <Text>{data.boardEntry.body}</Text>
 
-          <Divider />
+          {id === data.boardEntry.userId && (
+            <>
+              <Divider />
 
-          <Form method="post">
-            <Button
-              type="submit"
-              bg={"red.400"}
-              color={"white"}
-              _hover={{
-                bg: "red.500",
-              }}
-            >
-              Delete entry
-            </Button>
-          </Form>
+              <Form method="post">
+                <Button type="submit" colorScheme="red">
+                  Delete entry
+                </Button>
+              </Form>
+            </>
+          )}
         </Stack>
       </Box>
     </>
@@ -91,7 +90,6 @@ export default function BoardEntryDetailsPage() {
 
 export function ErrorBoundary({ error }: { error: Error }) {
   console.error(error);
-
   return <div>An unexpected error occurred: {error.message}</div>;
 }
 

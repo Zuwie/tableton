@@ -40,7 +40,7 @@ export default function DashboardIndexPage() {
       {loader.userBoardEntries.length === 0 ? (
         <Text>No board-entries yet</Text>
       ) : (
-        <Grid templateColumns="repeat(4, 1fr)" gap={6}>
+        <Grid templateColumns="repeat(3, 1fr)" gap={6}>
           {loader.userBoardEntries.map((entry) => (
             <GridItem
               w="100%"

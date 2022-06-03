@@ -11,13 +11,13 @@ export function getBoardEntry({
   userId: User["id"];
 }) {
   return prisma.boardEntry.findFirst({
-    where: { id, userId },
+    where: { id },
   });
 }
 
 export function getBoardEntryListItems({ userId }: { userId: User["id"] }) {
   return prisma.boardEntry.findMany({
-    where: { userId },
+    // where: { userId },
     select: { id: true, title: true },
     orderBy: { updatedAt: "desc" },
   });
