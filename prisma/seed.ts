@@ -116,64 +116,64 @@ async function seed() {
 
   await prisma.boardEntry.create({
     data: {
-      title: faker.lorem.words(5),
-      body: faker.lorem.paragraphs(),
+      title: faker.commerce.productName(),
+      body: faker.commerce.productDescription(),
       date: new Date(),
       userId: user2.id,
     },
   });
   await prisma.boardEntry.create({
     data: {
-      title: faker.lorem.words(5),
-      body: faker.lorem.paragraphs(),
+      title: faker.commerce.productName(),
+      body: faker.commerce.productDescription(),
       date: new Date(),
       userId: user2.id,
     },
   });
   await prisma.boardEntry.create({
     data: {
-      title: faker.lorem.words(5),
-      body: faker.lorem.paragraphs(),
+      title: faker.commerce.productName(),
+      body: faker.commerce.productDescription(),
       date: new Date(),
       userId: user2.id,
     },
   });
   await prisma.boardEntry.create({
     data: {
-      title: faker.lorem.words(5),
-      body: faker.lorem.paragraphs(),
+      title: faker.commerce.productName(),
+      body: faker.commerce.productDescription(),
       date: new Date(),
       userId: user2.id,
     },
   });
   await prisma.boardEntry.create({
     data: {
-      title: faker.lorem.words(5),
-      body: faker.lorem.paragraphs(),
+      title: faker.commerce.productName(),
+      body: faker.commerce.productDescription(),
       date: new Date(),
       userId: user2.id,
     },
   });
   await prisma.boardEntry.create({
     data: {
-      title: faker.lorem.words(5),
-      body: faker.lorem.paragraphs(),
+      title: faker.commerce.productName(),
+      body: faker.commerce.productDescription(),
       date: new Date(),
       userId: user2.id,
     },
   });
   await prisma.boardEntry.create({
     data: {
-      title: faker.lorem.words(5),
-      body: faker.lorem.paragraphs(),
+      title: faker.commerce.productName(),
+      body: faker.commerce.productDescription(),
       date: new Date(),
       userId: user2.id,
     },
   });
   await prisma.boardEntry.create({
     data: {
-      title: faker.lorem.words(5),
-      body: faker.lorem.paragraphs(),
+      title: faker.commerce.productName(),
+      body: faker.commerce.productDescription(),
       date: new Date(),
       userId: user2.id,
     },
