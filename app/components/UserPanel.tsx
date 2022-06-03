@@ -11,13 +11,7 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import {
-  FiHome,
-  FiTrendingUp,
-  FiCompass,
-  FiStar,
-  FiSettings,
-} from "react-icons/fi";
+import { FiClipboard, FiCompass, FiStar, FiSettings } from "react-icons/fi";
 import type { IconType } from "react-icons";
 import { ROUTES } from "~/constants";
 import MobileNav from "~/components/MobileNav";
@@ -30,8 +24,7 @@ interface LinkItemProps {
 }
 
 const LinkItems: Array<LinkItemProps> = [
-  { name: "Home", icon: FiHome, href: ROUTES.ROOT },
-  { name: "Dashboard", icon: FiTrendingUp, href: ROUTES.DASHBOARD },
+  { name: "Dashboard", icon: FiClipboard, href: ROUTES.DASHBOARD },
   { name: "Players", icon: FiCompass, href: ROUTES.PLAYERS },
   { name: "League", icon: FiStar, href: ROUTES.PLAYERS },
   { name: "Settings", icon: FiSettings, href: ROUTES.PLAYERS },
