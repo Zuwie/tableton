@@ -3,7 +3,15 @@ import type { LoaderFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { getBoardEntryListItems } from "~/models/board.server";
 import { requireUserId } from "~/session.server";
-import { Box, Button, Grid, GridItem, Heading, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  Grid,
+  GridItem,
+  Heading,
+  Text,
+} from "@chakra-ui/react";
 
 type LoaderData = {
   userBoardEntries: Awaited<ReturnType<typeof getBoardEntryListItems>>;
@@ -20,7 +28,14 @@ export default function DashboardIndexPage() {
 
   return (
     <>
-      <Heading as="h1">Find matches</Heading>
+      <Flex justifyContent="space-between" mt="10" mb="20">
+        <Heading as="h1">Find matches</Heading>
+        <NavLink to="new">
+          <Button as={"span"} colorScheme="teal">
+            + New Entry
+          </Button>
+        </NavLink>
+      </Flex>
 
       {loader.userBoardEntries.length === 0 ? (
         <Text>No board-entries yet</Text>
@@ -32,15 +47,10 @@ export default function DashboardIndexPage() {
               bg="white"
               key={entry.id}
               maxW="sm"
-              borderWidth="1px"
+              borderWidth="3px"
               borderRadius="lg"
             >
-              <NavLink
-                to={entry.id}
-                className={({ isActive }) =>
-                  `block border-b p-4 text-xl ${isActive ? "bg-white" : ""}`
-                }
-              >
+              <NavLink to={entry.id}>
                 <Box p="6">
                   <Heading as="h3">{entry.title}</Heading>
                 </Box>
@@ -49,9 +59,6 @@ export default function DashboardIndexPage() {
           ))}
         </Grid>
       )}
-      <NavLink to="new">
-        <Button as={"span"}>+ New Entry</Button>
-      </NavLink>
     </>
   );
 }

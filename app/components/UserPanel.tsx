@@ -62,7 +62,7 @@ export default function UserPanel({ children }: { children: ReactNode }) {
 
       <MobileNav onOpen={onOpen} />
 
-      <Box ml={{ base: 0, md: 60 }} p="4">
+      <Box ml={{ base: 0, md: 60 }} p="8">
         {children}
       </Box>
     </Box>

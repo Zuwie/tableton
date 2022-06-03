@@ -1,12 +1,21 @@
 import type { ActionFunction } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
-import { Form, Link, useActionData } from "@remix-run/react";
+import { Form, NavLink, useActionData } from "@remix-run/react";
 import * as React from "react";
-
-import { createNote } from "~/models/note.server";
 import { requireUserId } from "~/session.server";
 import { createBoardEntry } from "~/models/board.server";
 import { ROUTES } from "~/constants";
+import {
+  Box,
+  Button,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  Input,
+  Stack,
+  Textarea,
+  useColorModeValue,
+} from "@chakra-ui/react";
 
 type ActionData = {
   errors?: {
@@ -56,69 +65,56 @@ export default function NewBoardEntryPage() {
 
   return (
     <>
-      <Link to={ROUTES.DASHBOARD} className="mb-6 inline-block">
-        Back to dashboard
-      </Link>
+      <Box mt="10" mb="20">
+        <NavLink to={ROUTES.DASHBOARD}>
+          <Button as={"span"} colorScheme="teal">
+            Back to dashboard
+          </Button>
+        </NavLink>
+      </Box>
 
-      <Form
-        method="post"
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: 8,
-          width: "100%",
-        }}
+      <Box
+        rounded={"lg"}
+        bg={useColorModeValue("white", "gray.700")}
+        boxShadow={"lg"}
+        maxW={"xl"}
+        mx="auto"
+        py={12}
+        px={6}
       >
-        <div>
-          <label className="flex w-full flex-col gap-1">
-            <span>Title: </span>
-            <input
-              ref={titleRef}
-              name="title"
-              className="flex-1 rounded-md border-2 border-blue-500 px-3 text-lg leading-loose"
-              aria-invalid={actionData?.errors?.title ? true : undefined}
-              aria-errormessage={
-                actionData?.errors?.title ? "title-error" : undefined
-              }
-            />
-          </label>
-          {actionData?.errors?.title && (
-            <div className="pt-1 text-red-700" id="title-error">
-              {actionData.errors.title}
-            </div>
-          )}
-        </div>
+        <Form method="post">
+          <Stack spacing={10}>
+            <Stack spacing={4}>
+              <FormControl isRequired isInvalid={!!actionData?.errors?.title}>
+                <FormLabel>Title</FormLabel>
+                <Input ref={titleRef} name="title" />
+                {actionData?.errors?.title && (
+                  <FormErrorMessage>{actionData.errors.title}</FormErrorMessage>
+                )}
+              </FormControl>
 
-        <div>
-          <label className="flex w-full flex-col gap-1">
-            <span>Body: </span>
-            <textarea
-              ref={bodyRef}
-              name="body"
-              rows={8}
-              className="w-full flex-1 rounded-md border-2 border-blue-500 py-2 px-3 text-lg leading-6"
-              aria-invalid={actionData?.errors?.body ? true : undefined}
-              aria-errormessage={
-                actionData?.errors?.body ? "body-error" : undefined
-              }
-            />
-          </label>
-          {actionData?.errors?.body && (
-            <div className="pt-1 text-red-700" id="body-error">
-              {actionData.errors.body}
-            </div>
-          )}
-        </div>
+              <FormControl isRequired isInvalid={!!actionData?.errors?.body}>
+                <FormLabel>Body</FormLabel>
+                <Textarea ref={bodyRef} name="body" />
+                {actionData?.errors?.body && (
+                  <FormErrorMessage>{actionData.errors.body}</FormErrorMessage>
+                )}
+              </FormControl>
+            </Stack>
 
-        <div className="text-right">
-          <button
-            type="submit"
-            className="rounded bg-blue-500 py-2 px-4 text-white hover:bg-blue-600 focus:bg-blue-400"
-          >
-            Save
-          </button>
-        </div>
-      </Form>
+            <Button
+              type="submit"
+              bg={"teal.400"}
+              color={"white"}
+              _hover={{
+                bg: "teal.500",
+              }}
+            >
+              Create new entry
+            </Button>
+          </Stack>
+        </Form>
+      </Box>
     </>
   );
 }

@@ -93,9 +93,9 @@ export default function Header() {
             display={{ base: "none", md: "inline-flex" }}
             fontWeight={600}
             color={"white"}
-            bg={"green.600"}
+            bg={"teal.600"}
             _hover={{
-              bg: "green.700",
+              bg: "teal.700",
             }}
           >
             Sign Up

@@ -31,7 +31,7 @@ export default function RootIndexPage() {
             lineHeight={"110%"}
           >
             Connect with <br />
-            <Text as={"span"} color={"green.400"}>
+            <Text as={"span"} color={"teal.400"}>
               local players
             </Text>
           </Heading>
@@ -42,21 +42,17 @@ export default function RootIndexPage() {
           </Text>
           <Stack
             direction={"column"}
-            spacing={3}
+            spacing={4}
             align={"center"}
             alignSelf={"center"}
             position={"relative"}
           >
             <Button
-              colorScheme={"green"}
-              bg={"green.400"}
+              colorScheme={"teal"}
               rounded={"full"}
               size={"lg"}
               py={6}
               px={8}
-              _hover={{
-                bg: "green.500",
-              }}
             >
               Get Started
             </Button>

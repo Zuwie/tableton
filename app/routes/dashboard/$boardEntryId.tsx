@@ -1,6 +1,6 @@
 import type { ActionFunction, LoaderFunction } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
-import { Form, Link, useCatch, useLoaderData } from "@remix-run/react";
+import { Form, Link, NavLink, useCatch, useLoaderData } from "@remix-run/react";
 import invariant from "tiny-invariant";
 
 import { deleteNote } from "~/models/note.server";
@@ -9,6 +9,15 @@ import type { BoardEntry } from "@prisma/client";
 import { deleteBoardEntry, getBoardEntry } from "~/models/board.server";
 import { ROUTES } from "~/constants";
 import * as React from "react";
+import {
+  Box,
+  Button,
+  Divider,
+  Heading,
+  Stack,
+  Text,
+  useColorModeValue,
+} from "@chakra-ui/react";
 
 type LoaderData = {
   boardEntry: BoardEntry;
@@ -37,22 +46,46 @@ export const action: ActionFunction = async ({ request, params }) => {
 export default function BoardEntryDetailsPage() {
   const data = useLoaderData() as LoaderData;
   return (
-    <div>
-      <Link to={ROUTES.DASHBOARD} className="button-primary mb-6 inline-block">
-        Back to dashboard
-      </Link>
-      <h3 className="text-2xl font-bold">{data.boardEntry.title}</h3>
-      <p className="py-6">{data.boardEntry.body}</p>
-      <hr className="my-4" />
-      <Form method="post">
-        <button
-          type="submit"
-          className="rounded bg-blue-500  py-2 px-4 text-white hover:bg-blue-600 focus:bg-blue-400"
-        >
-          Delete
-        </button>
-      </Form>
-    </div>
+    <>
+      <Box mt="10" mb="20">
+        <NavLink to={ROUTES.DASHBOARD}>
+          <Button as={"span"} colorScheme="teal">
+            Back to dashboard
+          </Button>
+        </NavLink>
+      </Box>
+
+      <Box
+        rounded={"lg"}
+        bg={useColorModeValue("white", "gray.700")}
+        boxShadow={"lg"}
+        maxW={"xl"}
+        mx="auto"
+        py={12}
+        px={6}
+      >
+        <Stack spacing={10}>
+          <Heading as="h1">{data.boardEntry.title}</Heading>
+
+          <Text>{data.boardEntry.body}</Text>
+
+          <Divider />
+
+          <Form method="post">
+            <Button
+              type="submit"
+              bg={"red.400"}
+              color={"white"}
+              _hover={{
+                bg: "red.500",
+              }}
+            >
+              Delete entry
+            </Button>
+          </Form>
+        </Stack>
+      </Box>
+    </>
   );
 }
 
