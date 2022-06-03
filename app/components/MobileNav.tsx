@@ -20,6 +20,7 @@ import RemixLink from "~/components/RemixLink";
 import { ROUTES } from "~/constants";
 import LogoutButton from "~/components/LogoutButton";
 import React from "react";
+import { Form } from "@remix-run/react";
 
 interface MobileProps extends FlexProps {
   onOpen: () => void;
@@ -94,16 +95,16 @@ export default function MobileNav({ onOpen, ...rest }: MobileProps) {
               borderColor={useColorModeValue("gray.200", "gray.700")}
               py={0}
             >
-              <MenuItem>
-                <RemixLink to={ROUTES.PROFILE}>Profile</RemixLink>
-              </MenuItem>
-              <MenuItem>
-                <RemixLink to={ROUTES.SETTINGS}>Settings</RemixLink>
-              </MenuItem>
+              <RemixLink to={ROUTES.PROFILE}>
+                <MenuItem as="span">Profile</MenuItem>
+              </RemixLink>
+              <RemixLink to={ROUTES.SETTINGS}>
+                <MenuItem as="span">Settings</MenuItem>
+              </RemixLink>
               <MenuDivider />
-              <MenuItem as="div">
-                <LogoutButton />
-              </MenuItem>
+              <Form action="/logout" method="post">
+                <MenuItem type="submit">Sign Out</MenuItem>
+              </Form>
             </MenuList>
           </Menu>
         </Flex>
