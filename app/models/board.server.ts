@@ -18,7 +18,7 @@ export function getBoardEntry({
 export function getBoardEntryListItems({ userId }: { userId: User["id"] }) {
   return prisma.boardEntry.findMany({
     // where: { userId },
-    select: { id: true, title: true },
+    select: { id: true, title: true, user: true },
     orderBy: { updatedAt: "desc" },
   });
 }

@@ -24,9 +24,9 @@ async function seed() {
       },
       firstName: "Rafael",
       lastName: "Seifert",
+      avatar: faker.internet.avatar(),
     },
   });
-
   const user2 = await prisma.user.create({
     data: {
       email: faker.internet.email(),
@@ -37,6 +37,21 @@ async function seed() {
       },
       firstName: faker.internet.userName(),
       lastName: faker.internet.userName(),
+      avatar: faker.internet.avatar(),
+    },
+  });
+
+  await prisma.user.create({
+    data: {
+      email: faker.internet.email(),
+      password: {
+        create: {
+          hash: faker.internet.password(),
+        },
+      },
+      firstName: faker.internet.userName("firstName"),
+      lastName: faker.internet.userName("lastName"),
+      avatar: faker.internet.avatar(),
     },
   });
   await prisma.user.create({
@@ -49,18 +64,7 @@ async function seed() {
       },
       firstName: faker.internet.userName("firstName"),
       lastName: faker.internet.userName("lastName"),
-    },
-  });
-  await prisma.user.create({
-    data: {
-      email: faker.internet.email(),
-      password: {
-        create: {
-          hash: faker.internet.password(),
-        },
-      },
-      firstName: faker.internet.userName("firstName"),
-      lastName: faker.internet.userName("lastName"),
+      avatar: faker.internet.avatar(),
     },
   });
 

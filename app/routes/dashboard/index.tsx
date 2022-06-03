@@ -4,6 +4,7 @@ import { json } from "@remix-run/node";
 import { getBoardEntryListItems } from "~/models/board.server";
 import { requireUserId } from "~/session.server";
 import {
+  Avatar,
   Box,
   Button,
   Flex,
@@ -53,6 +54,11 @@ export default function DashboardIndexPage() {
               <NavLink to={entry.id}>
                 <Box p="6">
                   <Heading as="h3">{entry.title}</Heading>
+                  <Avatar
+                    size={"sm"}
+                    src={entry.user.avatar || undefined}
+                    name={`${entry.user.firstName} ${entry.user.lastName}`}
+                  />
                 </Box>
               </NavLink>
             </GridItem>
