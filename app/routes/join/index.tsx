@@ -44,6 +44,8 @@ interface ActionData {
   errors: {
     email?: string;
     password?: string;
+    firstName?: string;
+    lastName?: string;
   };
 }
 
@@ -51,6 +53,8 @@ export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
   const email = formData.get("email");
   const password = formData.get("password");
+  const firstName = formData.get("firstName");
+  const lastName = formData.get("lastName");
   const redirectTo = safeRedirect(formData.get("redirectTo"), ROUTES.DASHBOARD);
 
   if (!validateEmail(email)) {
@@ -74,6 +78,20 @@ export const action: ActionFunction = async ({ request }) => {
     );
   }
 
+  if (typeof firstName !== "string" || firstName.length === 0) {
+    return json<ActionData>(
+      { errors: { firstName: "Firstname is required" } },
+      { status: 400 }
+    );
+  }
+
+  if (typeof lastName !== "string") {
+    return json<ActionData>(
+      { errors: { lastName: "Lastname should only contain letters" } },
+      { status: 400 }
+    );
+  }
+
   const existingUser = await getUserByEmail(email);
   if (existingUser) {
     return json<ActionData>(
@@ -82,7 +100,7 @@ export const action: ActionFunction = async ({ request }) => {
     );
   }
 
-  const user = await createUser(email, password);
+  const user = await createUser(email, password, firstName, lastName);
 
   return createUserSession({
     request,
@@ -145,15 +163,23 @@ export default function JoinIndexPage() {
               <Stack spacing={4}>
                 <HStack>
                   <Box>
-                    <FormControl id="firstName" isRequired>
+                    <FormControl id="firstName">
                       <FormLabel>First Name</FormLabel>
-                      <Input type="text" name="firstName" />
+                      <Input
+                        type="text"
+                        name="firstName"
+                        autoComplete="firstName"
+                      />
                     </FormControl>
                   </Box>
                   <Box>
                     <FormControl id="lastName">
                       <FormLabel>Last Name</FormLabel>
-                      <Input type="text" name="lastName" />
+                      <Input
+                        type="text"
+                        name="lastName"
+                        autoComplete="lastName"
+                      />
                     </FormControl>
                   </Box>
                 </HStack>
@@ -212,11 +238,7 @@ export default function JoinIndexPage() {
                     type="submit"
                     loadingText="Submitting"
                     size="lg"
-                    bg={"blue.400"}
-                    color={"white"}
-                    _hover={{
-                      bg: "blue.500",
-                    }}
+                    colorScheme="teal"
                   >
                     Sign up
                   </Button>

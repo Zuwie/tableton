@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
+import faker from "@faker-js/faker";
 
 const prisma = new PrismaClient();
 
@@ -21,38 +22,93 @@ async function seed() {
           hash: hashedPassword,
         },
       },
+      firstName: "Rafael",
+      lastName: "Seifert",
     },
   });
 
-  await prisma.note.create({
+  const user2 = await prisma.user.create({
     data: {
-      title: "My first note",
-      body: "Hello, world!",
-      userId: user.id,
+      email: faker.internet.email(),
+      password: {
+        create: {
+          hash: faker.internet.password(),
+        },
+      },
+      firstName: faker.internet.userName(),
+      lastName: faker.internet.userName(),
     },
   });
-
-  await prisma.note.create({
+  await prisma.user.create({
     data: {
-      title: "My second note",
-      body: "Hello, world!",
-      userId: user.id,
+      email: faker.internet.email(),
+      password: {
+        create: {
+          hash: faker.internet.password(),
+        },
+      },
+      firstName: faker.internet.userName("firstName"),
+      lastName: faker.internet.userName("lastName"),
     },
   });
-
-  await prisma.note.create({
+  await prisma.user.create({
     data: {
-      title: "My third note",
-      body: "Hello, world!",
-      userId: user.id,
+      email: faker.internet.email(),
+      password: {
+        create: {
+          hash: faker.internet.password(),
+        },
+      },
+      firstName: faker.internet.userName("firstName"),
+      lastName: faker.internet.userName("lastName"),
     },
   });
 
   // BOARD
   await prisma.boardEntry.create({
     data: {
-      title: "My first boardEntry",
-      body: "Hello, world!",
+      title: faker.commerce.productName(),
+      body: faker.commerce.productDescription(),
+      date: new Date(),
+      userId: user.id,
+    },
+  });
+  await prisma.boardEntry.create({
+    data: {
+      title: faker.commerce.productName(),
+      body: faker.commerce.productDescription(),
+      date: new Date(),
+      userId: user.id,
+    },
+  });
+  await prisma.boardEntry.create({
+    data: {
+      title: faker.commerce.productName(),
+      body: faker.commerce.productDescription(),
+      date: new Date(),
+      userId: user.id,
+    },
+  });
+  await prisma.boardEntry.create({
+    data: {
+      title: faker.commerce.productName(),
+      body: faker.commerce.productDescription(),
+      date: new Date(),
+      userId: user.id,
+    },
+  });
+  await prisma.boardEntry.create({
+    data: {
+      title: faker.commerce.productName(),
+      body: faker.commerce.productDescription(),
+      date: new Date(),
+      userId: user.id,
+    },
+  });
+  await prisma.boardEntry.create({
+    data: {
+      title: faker.commerce.productName(),
+      body: faker.commerce.productDescription(),
       date: new Date(),
       userId: user.id,
     },
@@ -60,19 +116,66 @@ async function seed() {
 
   await prisma.boardEntry.create({
     data: {
-      title: "My second boardEntry",
-      body: "Hello, world!",
+      title: faker.lorem.text(),
+      body: faker.lorem.paragraphs(),
       date: new Date(),
-      userId: user.id,
+      userId: user2.id,
     },
   });
-
   await prisma.boardEntry.create({
     data: {
-      title: "My third boardEntry",
-      body: "Hello, world!",
+      title: faker.lorem.text(),
+      body: faker.lorem.paragraphs(),
       date: new Date(),
-      userId: user.id,
+      userId: user2.id,
+    },
+  });
+  await prisma.boardEntry.create({
+    data: {
+      title: faker.lorem.text(),
+      body: faker.lorem.paragraphs(),
+      date: new Date(),
+      userId: user2.id,
+    },
+  });
+  await prisma.boardEntry.create({
+    data: {
+      title: faker.lorem.text(),
+      body: faker.lorem.paragraphs(),
+      date: new Date(),
+      userId: user2.id,
+    },
+  });
+  await prisma.boardEntry.create({
+    data: {
+      title: faker.lorem.text(),
+      body: faker.lorem.paragraphs(),
+      date: new Date(),
+      userId: user2.id,
+    },
+  });
+  await prisma.boardEntry.create({
+    data: {
+      title: faker.lorem.text(),
+      body: faker.lorem.paragraphs(),
+      date: new Date(),
+      userId: user2.id,
+    },
+  });
+  await prisma.boardEntry.create({
+    data: {
+      title: faker.lorem.text(),
+      body: faker.lorem.paragraphs(),
+      date: new Date(),
+      userId: user2.id,
+    },
+  });
+  await prisma.boardEntry.create({
+    data: {
+      title: faker.lorem.text(),
+      body: faker.lorem.paragraphs(),
+      date: new Date(),
+      userId: user2.id,
     },
   });
 
