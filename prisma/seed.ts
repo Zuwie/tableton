@@ -116,7 +116,7 @@ async function seed() {
 
   await prisma.boardEntry.create({
     data: {
-      title: faker.lorem.text(),
+      title: faker.lorem.words(5),
       body: faker.lorem.paragraphs(),
       date: new Date(),
       userId: user2.id,
@@ -124,7 +124,7 @@ async function seed() {
   });
   await prisma.boardEntry.create({
     data: {
-      title: faker.lorem.text(),
+      title: faker.lorem.words(5),
       body: faker.lorem.paragraphs(),
       date: new Date(),
       userId: user2.id,
@@ -132,7 +132,7 @@ async function seed() {
   });
   await prisma.boardEntry.create({
     data: {
-      title: faker.lorem.text(),
+      title: faker.lorem.words(5),
       body: faker.lorem.paragraphs(),
       date: new Date(),
       userId: user2.id,
@@ -140,7 +140,7 @@ async function seed() {
   });
   await prisma.boardEntry.create({
     data: {
-      title: faker.lorem.text(),
+      title: faker.lorem.words(5),
       body: faker.lorem.paragraphs(),
       date: new Date(),
       userId: user2.id,
@@ -148,7 +148,7 @@ async function seed() {
   });
   await prisma.boardEntry.create({
     data: {
-      title: faker.lorem.text(),
+      title: faker.lorem.words(5),
       body: faker.lorem.paragraphs(),
       date: new Date(),
       userId: user2.id,
@@ -156,7 +156,7 @@ async function seed() {
   });
   await prisma.boardEntry.create({
     data: {
-      title: faker.lorem.text(),
+      title: faker.lorem.words(5),
       body: faker.lorem.paragraphs(),
       date: new Date(),
       userId: user2.id,
@@ -164,7 +164,7 @@ async function seed() {
   });
   await prisma.boardEntry.create({
     data: {
-      title: faker.lorem.text(),
+      title: faker.lorem.words(5),
       body: faker.lorem.paragraphs(),
       date: new Date(),
       userId: user2.id,
@@ -172,7 +172,7 @@ async function seed() {
   });
   await prisma.boardEntry.create({
     data: {
-      title: faker.lorem.text(),
+      title: faker.lorem.words(5),
       body: faker.lorem.paragraphs(),
       date: new Date(),
       userId: user2.id,
