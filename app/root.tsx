@@ -78,6 +78,7 @@ const Document = withEmotionCache(
           <ScrollRestoration />
           <Scripts />
           <LiveReload />
+          <ColorModeScript initialColorMode={theme.config.initialColorMode} />
         </body>
       </html>
     );
