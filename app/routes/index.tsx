@@ -6,6 +6,7 @@ import { getUserId } from "~/session.server";
 import type { LoaderFunction } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
 import { ROUTES } from "~/constants";
+import RemixLink from "~/components/RemixLink";
 
 // Redirect logged-in users
 export const loader: LoaderFunction = async ({ request }) => {
@@ -47,15 +48,18 @@ export default function RootIndexPage() {
             alignSelf={"center"}
             position={"relative"}
           >
-            <Button
-              colorScheme={"teal"}
-              rounded={"full"}
-              size={"lg"}
-              py={6}
-              px={8}
-            >
-              Get Started
-            </Button>
+            <RemixLink to={ROUTES.JOIN}>
+              <Button
+                as="span"
+                colorScheme={"teal"}
+                rounded={"full"}
+                size={"lg"}
+                py={6}
+                px={8}
+              >
+                Get Started
+              </Button>
+            </RemixLink>
             <Button variant={"link"} colorScheme={"blue"} size={"sm"}>
               Learn more
             </Button>
