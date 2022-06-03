@@ -102,14 +102,7 @@ export default function NewBoardEntryPage() {
               </FormControl>
             </Stack>
 
-            <Button
-              type="submit"
-              bg={"teal.400"}
-              color={"white"}
-              _hover={{
-                bg: "teal.500",
-              }}
-            >
+            <Button type="submit" colorScheme="teal">
               Create new entry
             </Button>
           </Stack>
