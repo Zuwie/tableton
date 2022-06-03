@@ -97,6 +97,7 @@ export default function MobileNav({ onOpen, ...rest }: MobileProps) {
             <MenuList
               bg={useColorModeValue("white", "gray.900")}
               borderColor={useColorModeValue("gray.200", "gray.700")}
+              py={0}
             >
               <MenuItem>
                 <RemixLink to={ROUTES.PROFILE}>Profile</RemixLink>
@@ -105,7 +106,7 @@ export default function MobileNav({ onOpen, ...rest }: MobileProps) {
                 <RemixLink to={ROUTES.SETTINGS}>Settings</RemixLink>
               </MenuItem>
               <MenuDivider />
-              <MenuItem>
+              <MenuItem as="div">
                 <LogoutButton />
               </MenuItem>
             </MenuList>
