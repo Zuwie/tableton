@@ -30,10 +30,12 @@ model Password {
 
 model BoardEntry {
   id    String @id @default(cuid())
+
   title String
   body  String
-  date  DateTime @default(now())
+  gameSystem String
 
+  date  DateTime @default(now())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

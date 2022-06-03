@@ -11,7 +11,11 @@ import {
   Grid,
   GridItem,
   Heading,
+  HStack,
+  Stack,
+  Tag,
   Text,
+  useColorModeValue,
 } from "@chakra-ui/react";
 
 type LoaderData = {
@@ -26,6 +30,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 export default function DashboardIndexPage() {
   const loader = useLoaderData() as LoaderData;
+  const backGround = useColorModeValue("white", "gray.700");
 
   return (
     <>
@@ -45,20 +50,32 @@ export default function DashboardIndexPage() {
           {loader.userBoardEntries.map((entry) => (
             <GridItem
               w="100%"
-              bg="white"
+              rounded={"lg"}
+              boxShadow={"lg"}
+              bg={backGround}
               key={entry.id}
               maxW="sm"
-              borderWidth="3px"
-              borderRadius="lg"
             >
               <NavLink to={entry.id}>
-                <Box p="6">
-                  <Heading as="h3">{entry.title}</Heading>
+                <Box p="6" h="100%" pos="relative">
                   <Avatar
                     size={"sm"}
                     src={entry.user.avatar || undefined}
                     name={`${entry.user.firstName} ${entry.user.lastName}`}
+                    pos="absolute"
+                    top={6}
+                    right={6}
                   />
+
+                  <Stack spacing={4}>
+                    <Heading as="h3" pr={10}>
+                      {entry.title}
+                    </Heading>
+
+                    <HStack spacing={4}>
+                      <Tag mt="auto">{entry.gameSystem}</Tag>
+                    </HStack>
+                  </Stack>
                 </Box>
               </NavLink>
             </GridItem>

@@ -4,7 +4,7 @@ import { Form, NavLink, useActionData } from "@remix-run/react";
 import * as React from "react";
 import { requireUserId } from "~/session.server";
 import { createBoardEntry } from "~/models/board.server";
-import { ROUTES } from "~/constants";
+import { GAME_SYSTEM, ROUTES } from "~/constants";
 import {
   Box,
   Button,
@@ -12,6 +12,7 @@ import {
   FormErrorMessage,
   FormLabel,
   Input,
+  Select,
   Stack,
   Textarea,
   useColorModeValue,
@@ -21,6 +22,7 @@ type ActionData = {
   errors?: {
     title?: string;
     body?: string;
+    gameSystem?: string;
   };
 };
 
@@ -30,6 +32,7 @@ export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
   const title = formData.get("title");
   const body = formData.get("body");
+  const gameSystem = formData.get("gameSystem");
 
   if (typeof title !== "string" || title.length === 0) {
     return json<ActionData>(
@@ -45,7 +48,19 @@ export const action: ActionFunction = async ({ request }) => {
     );
   }
 
-  const boardEntry = await createBoardEntry({ title, body, userId });
+  if (typeof gameSystem !== "string" || gameSystem.length === 0) {
+    return json<ActionData>(
+      { errors: { body: "GameSystem is required" } },
+      { status: 400 }
+    );
+  }
+
+  const boardEntry = await createBoardEntry({
+    title,
+    body,
+    gameSystem,
+    userId,
+  });
 
   return redirect(`/dashboard/${boardEntry.id}`);
 };
@@ -92,6 +107,14 @@ export default function NewBoardEntryPage() {
                   <FormErrorMessage>{actionData.errors.title}</FormErrorMessage>
                 )}
               </FormControl>
+
+              <Select placeholder="Game System" name="gameSystem" isRequired>
+                {Object.entries(GAME_SYSTEM).map(([key, value]) => (
+                  <option key={key} value={key}>
+                    {value}
+                  </option>
+                ))}
+              </Select>
 
               <FormControl isRequired isInvalid={!!actionData?.errors?.body}>
                 <FormLabel>Body</FormLabel>
