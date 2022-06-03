@@ -2,8 +2,19 @@ import Header from "~/components/Header";
 import { Box, Button, Container, Heading, Stack, Text } from "@chakra-ui/react";
 import LandingFeatures from "~/components/LandingFeatures";
 import Footer from "~/components/Footer";
+import { getUserId } from "~/session.server";
+import type { LoaderFunction } from "@remix-run/node";
+import { redirect } from "@remix-run/node";
+import { ROUTES } from "~/constants";
 
-export default function LoginIndexPage() {
+// Redirect logged-in users
+export const loader: LoaderFunction = async ({ request }) => {
+  const userId = await getUserId(request);
+  if (userId) throw redirect(ROUTES.DASHBOARD);
+  return null;
+};
+
+export default function RootIndexPage() {
   return (
     <>
       <Header />
