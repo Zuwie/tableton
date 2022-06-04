@@ -2,7 +2,7 @@ const { execSync } = require("child_process");
 const crypto = require("crypto");
 const fs = require("fs/promises");
 const path = require("path");
-const inquirer = require("inquirer");
+// const inquirer = require("inquirer");
 
 const toml = require("@iarna/toml");
 const sort = require("sort-package-json");
@@ -95,23 +95,23 @@ Start development with \`npm run dev\`
   );
 }
 
-async function askSetupQuestions({ rootDirectory }) {
-  const answers = await inquirer.prompt([
-    {
-      name: "validate",
-      type: "confirm",
-      default: false,
-      message:
-        "Do you want to run the build/tests/etc to verify things are setup properly",
-    },
-  ]);
-
-  if (answers.validate) {
-    console.log(
-      `Running the validate script to make sure everything was set up properly`
-    );
-    execSync(`npm run validate`, { stdio: "inherit", cwd: rootDirectory });
-  }
-}
+// async function askSetupQuestions({ rootDirectory }) {
+//   const answers = await inquirer.prompt([
+//     {
+//       name: "validate",
+//       type: "confirm",
+//       default: false,
+//       message:
+//         "Do you want to run the build/tests/etc to verify things are setup properly",
+//     },
+//   ]);
+//
+//   if (answers.validate) {
+//     console.log(
+//       `Running the validate script to make sure everything was set up properly`
+//     );
+//     execSync(`npm run validate`, { stdio: "inherit", cwd: rootDirectory });
+//   }
+// }
 
 module.exports = main;

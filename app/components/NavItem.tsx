@@ -1,5 +1,5 @@
 import type { FlexProps } from "@chakra-ui/react";
-import { Flex, Icon, Link, Text } from "@chakra-ui/react";
+import { Flex, Icon, Text } from "@chakra-ui/react";
 import type { ReactText } from "react";
 import React from "react";
 import type { IconType } from "react-icons";

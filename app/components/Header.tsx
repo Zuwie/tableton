@@ -22,13 +22,10 @@ import {
   ChevronRightIcon,
 } from "@chakra-ui/icons";
 import { ROUTES } from "~/constants";
-import { useOptionalUser } from "~/utils";
-import LogoutButton from "~/components/LogoutButton";
 import { NavLink } from "@remix-run/react";
 
 export default function Header() {
   const { isOpen, onToggle } = useDisclosure();
-  const user = useOptionalUser();
 
   return (
     <Box>

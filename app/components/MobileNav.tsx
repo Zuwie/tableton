@@ -18,7 +18,6 @@ import { useUser } from "~/utils";
 import { FiBell, FiChevronDown, FiMenu } from "react-icons/fi";
 import RemixLink from "~/components/RemixLink";
 import { ROUTES } from "~/constants";
-import LogoutButton from "~/components/LogoutButton";
 import React from "react";
 import { Form } from "@remix-run/react";
 
