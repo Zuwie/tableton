@@ -79,33 +79,27 @@ export default function Header() {
           direction={"row"}
           spacing={6}
         >
-          {user ? (
-            <LogoutButton />
-          ) : (
-            <>
-              <Button
-                as={"a"}
-                href={ROUTES.LOGIN}
-                fontWeight={400}
-                variant={"link"}
-              >
-                Sign In
-              </Button>
-              <Button
-                as={"a"}
-                href={ROUTES.JOIN}
-                display={{ base: "none", md: "inline-flex" }}
-                fontWeight={600}
-                color={"white"}
-                bg={"green.600"}
-                _hover={{
-                  bg: "green.700",
-                }}
-              >
-                Sign Up
-              </Button>
-            </>
-          )}
+          <Button
+            as={"a"}
+            href={ROUTES.LOGIN}
+            fontWeight={400}
+            variant={"link"}
+          >
+            Sign In
+          </Button>
+          <Button
+            as={"a"}
+            href={ROUTES.JOIN}
+            display={{ base: "none", md: "inline-flex" }}
+            fontWeight={600}
+            color={"white"}
+            bg={"teal.600"}
+            _hover={{
+              bg: "teal.700",
+            }}
+          >
+            Sign Up
+          </Button>
         </Stack>
       </Flex>
 
@@ -282,6 +276,6 @@ const NAV_ITEMS: Array<NavItem> = [
   },
   {
     label: "Find players",
-    href: ROUTES.ACCOUNT,
+    href: ROUTES.SETTINGS,
   },
 ];

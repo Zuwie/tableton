@@ -2,8 +2,20 @@ import Header from "~/components/Header";
 import { Box, Button, Container, Heading, Stack, Text } from "@chakra-ui/react";
 import LandingFeatures from "~/components/LandingFeatures";
 import Footer from "~/components/Footer";
+import { getUserId } from "~/session.server";
+import type { LoaderFunction } from "@remix-run/node";
+import { redirect } from "@remix-run/node";
+import { ROUTES } from "~/constants";
+import RemixLink from "~/components/RemixLink";
 
-export default function LoginIndexPage() {
+// Redirect logged-in users
+export const loader: LoaderFunction = async ({ request }) => {
+  const userId = await getUserId(request);
+  if (userId) throw redirect(ROUTES.DASHBOARD);
+  return null;
+};
+
+export default function RootIndexPage() {
   return (
     <>
       <Header />
@@ -20,7 +32,7 @@ export default function LoginIndexPage() {
             lineHeight={"110%"}
           >
             Connect with <br />
-            <Text as={"span"} color={"green.400"}>
+            <Text as={"span"} color={"teal.400"}>
               local players
             </Text>
           </Heading>
@@ -31,24 +43,23 @@ export default function LoginIndexPage() {
           </Text>
           <Stack
             direction={"column"}
-            spacing={3}
+            spacing={4}
             align={"center"}
             alignSelf={"center"}
             position={"relative"}
           >
-            <Button
-              colorScheme={"green"}
-              bg={"green.400"}
-              rounded={"full"}
-              size={"lg"}
-              py={6}
-              px={8}
-              _hover={{
-                bg: "green.500",
-              }}
-            >
-              Get Started
-            </Button>
+            <RemixLink to={ROUTES.JOIN}>
+              <Button
+                as="span"
+                colorScheme={"teal"}
+                rounded={"full"}
+                size={"lg"}
+                py={6}
+                px={8}
+              >
+                Get Started
+              </Button>
+            </RemixLink>
             <Button variant={"link"} colorScheme={"blue"} size={"sm"}>
               Learn more
             </Button>

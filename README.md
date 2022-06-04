@@ -12,7 +12,7 @@ Find tabletop-games within your area.
 - Email/Password Authentication
   with [cookie-based sessions](https://remix.run/docs/en/v1/api/remix#createcookiesessionstorage)
 - Database ORM with [Prisma](https://prisma.io)
-- Styling with [Tailwind](https://tailwindcss.com/)
+- Styling with [Chakra-UI](https://chakra-ui.com/)
 - End-to-end testing with [Cypress](https://cypress.io)
 - Local third party request mocking with [MSW](https://mswjs.io)
 - Unit testing with [Vitest](https://vitest.dev) and [Testing Library](https://testing-library.com)
@@ -45,7 +45,7 @@ The database seed script creates a new user with some data you can use to get st
 
 - creating users, and logging in and out [./app/models/user.server.ts](./app/models/user.server.ts)
 - user sessions, and verifying them [./app/session.server.ts](./app/session.server.ts)
-- creating, and deleting notes [./app/models/note.server.ts](./app/models/note.server.ts)
+- creating, and deleting board-entries [./app/models/note.server.ts](./app/models/board.server.ts)
 
 ## Deployment
 
@@ -69,8 +69,8 @@ Prior to your first deployment, you'll need to do a few things:
 - Create two apps on Fly, one for staging and one for production:
 
   ```sh
-  fly create indie-stack-template
-  fly create indie-stack-template-staging
+  fly create tableton
+  fly create tableton-staging
   ```
 
 - Add a `FLY_API_TOKEN` to your GitHub repo. To do this, go to your user settings on Fly and create a
@@ -81,8 +81,8 @@ Prior to your first deployment, you'll need to do a few things:
 - Add a `SESSION_SECRET` to your fly app secrets, to do this you can run the following commands:
 
   ```sh
-  fly secrets set SESSION_SECRET=$(openssl rand -hex 32) --app indie-stack-template
-  fly secrets set SESSION_SECRET=$(openssl rand -hex 32) --app indie-stack-template-staging
+  fly secrets set SESSION_SECRET=$(openssl rand -hex 32) --app tableton
+  fly secrets set SESSION_SECRET=$(openssl rand -hex 32) --app tableton-staging
   ```
 
   If you don't have openssl installed, you can also use [1password](https://1password.com/password-generator/) to
@@ -92,8 +92,8 @@ Prior to your first deployment, you'll need to do a few things:
   following:
 
   ```sh
-  fly volumes create data --size 1 --app indie-stack-template
-  fly volumes create data --size 1 --app indie-stack-template-staging
+  fly volumes create data --size 1 --app tableton
+  fly volumes create data --size 1 --app tableton-staging
   ```
 
 Now that everything is set up you can commit and push your changes to your repo. Every commit to your `main` branch will

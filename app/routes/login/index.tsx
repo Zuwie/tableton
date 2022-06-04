@@ -187,14 +187,7 @@ export default function LoginPage() {
                       Forgot password?
                     </Link>
                   </Stack>
-                  <Button
-                    type="submit"
-                    bg={"blue.400"}
-                    color={"white"}
-                    _hover={{
-                      bg: "blue.500",
-                    }}
-                  >
+                  <Button type="submit" colorScheme="teal">
                     Sign in
                   </Button>
                 </Stack>

@@ -3,6 +3,20 @@ import type { LoaderFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { getBoardEntryListItems } from "~/models/board.server";
 import { requireUserId } from "~/session.server";
+import {
+  Avatar,
+  Box,
+  Button,
+  Flex,
+  Grid,
+  GridItem,
+  Heading,
+  HStack,
+  Stack,
+  Tag,
+  Text,
+  useColorModeValue,
+} from "@chakra-ui/react";
 
 type LoaderData = {
   userBoardEntries: Awaited<ReturnType<typeof getBoardEntryListItems>>;
@@ -16,28 +30,58 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 export default function DashboardIndexPage() {
   const loader = useLoaderData() as LoaderData;
+  const backGround = useColorModeValue("white", "gray.700");
 
   return (
-    <div>
-      <h1>This is the board</h1>
+    <>
+      <Flex justifyContent="space-between" mt="10" mb="20">
+        <Heading as="h1">Find matches</Heading>
+        <NavLink to="new">
+          <Button as={"span"} colorScheme="teal">
+            + New Entry
+          </Button>
+        </NavLink>
+      </Flex>
+
       {loader.userBoardEntries.length === 0 ? (
-        <p className="p-4">No board-entries yet</p>
+        <Text>No board-entries yet</Text>
       ) : (
-        <ol>
+        <Grid templateColumns="repeat(3, 1fr)" gap={6}>
           {loader.userBoardEntries.map((entry) => (
-            <li key={entry.id}>
-              <NavLink
-                to={entry.id}
-                className={({ isActive }) =>
-                  `block border-b p-4 text-xl ${isActive ? "bg-white" : ""}`
-                }
-              >
-                {entry.title}
+            <GridItem
+              w="100%"
+              rounded={"lg"}
+              boxShadow={"lg"}
+              bg={backGround}
+              key={entry.id}
+              maxW="sm"
+            >
+              <NavLink to={entry.id}>
+                <Box p="6" h="100%" pos="relative">
+                  <Avatar
+                    size={"sm"}
+                    src={entry.user.avatar || undefined}
+                    name={`${entry.user.firstName} ${entry.user.lastName}`}
+                    pos="absolute"
+                    top={6}
+                    right={6}
+                  />
+
+                  <Stack spacing={4}>
+                    <Heading as="h3" pr={10}>
+                      {entry.title}
+                    </Heading>
+
+                    <HStack spacing={4}>
+                      <Tag mt="auto">{entry.gameSystem}</Tag>
+                    </HStack>
+                  </Stack>
+                </Box>
               </NavLink>
-            </li>
+            </GridItem>
           ))}
-        </ol>
+        </Grid>
       )}
-    </div>
+    </>
   );
 }

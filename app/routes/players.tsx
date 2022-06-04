@@ -4,10 +4,10 @@ import type { MetaFunction } from "@remix-run/node";
 
 export const meta: MetaFunction = () => {
   return {
-    title: "Dashboard",
+    title: "Players",
   };
 };
 
-export default function BoardPage() {
+export default function Players() {
   return <UserPanel children={<Outlet />} />;
 }

@@ -11,29 +11,31 @@ export function getBoardEntry({
   userId: User["id"];
 }) {
   return prisma.boardEntry.findFirst({
-    where: { id, userId },
+    where: { id },
   });
 }
 
 export function getBoardEntryListItems({ userId }: { userId: User["id"] }) {
   return prisma.boardEntry.findMany({
-    where: { userId },
-    select: { id: true, title: true },
+    // where: { userId },
+    select: { id: true, title: true, gameSystem: true, user: true },
     orderBy: { updatedAt: "desc" },
   });
 }
 
 export function createBoardEntry({
-  body,
   title,
+  body,
+  gameSystem,
   userId,
-}: Pick<BoardEntry, "body" | "title"> & {
+}: Pick<BoardEntry, "body" | "title" | "gameSystem"> & {
   userId: User["id"];
 }) {
   return prisma.boardEntry.create({
     data: {
       title,
       body,
+      gameSystem,
       user: {
         connect: {
           id: userId,
