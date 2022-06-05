@@ -33,6 +33,7 @@ export const action: ActionFunction = async ({ request }) => {
   const title = formData.get("title");
   const body = formData.get("body");
   const gameSystem = formData.get("gameSystem");
+  const dateFormat = formData.get("date");
 
   if (typeof title !== "string" || title.length === 0) {
     return json<ActionData>(
@@ -55,10 +56,20 @@ export const action: ActionFunction = async ({ request }) => {
     );
   }
 
+  if (typeof dateFormat !== "string" || dateFormat.length === 0) {
+    return json<ActionData>(
+      { errors: { body: "Date is required" } },
+      { status: 400 }
+    );
+  }
+
+  const date = new Date(dateFormat);
+
   const boardEntry = await createBoardEntry({
     title,
     body,
     gameSystem,
+    date,
     userId,
   });
 
@@ -115,6 +126,8 @@ export default function NewBoardEntryPage() {
                   </option>
                 ))}
               </Select>
+
+              <input type="date" name="date" />
 
               <FormControl isRequired isInvalid={!!actionData?.errors?.body}>
                 <FormLabel>Body</FormLabel>

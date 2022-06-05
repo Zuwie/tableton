@@ -17,6 +17,7 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { GAME_SYSTEM } from "~/constants";
 
 type LoaderData = {
   userBoardEntries: Awaited<ReturnType<typeof getBoardEntryListItems>>;
@@ -73,7 +74,14 @@ export default function DashboardIndexPage() {
                     </Heading>
 
                     <HStack spacing={4}>
-                      <Tag mt="auto">{entry.gameSystem}</Tag>
+                      <Tag>
+                        {
+                          GAME_SYSTEM[
+                            entry.gameSystem as keyof typeof GAME_SYSTEM
+                          ]
+                        }
+                      </Tag>
+                      <Tag>{new Date(entry.date).toLocaleDateString()}</Tag>
                     </HStack>
                   </Stack>
                 </Box>

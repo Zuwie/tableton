@@ -18,7 +18,13 @@ export function getBoardEntry({
 export function getBoardEntryListItems({ userId }: { userId: User["id"] }) {
   return prisma.boardEntry.findMany({
     // where: { userId },
-    select: { id: true, title: true, gameSystem: true, user: true },
+    select: {
+      id: true,
+      title: true,
+      gameSystem: true,
+      date: true,
+      user: true,
+    },
     orderBy: { updatedAt: "desc" },
   });
 }
@@ -27,8 +33,9 @@ export function createBoardEntry({
   title,
   body,
   gameSystem,
+  date,
   userId,
-}: Pick<BoardEntry, "body" | "title" | "gameSystem"> & {
+}: Pick<BoardEntry, "body" | "title" | "gameSystem" | "date"> & {
   userId: User["id"];
 }) {
   return prisma.boardEntry.create({
@@ -36,6 +43,7 @@ export function createBoardEntry({
       title,
       body,
       gameSystem,
+      date,
       user: {
         connect: {
           id: userId,

@@ -6,14 +6,16 @@ import invariant from "tiny-invariant";
 import { requireUserId } from "~/session.server";
 import type { BoardEntry } from "@prisma/client";
 import { deleteBoardEntry, getBoardEntry } from "~/models/board.server";
-import { ROUTES } from "~/constants";
+import { GAME_SYSTEM, ROUTES } from "~/constants";
 import * as React from "react";
 import {
   Box,
   Button,
   Divider,
   Heading,
+  HStack,
   Stack,
+  Tag,
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
@@ -67,6 +69,17 @@ export default function BoardEntryDetailsPage() {
         px={6}
       >
         <Stack spacing={10}>
+          <HStack spacing={4}>
+            <Tag>
+              {
+                GAME_SYSTEM[
+                  data.boardEntry.gameSystem as keyof typeof GAME_SYSTEM
+                ]
+              }
+            </Tag>
+            <Tag>{new Date(data.boardEntry.date).toLocaleDateString()}</Tag>
+          </HStack>
+
           <Heading as="h1">{data.boardEntry.title}</Heading>
 
           <Text>{data.boardEntry.body}</Text>
