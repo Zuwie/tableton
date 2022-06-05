@@ -47,15 +47,13 @@ export default function DashboardIndexPage() {
       {loader.userBoardEntries.length === 0 ? (
         <Text>No board-entries yet</Text>
       ) : (
-        <Grid templateColumns="repeat(3, 1fr)" gap={6}>
+        <Grid templateColumns="repeat(auto-fit, minmax(20rem, 1fr))" gap={6}>
           {loader.userBoardEntries.map((entry) => (
             <GridItem
-              w="100%"
               rounded={"lg"}
               boxShadow={"lg"}
               bg={backGround}
               key={entry.id}
-              maxW="sm"
             >
               <NavLink to={entry.id}>
                 <Box p="6" h="100%" pos="relative">
