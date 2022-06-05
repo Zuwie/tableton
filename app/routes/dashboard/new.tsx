@@ -11,6 +11,7 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
+  HStack,
   Input,
   Select,
   Stack,
@@ -119,18 +120,43 @@ export default function NewBoardEntryPage() {
                 )}
               </FormControl>
 
-              <Select placeholder="Game System" name="gameSystem" isRequired>
-                {Object.entries(GAME_SYSTEM).map(([key, value]) => (
-                  <option key={key} value={key}>
-                    {value}
-                  </option>
-                ))}
-              </Select>
+              <FormControl
+                isRequired
+                isInvalid={!!actionData?.errors?.gameSystem}
+              >
+                <FormLabel>Select the game you want to play</FormLabel>
+                <Select name="gameSystem">
+                  {Object.entries(GAME_SYSTEM).map(([key, value]) => (
+                    <option key={key} value={key}>
+                      {value}
+                    </option>
+                  ))}
+                </Select>
+                {actionData?.errors?.gameSystem && (
+                  <FormErrorMessage>
+                    {actionData.errors.gameSystem}
+                  </FormErrorMessage>
+                )}
+              </FormControl>
 
-              <input type="date" name="date" />
+              <HStack>
+                <FormControl isRequired>
+                  <FormLabel>Date</FormLabel>
+                  <Input type="date" name="date" />
+                </FormControl>
+                <FormControl isRequired>
+                  <FormLabel>Time</FormLabel>
+                  <Input
+                    type="time"
+                    name="time"
+                    step={900}
+                    pattern="[0-9]{2}:[0-9]{2}"
+                  />
+                </FormControl>
+              </HStack>
 
               <FormControl isRequired isInvalid={!!actionData?.errors?.body}>
-                <FormLabel>Body</FormLabel>
+                <FormLabel>Add any additional information here</FormLabel>
                 <Textarea ref={bodyRef} name="body" />
                 {actionData?.errors?.body && (
                   <FormErrorMessage>{actionData.errors.body}</FormErrorMessage>
