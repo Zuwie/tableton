@@ -16,7 +16,9 @@ async function seed() {
 
   const hashedPassword = await bcrypt.hash("123456", 10);
 
-  const user = await prisma.user.create({
+  const userArray: User[] = [];
+
+  const user1 = await prisma.user.create({
     data: {
       email,
       password: {
@@ -26,19 +28,6 @@ async function seed() {
       },
       firstName: "Rafael",
       lastName: "Seifert",
-      avatar: faker.internet.avatar(),
-    },
-  });
-  const user2 = await prisma.user.create({
-    data: {
-      email: faker.internet.email(),
-      password: {
-        create: {
-          hash: faker.internet.password(),
-        },
-      },
-      firstName: faker.internet.userName(),
-      lastName: faker.internet.userName(),
       avatar: faker.internet.avatar(),
     },
   });
@@ -59,39 +48,29 @@ async function seed() {
     };
   }
 
-  function fakeBoardEntryData(user: User) {
-    const gameSystems = Object.values(GAME_SYSTEM);
+  function getFakeBoardEntryData(user: User) {
+    const gameSystems = Object.keys(GAME_SYSTEM);
     return {
       data: {
         title: faker.commerce.productName(),
         body: faker.commerce.productDescription(),
-        date: new Date(),
+        date: faker.date.future(),
         gameSystem: gameSystems[Math.floor(Math.random() * gameSystems.length)],
         userId: user.id,
       },
     };
   }
 
-  await prisma.user.create(getFakeUser());
-  await prisma.user.create(getFakeUser());
-  await prisma.user.create(getFakeUser());
-  await prisma.user.create(getFakeUser());
-  await prisma.user.create(getFakeUser());
+  for (let i = 0; i < 15; i++) {
+    const fakeUser = prisma.user.create(getFakeUser());
+    await fakeUser;
+    userArray.push(await fakeUser);
+  }
 
-  // BOARD
-  await prisma.boardEntry.create(fakeBoardEntryData(user));
-  await prisma.boardEntry.create(fakeBoardEntryData(user));
-  await prisma.boardEntry.create(fakeBoardEntryData(user));
-  await prisma.boardEntry.create(fakeBoardEntryData(user));
-  await prisma.boardEntry.create(fakeBoardEntryData(user));
-  await prisma.boardEntry.create(fakeBoardEntryData(user));
-
-  await prisma.boardEntry.create(fakeBoardEntryData(user2));
-  await prisma.boardEntry.create(fakeBoardEntryData(user2));
-  await prisma.boardEntry.create(fakeBoardEntryData(user2));
-  await prisma.boardEntry.create(fakeBoardEntryData(user2));
-  await prisma.boardEntry.create(fakeBoardEntryData(user2));
-  await prisma.boardEntry.create(fakeBoardEntryData(user2));
+  for (let i = 0; i < 30; i++) {
+    const randomUser = userArray[Math.floor(Math.random() * userArray.length)];
+    await prisma.boardEntry.create(getFakeBoardEntryData(randomUser));
+  }
 
   console.log(`Database has been seeded. 🌱`);
 }
