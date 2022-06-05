@@ -52,6 +52,12 @@ The database seed script creates a new user with some data you can use to get st
 This Remix Stack comes with two GitHub Actions that handle automatically deploying your app to production and staging
 environments.
 
+If application is deployed and DB had changes run:
+
+  ```sh
+  prisma migrate {name}
+  ```
+
 Prior to your first deployment, you'll need to do a few things:
 
 - [Install Fly](https://fly.io/docs/getting-started/installing-flyctl/)
