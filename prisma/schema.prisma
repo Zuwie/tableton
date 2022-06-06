@@ -13,11 +13,11 @@ model User {
   firstName String
   lastName  String
   avatar String?
+  password Password?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  password Password?
   boardEntries    BoardEntry[]
 }
 
