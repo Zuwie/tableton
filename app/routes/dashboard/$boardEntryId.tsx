@@ -14,6 +14,7 @@ import {
   Divider,
   Heading,
   HStack,
+  Spacer,
   Stack,
   Tag,
   Text,
@@ -77,6 +78,7 @@ export default function BoardEntryDetailsPage() {
                 ]
               }
             </Tag>
+            <Spacer />
             <Tag>{new Date(data.boardEntry.date).toLocaleDateString()}</Tag>
             <Tag>
               {new Date(data.boardEntry.date).toLocaleTimeString([], {
