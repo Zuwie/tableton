@@ -24,6 +24,7 @@ type ActionData = {
     title?: string;
     body?: string;
     gameSystem?: string;
+    location?: string;
     date?: string;
   };
 };
@@ -35,6 +36,7 @@ export const action: ActionFunction = async ({ request }) => {
   const title = formData.get("title");
   const body = formData.get("body");
   const gameSystem = formData.get("gameSystem");
+  const location = formData.get("location");
   const dateFormat = formData.get("date");
   const time = formData.get("time");
 
@@ -59,6 +61,13 @@ export const action: ActionFunction = async ({ request }) => {
     );
   }
 
+  if (typeof location !== "string" || location.length === 0) {
+    return json<ActionData>(
+      { errors: { body: "Location is required" } },
+      { status: 400 }
+    );
+  }
+
   if (typeof dateFormat !== "string" || dateFormat.length === 0) {
     return json<ActionData>(
       { errors: { body: "Date is required" } },
@@ -79,6 +88,7 @@ export const action: ActionFunction = async ({ request }) => {
     title,
     body,
     gameSystem,
+    location,
     date,
     userId,
   });
@@ -90,6 +100,7 @@ export default function NewBoardEntryPage() {
   const actionData = useActionData() as ActionData;
   const titleRef = React.useRef<HTMLInputElement>(null);
   const bodyRef = React.useRef<HTMLTextAreaElement>(null);
+  const locationRef = React.useRef<HTMLInputElement>(null);
 
   React.useEffect(() => {
     if (actionData?.errors?.title) {
@@ -158,6 +169,19 @@ export default function NewBoardEntryPage() {
                   <Input type="time" name="time" pattern="[0-9]{2}:[0-9]{2}" />
                 </FormControl>
               </HStack>
+
+              <FormControl
+                isRequired
+                isInvalid={!!actionData?.errors?.location}
+              >
+                <FormLabel>Location</FormLabel>
+                <Input ref={locationRef} name="location" />
+                {actionData?.errors?.location && (
+                  <FormErrorMessage>
+                    {actionData.errors.location}
+                  </FormErrorMessage>
+                )}
+              </FormControl>
 
               <FormControl isRequired isInvalid={!!actionData?.errors?.body}>
                 <FormLabel>Add any additional information here</FormLabel>

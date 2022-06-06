@@ -33,6 +33,7 @@ export function createBoardEntry({
   title,
   body,
   gameSystem,
+  location,
   date,
   userId,
 }: Pick<BoardEntry, "body" | "title" | "gameSystem" | "location" | "date"> & {
