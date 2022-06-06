@@ -4,7 +4,6 @@ import { Form, NavLink, useCatch, useLoaderData } from "@remix-run/react";
 import invariant from "tiny-invariant";
 
 import { requireUserId } from "~/session.server";
-import type { BoardEntry } from "@prisma/client";
 import { deleteBoardEntry, getBoardEntry } from "~/models/board.server";
 import { GAME_SYSTEM, ROUTES } from "~/constants";
 import * as React from "react";
@@ -24,7 +23,7 @@ import {
 import { useUser } from "~/utils";
 
 type LoaderData = {
-  boardEntry: BoardEntry;
+  boardEntry: Awaited<ReturnType<typeof getBoardEntry>>;
 };
 
 export const loader: LoaderFunction = async ({ request, params }) => {
@@ -76,42 +75,47 @@ export default function BoardEntryDetailsPage() {
               <Tag>
                 {
                   GAME_SYSTEM[
-                    data.boardEntry.gameSystem as keyof typeof GAME_SYSTEM
+                    data.boardEntry?.gameSystem as keyof typeof GAME_SYSTEM
                   ]
                 }
               </Tag>
               <Spacer />
-              <Tag>{new Date(data.boardEntry.date).toLocaleDateString()}</Tag>
               <Tag>
-                {new Date(data.boardEntry.date).toLocaleTimeString([], {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })}
+                {new Date(data.boardEntry?.date as Date).toLocaleDateString()}
+              </Tag>
+              <Tag>
+                {new Date(data.boardEntry?.date as Date).toLocaleTimeString(
+                  [],
+                  {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  }
+                )}
               </Tag>
             </HStack>
             <HStack>
               <Spacer />
-              <Tag>{data.boardEntry.location}</Tag>
+              <Tag>{data.boardEntry?.location}</Tag>
             </HStack>
           </Stack>
 
           <Box pos="relative">
             <Heading as="h1" pr={10}>
-              {data.boardEntry.title}
+              {data.boardEntry?.title}
             </Heading>
             <Avatar
               size={"sm"}
-              src={data.boardEntry.user.avatar || undefined}
-              name={`${data.boardEntry.user.firstName} ${data.boardEntry.user.lastName}`}
+              src={data.boardEntry?.user.avatar || undefined}
+              name={`${data.boardEntry?.user.firstName} ${data.boardEntry?.user.lastName}`}
               pos="absolute"
               top={0}
               right={0}
             />
           </Box>
 
-          <Text>{data.boardEntry.body}</Text>
+          <Text>{data.boardEntry?.body}</Text>
 
-          {id === data.boardEntry.userId && (
+          {id === data.boardEntry?.user.id && (
             <>
               <Divider />
 
