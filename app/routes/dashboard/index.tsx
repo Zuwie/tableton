@@ -18,6 +18,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { GAME_SYSTEM } from "~/constants";
+import * as React from "react";
 
 type LoaderData = {
   userBoardEntries: Awaited<ReturnType<typeof getBoardEntryListItems>>;
@@ -80,6 +81,12 @@ export default function DashboardIndexPage() {
                         }
                       </Tag>
                       <Tag>{new Date(entry.date).toLocaleDateString()}</Tag>
+                      <Tag>
+                        {new Date(entry.date).toLocaleTimeString([], {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
+                      </Tag>
                     </HStack>
                   </Stack>
                 </Box>

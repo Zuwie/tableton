@@ -78,6 +78,12 @@ export default function BoardEntryDetailsPage() {
               }
             </Tag>
             <Tag>{new Date(data.boardEntry.date).toLocaleDateString()}</Tag>
+            <Tag>
+              {new Date(data.boardEntry.date).toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
+            </Tag>
           </HStack>
 
           <Heading as="h1">{data.boardEntry.title}</Heading>

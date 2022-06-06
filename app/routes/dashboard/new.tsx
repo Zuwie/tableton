@@ -24,6 +24,7 @@ type ActionData = {
     title?: string;
     body?: string;
     gameSystem?: string;
+    date?: string;
   };
 };
 
@@ -35,6 +36,7 @@ export const action: ActionFunction = async ({ request }) => {
   const body = formData.get("body");
   const gameSystem = formData.get("gameSystem");
   const dateFormat = formData.get("date");
+  const time = formData.get("time");
 
   if (typeof title !== "string" || title.length === 0) {
     return json<ActionData>(
@@ -64,7 +66,14 @@ export const action: ActionFunction = async ({ request }) => {
     );
   }
 
-  const date = new Date(dateFormat);
+  if (typeof time !== "string" || time.length === 0) {
+    return json<ActionData>(
+      { errors: { body: "Time is required" } },
+      { status: 400 }
+    );
+  }
+
+  const date = new Date(dateFormat + " " + time);
 
   const boardEntry = await createBoardEntry({
     title,
@@ -146,12 +155,7 @@ export default function NewBoardEntryPage() {
                 </FormControl>
                 <FormControl isRequired>
                   <FormLabel>Time</FormLabel>
-                  <Input
-                    type="time"
-                    name="time"
-                    step={900}
-                    pattern="[0-9]{2}:[0-9]{2}"
-                  />
+                  <Input type="time" name="time" pattern="[0-9]{2}:[0-9]{2}" />
                 </FormControl>
               </HStack>
 
