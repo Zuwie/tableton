@@ -15,9 +15,8 @@ export function getBoardEntry({
   });
 }
 
-export function getBoardEntryListItems({ userId }: { userId: User["id"] }) {
+export function getBoardEntryListItems() {
   return prisma.boardEntry.findMany({
-    // where: { userId },
     select: {
       id: true,
       title: true,
