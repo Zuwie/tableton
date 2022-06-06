@@ -12,6 +12,7 @@ import {
   GridItem,
   Heading,
   HStack,
+  Spacer,
   Stack,
   Tag,
   Text,
@@ -67,27 +68,34 @@ export default function DashboardIndexPage() {
                     right={6}
                   />
 
-                  <Stack spacing={4}>
+                  <Stack spacing={4} justifyContent="space-between" h="100%">
                     <Heading as="h3" pr={10}>
                       {entry.title}
                     </Heading>
 
-                    <HStack spacing={4}>
-                      <Tag>
-                        {
-                          GAME_SYSTEM[
-                            entry.gameSystem as keyof typeof GAME_SYSTEM
-                          ]
-                        }
-                      </Tag>
-                      <Tag>{new Date(entry.date).toLocaleDateString()}</Tag>
-                      <Tag>
-                        {new Date(entry.date).toLocaleTimeString([], {
-                          hour: "2-digit",
-                          minute: "2-digit",
-                        })}
-                      </Tag>
-                    </HStack>
+                    <Stack spacing={2}>
+                      <HStack spacing={2}>
+                        <Tag>
+                          {
+                            GAME_SYSTEM[
+                              entry.gameSystem as keyof typeof GAME_SYSTEM
+                            ]
+                          }
+                        </Tag>
+                        <Spacer />
+                        <Tag>{new Date(entry.date).toLocaleDateString()}</Tag>
+                        <Tag>
+                          {new Date(entry.date).toLocaleTimeString([], {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          })}
+                        </Tag>
+                      </HStack>
+                      <HStack>
+                        <Spacer />
+                        <Tag>{entry.location}</Tag>
+                      </HStack>
+                    </Stack>
                   </Stack>
                 </Box>
               </NavLink>

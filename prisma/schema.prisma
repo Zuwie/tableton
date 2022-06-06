@@ -35,6 +35,7 @@ model BoardEntry {
   body  String
 
   gameSystem String
+  location String
   date  DateTime @default(now())
 
   createdAt DateTime @default(now())

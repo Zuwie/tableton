@@ -70,23 +70,29 @@ export default function BoardEntryDetailsPage() {
         px={6}
       >
         <Stack spacing={10}>
-          <HStack spacing={4}>
-            <Tag>
-              {
-                GAME_SYSTEM[
-                  data.boardEntry.gameSystem as keyof typeof GAME_SYSTEM
-                ]
-              }
-            </Tag>
-            <Spacer />
-            <Tag>{new Date(data.boardEntry.date).toLocaleDateString()}</Tag>
-            <Tag>
-              {new Date(data.boardEntry.date).toLocaleTimeString([], {
-                hour: "2-digit",
-                minute: "2-digit",
-              })}
-            </Tag>
-          </HStack>
+          <Stack spacing={2}>
+            <HStack spacing={2}>
+              <Tag>
+                {
+                  GAME_SYSTEM[
+                    data.boardEntry.gameSystem as keyof typeof GAME_SYSTEM
+                  ]
+                }
+              </Tag>
+              <Spacer />
+              <Tag>{new Date(data.boardEntry.date).toLocaleDateString()}</Tag>
+              <Tag>
+                {new Date(data.boardEntry.date).toLocaleTimeString([], {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
+              </Tag>
+            </HStack>
+            <HStack>
+              <Spacer />
+              <Tag>{data.boardEntry.location}</Tag>
+            </HStack>
+          </Stack>
 
           <Heading as="h1">{data.boardEntry.title}</Heading>
 

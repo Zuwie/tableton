@@ -54,8 +54,9 @@ async function seed() {
       data: {
         title: faker.commerce.productName(),
         body: faker.commerce.productDescription(),
-        date: faker.date.future(),
         gameSystem: gameSystems[Math.floor(Math.random() * gameSystems.length)],
+        location: faker.address.city(),
+        date: faker.date.future(),
         userId: user.id,
       },
     };

@@ -21,6 +21,7 @@ export function getBoardEntryListItems() {
       id: true,
       title: true,
       gameSystem: true,
+      location: true,
       date: true,
       user: true,
     },
@@ -34,7 +35,7 @@ export function createBoardEntry({
   gameSystem,
   date,
   userId,
-}: Pick<BoardEntry, "body" | "title" | "gameSystem" | "date"> & {
+}: Pick<BoardEntry, "body" | "title" | "gameSystem" | "location" | "date"> & {
   userId: User["id"];
 }) {
   return prisma.boardEntry.create({
@@ -42,6 +43,7 @@ export function createBoardEntry({
       title,
       body,
       gameSystem,
+      location,
       date,
       user: {
         connect: {
