@@ -12,6 +12,15 @@ export function getBoardEntry({
 }) {
   return prisma.boardEntry.findFirst({
     where: { id },
+    select: {
+      id: true,
+      title: true,
+      body: true,
+      gameSystem: true,
+      location: true,
+      date: true,
+      user: true,
+    },
   });
 }
 

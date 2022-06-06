@@ -58,7 +58,7 @@ export default function DashboardIndexPage() {
               key={entry.id}
             >
               <NavLink to={entry.id}>
-                <Box p="6" h="100%" pos="relative">
+                <Box pos="relative" p="6" h="100%">
                   <Avatar
                     size={"sm"}
                     src={entry.user.avatar || undefined}

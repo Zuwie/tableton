@@ -9,6 +9,7 @@ import { deleteBoardEntry, getBoardEntry } from "~/models/board.server";
 import { GAME_SYSTEM, ROUTES } from "~/constants";
 import * as React from "react";
 import {
+  Avatar,
   Box,
   Button,
   Divider,
@@ -94,7 +95,19 @@ export default function BoardEntryDetailsPage() {
             </HStack>
           </Stack>
 
-          <Heading as="h1">{data.boardEntry.title}</Heading>
+          <Box pos="relative">
+            <Heading as="h1" pr={10}>
+              {data.boardEntry.title}
+            </Heading>
+            <Avatar
+              size={"sm"}
+              src={data.boardEntry.user.avatar || undefined}
+              name={`${data.boardEntry.user.firstName} ${data.boardEntry.user.lastName}`}
+              pos="absolute"
+              top={0}
+              right={0}
+            />
+          </Box>
 
           <Text>{data.boardEntry.body}</Text>
 
