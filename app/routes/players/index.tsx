@@ -1,52 +1,80 @@
 import {
+  Avatar,
   Heading,
+  HStack,
   Table,
   TableCaption,
   TableContainer,
   Tbody,
   Td,
+  Text,
   Tfoot,
   Th,
   Thead,
   Tr,
+  useColorModeValue,
 } from "@chakra-ui/react";
+import { getUsers } from "~/models/user.server";
+import type { LoaderFunction } from "@remix-run/node";
+import { json } from "@remix-run/node";
+import { useLoaderData } from "@remix-run/react";
+import { GAME_SYSTEM } from "~/constants";
+
+type LoaderData = {
+  users: Awaited<ReturnType<typeof getUsers>>;
+};
+
+export const loader: LoaderFunction = async ({ request }) => {
+  const users = await getUsers();
+  return json<LoaderData>({ users });
+};
 
 export default function PlayersIndexPage() {
+  const loader = useLoaderData() as LoaderData;
+  const backGround = useColorModeValue("white", "gray.800");
+
   return (
     <>
-      <Heading>Players</Heading>
-      <TableContainer>
+      <Heading as="h1" mt="10" mb="20">
+        Players
+      </Heading>
+
+      <TableContainer bg={backGround} rounded="lg">
         <Table variant="simple">
-          <TableCaption>Imperial to metric conversion factors</TableCaption>
+          <TableCaption>Players</TableCaption>
           <Thead>
             <Tr>
-              <Th>To convert</Th>
-              <Th>into</Th>
-              <Th isNumeric>multiply by</Th>
+              <Th>Firstname</Th>
+              <Th>Preferred Game-System</Th>
             </Tr>
           </Thead>
           <Tbody>
-            <Tr>
-              <Td>inches</Td>
-              <Td>millimetres (mm)</Td>
-              <Td isNumeric>25.4</Td>
-            </Tr>
-            <Tr>
-              <Td>feet</Td>
-              <Td>centimetres (cm)</Td>
-              <Td isNumeric>30.48</Td>
-            </Tr>
-            <Tr>
-              <Td>yards</Td>
-              <Td>metres (m)</Td>
-              <Td isNumeric>0.91444</Td>
-            </Tr>
+            {loader.users.length === 0 ? (
+              <Text>No players to display</Text>
+            ) : (
+              <>
+                {loader.users.map((user) => (
+                  <Tr key={user.id}>
+                    <Td>
+                      <HStack>
+                        <Avatar
+                          name={`${user.firstName} ${user.lastName}`}
+                          size="sm"
+                          src={user.avatar || undefined}
+                        />{" "}
+                        <Text>{user.firstName}</Text>
+                      </HStack>
+                    </Td>
+                    <Td>{GAME_SYSTEM.WARHAMMER_40K}</Td>
+                  </Tr>
+                ))}
+              </>
+            )}
           </Tbody>
           <Tfoot>
             <Tr>
-              <Th>To convert</Th>
-              <Th>into</Th>
-              <Th isNumeric>multiply by</Th>
+              <Td>Firstname</Td>
+              <Td>Avatar</Td>
             </Tr>
           </Tfoot>
         </Table>
