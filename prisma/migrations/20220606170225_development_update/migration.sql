@@ -19,6 +19,7 @@ CREATE TABLE "new_BoardEntry" (
     CONSTRAINT "BoardEntry_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("id") ON DELETE CASCADE ON UPDATE CASCADE
 );
 INSERT INTO "new_BoardEntry" ("body", "createdAt", "date", "gameSystem", "id", "title", "updatedAt", "userId") SELECT "body", "createdAt", "date", "gameSystem", "id", "title", "updatedAt", "userId" FROM "BoardEntry";
+INSERT INTO "new_BoardEntry" ("location") "Vienna"
 DROP TABLE "BoardEntry";
 ALTER TABLE "new_BoardEntry" RENAME TO "BoardEntry";
 PRAGMA foreign_key_check;
