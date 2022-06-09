@@ -1,6 +1,6 @@
 import { NavLink, useLoaderData } from "@remix-run/react";
-import type { LoaderFunction } from "@remix-run/node";
-import { json, MetaFunction } from "@remix-run/node";
+import type { LoaderFunction, MetaFunction } from "@remix-run/node";
+import { json } from "@remix-run/node";
 import { getBoardEntryListItems } from "~/models/board.server";
 import { requireUserId } from "~/session.server";
 import {
@@ -31,6 +31,11 @@ type LoaderData = {
   userBoardEntries: Awaited<ReturnType<typeof getBoardEntryListItems>>;
 };
 
+/**
+ * It gets the user's board entries and returns them as JSON
+ * @param  - LoaderFunction - This is the type of the function that will be called when the page is loaded.
+ * @returns The userBoardEntries are being returned.
+ */
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await requireUserId(request);
   const userBoardEntries = await getBoardEntryListItems();

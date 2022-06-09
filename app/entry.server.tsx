@@ -7,6 +7,14 @@ import type { EntryContext } from "@remix-run/node"; // Depends on the runtime y
 import { ServerStyleContext } from "./context";
 import createEmotionCache from "./createEmotionCache";
 
+/**
+ * It renders the React app to a string, extracts the critical CSS, and returns a response with the HTML and CSS
+ * @param {Request} request - The request object that was sent to the worker.
+ * @param {number} responseStatusCode - The HTTP status code to return.
+ * @param {Headers} responseHeaders - Headers
+ * @param {EntryContext} remixContext - This is the context object that you passed to the `<RemixServer />` component.
+ * @returns A Response object.
+ */
 export default function handleRequest(
   request: Request,
   responseStatusCode: number,

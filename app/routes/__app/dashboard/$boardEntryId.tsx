@@ -26,6 +26,11 @@ type LoaderData = {
   boardEntry: Awaited<ReturnType<typeof getBoardEntry>>;
 };
 
+/**
+ * It loads a board entry by id, and returns it as JSON
+ * @param  - LoaderFunction
+ * @returns The boardEntry is being returned.
+ */
 export const loader: LoaderFunction = async ({ request, params }) => {
   const userId = await requireUserId(request);
   invariant(params.boardEntryId, "boardEntryId not found");
@@ -36,6 +41,11 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   return json<LoaderData>({ boardEntry });
 };
 
+/**
+ * It deletes a board entry and redirects to the dashboard
+ * @param  - ActionFunction
+ * @returns The redirect function is being returned.
+ */
 export const action: ActionFunction = async ({ request, params }) => {
   const userId = await requireUserId(request);
   invariant(params.boardEntryId, "boardEntryId not found");
@@ -45,6 +55,7 @@ export const action: ActionFunction = async ({ request, params }) => {
   return redirect("/dashboard");
 };
 
+/* A React component that is being exported. */
 export default function BoardEntryDetailsPage() {
   const { id } = useUser();
   const data = useLoaderData() as LoaderData;
@@ -131,11 +142,21 @@ export default function BoardEntryDetailsPage() {
   );
 }
 
+/**
+ * It takes an error object as a prop, logs the error to the console, and renders a div with the error message
+ * @param  - { error: Error }
+ * @returns A React component that displays an error message.
+ */
 export function ErrorBoundary({ error }: { error: Error }) {
   console.error(error);
   return <div>An unexpected error occurred: {error.message}</div>;
 }
 
+/**
+ * It catches errors and renders a different component based on the error status
+ * @returns A React component that renders a div with the text "BoardEntry not found" if the status is 404, and throws an
+ * error otherwise.
+ */
 export function CatchBoundary() {
   const caught = useCatch();
 

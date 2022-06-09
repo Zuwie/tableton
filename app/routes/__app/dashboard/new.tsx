@@ -29,6 +29,12 @@ type ActionData = {
   };
 };
 
+/**
+ * It takes the form data from the request, validates it, and then creates a new board entry
+ * @param  - `title` - The title of the board entry
+ * @returns A function that takes an object with a request property and returns a promise that resolves to a redirect to
+ * the dashboard with the id of the newly created board entry.
+ */
 export const action: ActionFunction = async ({ request }) => {
   const userId = await requireUserId(request);
 
@@ -96,6 +102,7 @@ export const action: ActionFunction = async ({ request }) => {
   return redirect(`/dashboard/${boardEntry.id}`);
 };
 
+/* A React component that renders a form to create a new board entry. */
 export default function NewBoardEntryPage() {
   const actionData = useActionData() as ActionData;
   const titleRef = React.useRef<HTMLInputElement>(null);

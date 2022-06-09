@@ -3,6 +3,12 @@ import type { LoaderFunction } from "@remix-run/node";
 
 import { prisma } from "~/db.server";
 
+/**
+ * It tries to connect to the database and make a simple query, and then it tries to make a HEAD request to itself. If
+ * either of those fail, it returns a 500 status code
+ * @param  - LoaderFunction
+ * @returns A function that returns a promise that resolves to a response.
+ */
 export const loader: LoaderFunction = async ({ request }) => {
   const host =
     request.headers.get("X-Forwarded-Host") ?? request.headers.get("host");

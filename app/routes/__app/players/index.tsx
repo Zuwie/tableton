@@ -30,11 +30,17 @@ type LoaderData = {
   users: Awaited<ReturnType<typeof getUsers>>;
 };
 
+/**
+ * It returns a JSON response with a list of users
+ * @param  - LoaderFunction
+ * @returns A function that returns a promise that resolves to a json object.
+ */
 export const loader: LoaderFunction = async ({ request }) => {
   const users = await getUsers();
   return json<LoaderData>({ users });
 };
 
+/* A React component that is exported as the default export. */
 export default function PlayersIndexPage() {
   const loader = useLoaderData() as LoaderData;
   const backGround = useColorModeValue("white", "gray.800");

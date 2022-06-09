@@ -8,7 +8,11 @@ import { redirect } from "@remix-run/node";
 import { ROUTES } from "~/constants";
 import RemixLink from "~/components/RemixLink";
 
-// Redirect logged-in users
+/**
+ * If the user is logged in, redirect to the dashboard. Otherwise, do nothing
+ * @param  - LoaderFunction
+ * @returns The loader function is returning a promise that resolves to null.
+ */
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request);
   if (userId) throw redirect(ROUTES.DASHBOARD);
