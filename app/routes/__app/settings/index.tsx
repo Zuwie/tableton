@@ -1,5 +1,5 @@
 import { Button, Heading, useColorMode } from "@chakra-ui/react";
-import { MetaFunction } from "@remix-run/node";
+import type { MetaFunction } from "@remix-run/node";
 
 export const meta: MetaFunction = () => {
   return {
