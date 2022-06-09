@@ -1,6 +1,6 @@
 import { NavLink, useLoaderData } from "@remix-run/react";
 import type { LoaderFunction } from "@remix-run/node";
-import { json } from "@remix-run/node";
+import { json, MetaFunction } from "@remix-run/node";
 import { getBoardEntryListItems } from "~/models/board.server";
 import { requireUserId } from "~/session.server";
 import {
@@ -20,6 +20,12 @@ import {
 } from "@chakra-ui/react";
 import { GAME_SYSTEM } from "~/constants";
 import * as React from "react";
+
+export const meta: MetaFunction = () => {
+  return {
+    title: "Dashboard",
+  };
+};
 
 type LoaderData = {
   userBoardEntries: Awaited<ReturnType<typeof getBoardEntryListItems>>;

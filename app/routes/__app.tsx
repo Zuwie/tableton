@@ -15,7 +15,8 @@ import { FiClipboard, FiCompass, FiStar, FiSettings } from "react-icons/fi";
 import type { IconType } from "react-icons";
 import { ROUTES } from "~/constants";
 import MobileNav from "~/components/MobileNav";
-import NavItem from "./NavItem";
+import NavItem from "../components/NavItem";
+import { Outlet } from "@remix-run/react";
 
 interface LinkItemProps {
   name: string;
@@ -30,7 +31,7 @@ const LinkItems: Array<LinkItemProps> = [
   { name: "Settings", icon: FiSettings, href: ROUTES.PLAYERS },
 ];
 
-export default function UserPanel({ children }: { children: ReactNode }) {
+export default function __app() {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -56,7 +57,7 @@ export default function UserPanel({ children }: { children: ReactNode }) {
       <MobileNav onOpen={onOpen} />
 
       <Box ml={{ base: 0, md: 60 }} p="8">
-        {children}
+        <Outlet />
       </Box>
     </Box>
   );

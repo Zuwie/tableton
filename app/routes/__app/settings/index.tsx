@@ -1,4 +1,11 @@
 import { Button, Heading, useColorMode } from "@chakra-ui/react";
+import { MetaFunction } from "@remix-run/node";
+
+export const meta: MetaFunction = () => {
+  return {
+    title: "Settings",
+  };
+};
 
 export default function SettingsIndexPage() {
   const { colorMode, toggleColorMode } = useColorMode();

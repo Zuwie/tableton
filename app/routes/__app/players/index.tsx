@@ -15,10 +15,16 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { getUsers } from "~/models/user.server";
-import type { LoaderFunction } from "@remix-run/node";
+import type { LoaderFunction, MetaFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { GAME_SYSTEM } from "~/constants";
+
+export const meta: MetaFunction = () => {
+  return {
+    title: "Players",
+  };
+};
 
 type LoaderData = {
   users: Awaited<ReturnType<typeof getUsers>>;
