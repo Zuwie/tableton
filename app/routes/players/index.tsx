@@ -41,7 +41,6 @@ export default function PlayersIndexPage() {
 
       <TableContainer bg={backGround} rounded="lg">
         <Table variant="simple">
-          <TableCaption>Players</TableCaption>
           <Thead>
             <Tr>
               <Th>Firstname</Th>
@@ -71,12 +70,6 @@ export default function PlayersIndexPage() {
               </>
             )}
           </Tbody>
-          <Tfoot>
-            <Tr>
-              <Td>Firstname</Td>
-              <Td>Avatar</Td>
-            </Tr>
-          </Tfoot>
         </Table>
       </TableContainer>
     </>
