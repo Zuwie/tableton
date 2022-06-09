@@ -161,7 +161,7 @@ export default function JoinIndexPage() {
           <Stack spacing={4}>
             <HStack>
               <Box>
-                <FormControl id="firstName">
+                <FormControl id="firstName" isRequired>
                   <FormLabel>First Name</FormLabel>
                   <Input
                     type="text"
