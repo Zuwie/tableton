@@ -31,9 +31,8 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   invariant(params.boardEntryId, "boardEntryId not found");
 
   const boardEntry = await getBoardEntry({ userId, id: params.boardEntryId });
-  if (!boardEntry) {
-    throw new Response("Not Found", { status: 404 });
-  }
+  if (!boardEntry) throw new Response("Not Found", { status: 404 });
+
   return json<LoaderData>({ boardEntry });
 };
 
