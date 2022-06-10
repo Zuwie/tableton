@@ -1,7 +1,13 @@
 {
   "build": {
     "env": {
-      "ENABLE_VC_BUILD": "1"
+      "ENABLE_FILE_SYSTEM_API": "1"
     }
-  }
+  },
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/api"
+    }
+  ]
 }
