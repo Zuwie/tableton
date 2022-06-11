@@ -109,19 +109,16 @@ export default function BoardEntryDetailsPage() {
             </HStack>
           </Stack>
 
-          <Box pos="relative">
-            <Heading as="h1" pr={10}>
-              {data.boardEntry?.title}
-            </Heading>
-            <Avatar
-              size={"sm"}
-              src={data.boardEntry?.user.avatar || undefined}
-              name={`${data.boardEntry?.user.firstName} ${data.boardEntry?.user.lastName}`}
-              pos="absolute"
-              top={0}
-              right={0}
-            />
-          </Box>
+          <HStack justifyContent="space-between" gap={4}>
+            <Heading as="h1">{data.boardEntry?.title}</Heading>
+            <NavLink to={`${ROUTES.PLAYERS}/${data.boardEntry?.user.id}`}>
+              <Avatar
+                size="md"
+                src={data.boardEntry?.user.avatar || undefined}
+                name={`${data.boardEntry?.user.firstName} ${data.boardEntry?.user.lastName}`}
+              />
+            </NavLink>
+          </HStack>
 
           <Text>{data.boardEntry?.body}</Text>
 

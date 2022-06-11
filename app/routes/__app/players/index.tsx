@@ -3,12 +3,10 @@ import {
   Heading,
   HStack,
   Table,
-  TableCaption,
   TableContainer,
   Tbody,
   Td,
   Text,
-  Tfoot,
   Th,
   Thead,
   Tr,
@@ -70,9 +68,9 @@ export default function PlayersIndexPage() {
                       <NavLink to={user.id}>
                         <HStack>
                           <Avatar
-                            name={`${user.firstName} ${user.lastName}`}
                             size="sm"
                             src={user.avatar || undefined}
+                            name={`${user.firstName} ${user.lastName}`}
                           />{" "}
                           <Text>{user.firstName}</Text>
                         </HStack>
