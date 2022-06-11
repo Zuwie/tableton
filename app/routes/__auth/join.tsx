@@ -6,33 +6,30 @@ import type {
 import { json, redirect } from "@remix-run/node";
 import { Form, Link, useActionData, useSearchParams } from "@remix-run/react";
 import * as React from "react";
+import { useState } from "react";
 
 import { createUserSession, getUserId } from "~/session.server";
 
 import { createUser, getUserByEmail } from "~/models/user.server";
 import { safeRedirect, validateEmail } from "~/utils";
 import { ROUTES } from "~/constants";
-import Header from "~/components/Header";
 
 import {
-  Flex,
   Box,
+  Button,
   FormControl,
+  FormErrorMessage,
   FormLabel,
+  Heading,
+  HStack,
   Input,
   InputGroup,
-  HStack,
   InputRightElement,
   Stack,
-  Button,
-  Heading,
   Text,
   useColorModeValue,
-  FormErrorMessage,
 } from "@chakra-ui/react";
-import { useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-import Footer from "~/components/Footer";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request);
