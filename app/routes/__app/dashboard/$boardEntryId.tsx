@@ -11,6 +11,7 @@ import {
   Avatar,
   Box,
   Button,
+  ButtonGroup,
   Divider,
   Heading,
   HStack,
@@ -21,6 +22,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { useUser } from "~/utils";
+import { FiBell, FiTrash } from "react-icons/fi";
 
 type LoaderData = {
   boardEntry: Awaited<ReturnType<typeof getBoardEntry>>;
@@ -122,17 +124,22 @@ export default function BoardEntryDetailsPage() {
 
           <Text>{data.boardEntry?.body}</Text>
 
-          {id === data.boardEntry?.user.id && (
-            <>
-              <Divider />
+          <Divider />
 
+          <ButtonGroup>
+            <Button colorScheme="teal" gap={2}>
+              <FiBell /> Interested
+            </Button>
+
+            {id === data.boardEntry?.user.id && (
               <Form method="post">
-                <Button type="submit" colorScheme="red">
+                <Button type="submit" colorScheme="red" gap={2}>
+                  <FiTrash />
                   Delete entry
                 </Button>
               </Form>
-            </>
-          )}
+            )}
+          </ButtonGroup>
         </Stack>
       </Box>
     </>
