@@ -44,6 +44,7 @@ export default function PlayerDetailsPage() {
 
   return (
     <>
+      {/* TODO: adjust link depending on where user came from e.g. dashboardEntry */}
       <Box mt="10" mb="20">
         <NavLink to={ROUTES.PLAYERS}>
           <Button as={"span"} colorScheme="teal">
