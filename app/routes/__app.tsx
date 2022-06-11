@@ -1,17 +1,16 @@
-import type { ReactNode } from "react";
 import React from "react";
 import type { BoxProps } from "@chakra-ui/react";
 import {
   Box,
   CloseButton,
-  Flex,
-  useColorModeValue,
   Drawer,
   DrawerContent,
+  Flex,
   Text,
+  useColorModeValue,
   useDisclosure,
 } from "@chakra-ui/react";
-import { FiClipboard, FiCompass, FiStar, FiSettings } from "react-icons/fi";
+import { FiClipboard, FiCompass, FiSettings, FiStar } from "react-icons/fi";
 import type { IconType } from "react-icons";
 import { ROUTES } from "~/constants";
 import MobileNav from "~/components/MobileNav";
