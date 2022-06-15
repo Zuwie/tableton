@@ -11,7 +11,13 @@ import { useState } from "react";
 import { createUserSession, getUserId } from "~/session.server";
 
 import { createUser, getUserByEmail } from "~/models/user.server";
-import { safeRedirect, validateEmail } from "~/utils";
+import {
+  safeRedirect,
+  validateEmail,
+  validateFirstName,
+  validateLastName,
+  validatePassword,
+} from "~/utils";
 import { ROUTES } from "~/constants";
 
 import {
@@ -30,6 +36,12 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+
+export const meta: MetaFunction = () => {
+  return {
+    title: "Sign Up",
+  };
+};
 
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request);
@@ -61,33 +73,9 @@ export const action: ActionFunction = async ({ request }) => {
     );
   }
 
-  if (typeof password !== "string" || password.length === 0) {
-    return json<ActionData>(
-      { errors: { password: "Password is required" } },
-      { status: 400 }
-    );
-  }
-
-  if (password.length < 8) {
-    return json<ActionData>(
-      { errors: { password: "Password is too short" } },
-      { status: 400 }
-    );
-  }
-
-  if (typeof firstName !== "string" || firstName.length === 0) {
-    return json<ActionData>(
-      { errors: { firstName: "Firstname is required" } },
-      { status: 400 }
-    );
-  }
-
-  if (typeof lastName !== "string") {
-    return json<ActionData>(
-      { errors: { lastName: "Lastname should only contain letters" } },
-      { status: 400 }
-    );
-  }
+  validatePassword(password);
+  validateFirstName(firstName);
+  validateLastName(lastName);
 
   const existingUser = await getUserByEmail(email);
   if (existingUser) {
@@ -100,9 +88,9 @@ export const action: ActionFunction = async ({ request }) => {
   let avatar;
   const user = await createUser(
     email,
-    password,
-    firstName,
-    lastName,
+    password as string,
+    firstName as string,
+    lastName as string,
     (avatar = null)
   );
 
@@ -114,17 +102,11 @@ export const action: ActionFunction = async ({ request }) => {
   });
 };
 
-export const meta: MetaFunction = () => {
-  return {
-    title: "Sign Up",
-  };
-};
-
 export default function JoinIndexPage() {
-  const [showPassword, setShowPassword] = useState(false);
   const [searchParams] = useSearchParams();
-  const redirectTo = searchParams.get("redirectTo") ?? undefined;
   const actionData = useActionData() as ActionData;
+  const [showPassword, setShowPassword] = useState(false);
+  const redirectTo = searchParams.get("redirectTo") ?? undefined;
   const emailRef = React.useRef<HTMLInputElement>(null);
   const passwordRef = React.useRef<HTMLInputElement>(null);
 
