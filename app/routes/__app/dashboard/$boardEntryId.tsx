@@ -22,7 +22,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { useUser } from "~/utils";
-import { FiBell, FiTrash } from "react-icons/fi";
+import { FiInbox, FiTrash } from "react-icons/fi";
 
 type LoaderData = {
   boardEntry: Awaited<ReturnType<typeof getBoardEntry>>;
@@ -52,9 +52,19 @@ export const action: ActionFunction = async ({ request, params }) => {
   const userId = await requireUserId(request);
   invariant(params.boardEntryId, "boardEntryId not found");
 
-  await deleteBoardEntry({ userId, id: params.boardEntryId });
+  const formData = await request.formData();
+  const action = formData.get("_action");
 
-  return redirect("/dashboard");
+  if (action === "delete") {
+    await deleteBoardEntry({ userId, id: params.boardEntryId });
+    return redirect("/dashboard");
+  }
+
+  if (action === "sendMatchRequest") {
+    return redirect("/players");
+  }
+
+  return null;
 };
 
 /* A React component that is being exported. */
@@ -127,13 +137,26 @@ export default function BoardEntryDetailsPage() {
           <Divider />
 
           <ButtonGroup>
-            <Button colorScheme="teal" gap={2}>
-              <FiBell /> Interested
-            </Button>
+            <Form method="post">
+              <Button
+                colorScheme="teal"
+                gap={2}
+                type="submit"
+                name="_action"
+                value="sendMatchRequest"
+              >
+                <FiInbox /> Send match request
+              </Button>
+            </Form>
 
             {id === data.boardEntry?.user.id && (
               <Form method="post">
-                <Button type="submit" colorScheme="red" gap={2}>
+                <Button
+                  type="submit"
+                  colorScheme="red"
+                  name="_action"
+                  value="delete"
+                >
                   <FiTrash />
                   Delete entry
                 </Button>
