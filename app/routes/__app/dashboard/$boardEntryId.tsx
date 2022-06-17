@@ -23,6 +23,7 @@ import {
 } from "@chakra-ui/react";
 import { useUser } from "~/utils";
 import { FiInbox, FiTrash } from "react-icons/fi";
+import { createMatchRequest } from "~/models/matches.server";
 
 type LoaderData = {
   boardEntry: Awaited<ReturnType<typeof getBoardEntry>>;
@@ -34,10 +35,9 @@ type LoaderData = {
  * @returns The boardEntry is being returned.
  */
 export const loader: LoaderFunction = async ({ request, params }) => {
-  const userId = await requireUserId(request);
   invariant(params.boardEntryId, "boardEntryId not found");
 
-  const boardEntry = await getBoardEntry({ userId, id: params.boardEntryId });
+  const boardEntry = await getBoardEntry({ id: params.boardEntryId });
   if (!boardEntry) throw new Response("Not Found", { status: 404 });
 
   return json<LoaderData>({ boardEntry });
@@ -61,7 +61,7 @@ export const action: ActionFunction = async ({ request, params }) => {
   }
 
   if (action === "sendMatchRequest") {
-    return redirect("/players");
+    await createMatchRequest({ userId, id: params.boardEntryId });
   }
 
   return null;
@@ -71,6 +71,9 @@ export const action: ActionFunction = async ({ request, params }) => {
 export default function BoardEntryDetailsPage() {
   const { id } = useUser();
   const data = useLoaderData() as LoaderData;
+  const matchIsRequestedByCurrentUser = data.boardEntry?.MatchRequest.some(
+    (match) => match.fromUserId === id
+  );
 
   return (
     <>
@@ -144,8 +147,12 @@ export default function BoardEntryDetailsPage() {
                 type="submit"
                 name="_action"
                 value="sendMatchRequest"
+                disabled={matchIsRequestedByCurrentUser}
               >
-                <FiInbox /> Send match request
+                <FiInbox />
+                {matchIsRequestedByCurrentUser
+                  ? "Match has been requested"
+                  : "Send match request"}
               </Button>
             </Form>
 

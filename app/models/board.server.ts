@@ -8,12 +8,7 @@ export type { BoardEntry } from "@prisma/client";
  * @param  - Pick<BoardEntry, "id"> & {
  * @returns BoardEntry
  */
-export function getBoardEntry({
-  id,
-  userId,
-}: Pick<BoardEntry, "id"> & {
-  userId: User["id"];
-}) {
+export function getBoardEntry({ id }: Pick<BoardEntry, "id">) {
   return prisma.boardEntry.findFirst({
     where: { id },
     select: {
@@ -24,6 +19,7 @@ export function getBoardEntry({
       location: true,
       date: true,
       user: true,
+      MatchRequest: true,
     },
   });
 }
