@@ -71,7 +71,7 @@ export const action: ActionFunction = async ({ request, params }) => {
 export default function BoardEntryDetailsPage() {
   const { id } = useUser();
   const data = useLoaderData() as LoaderData;
-  const matchIsRequestedByCurrentUser = data.boardEntry?.MatchRequest.some(
+  const matchIsRequestedByCurrentUser = data.boardEntry?.matchRequests.some(
     (match) => match.fromUserId === id
   );
 

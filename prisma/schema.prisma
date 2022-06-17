@@ -7,6 +7,10 @@ generator client {
   provider = "prisma-client-js"
 }
 
+generator dbml {
+  provider = "prisma-dbml-generator"
+}
+
 model User {
   id        String    @id @default(cuid())
   email     String    @unique
@@ -20,8 +24,9 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  boardEntries  BoardEntry[]
-  matchRequests MatchRequest[]
+  boardEntries          BoardEntry[]
+  incomingMatchRequests MatchRequest[] @relation("incomingMatchRequests")
+  outgoingMatchRequests MatchRequest[] @relation("outgoingMatchRequests")
 }
 
 model Password {
@@ -44,16 +49,17 @@ model BoardEntry {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  user         User           @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId       String
-  MatchRequest MatchRequest[]
+  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId        String
+  matchRequests MatchRequest[]
 }
 
 model MatchRequest {
   id String @id @default(cuid())
 
-  fromUser   User   @relation(fields: [fromUserId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  fromUser   User   @relation("outgoingMatchRequests", fields: [fromUserId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   fromUserId String
+  toUser     User   @relation("incomingMatchRequests", fields: [toUserId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   toUserId   String
 
   status    Int      @default(0)
@@ -61,4 +67,9 @@ model MatchRequest {
 
   boardEntry   BoardEntry @relation(fields: [boardEntryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   boardEntryId String
+}
+
+model Notifications {
+  id String @id @default(cuid())
+
 }

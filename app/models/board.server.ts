@@ -19,7 +19,7 @@ export function getBoardEntry({ id }: Pick<BoardEntry, "id">) {
       location: true,
       date: true,
       user: true,
-      MatchRequest: true,
+      matchRequests: true,
     },
   });
 }
