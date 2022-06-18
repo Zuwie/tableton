@@ -72,4 +72,8 @@ model MatchRequest {
 model Notifications {
   id String @id @default(cuid())
 
+  title     String
+  body      String
+  readAt    DateTime
+  createdAt DateTime @default(now())
 }

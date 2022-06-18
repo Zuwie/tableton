@@ -11,10 +11,11 @@ import {
   Avatar,
   Box,
   Button,
-  ButtonGroup,
   Divider,
   Heading,
   HStack,
+  List,
+  ListItem,
   Spacer,
   Stack,
   Tag,
@@ -70,10 +71,16 @@ export const action: ActionFunction = async ({ request, params }) => {
 /* A React component that is being exported. */
 export default function BoardEntryDetailsPage() {
   const { id } = useUser();
-  const data = useLoaderData() as LoaderData;
-  const matchIsRequestedByCurrentUser = data.boardEntry?.matchRequests.some(
+  const loader = useLoaderData() as LoaderData;
+  const matchIsRequestedByCurrentUser = loader.boardEntry?.matchRequests.some(
     (match) => match.fromUserId === id
   );
+  // const matchIsRequestedToCurrentUser = data.boardEntry?.matchRequests.some(
+  //   (match) => match.toUserId === id
+  // );
+  const isOwner = id === loader.boardEntry?.user.id;
+
+  const boxBg = useColorModeValue("white", "gray.700");
 
   return (
     <>
@@ -85,93 +92,119 @@ export default function BoardEntryDetailsPage() {
         </NavLink>
       </Box>
 
-      <Box
-        rounded={"lg"}
-        bg={useColorModeValue("white", "gray.700")}
-        boxShadow={"lg"}
-        maxW={"xl"}
-        mx="auto"
-        py={12}
-        px={6}
-      >
-        <Stack spacing={10}>
-          <Stack spacing={2}>
-            <HStack spacing={2}>
-              <Tag>
-                {
-                  GAME_SYSTEM[
-                    data.boardEntry?.gameSystem as keyof typeof GAME_SYSTEM
-                  ]
-                }
-              </Tag>
-              <Spacer />
-              <Tag>
-                {new Date(data.boardEntry?.date as Date).toLocaleDateString()}
-              </Tag>
-              <Tag>
-                {new Date(data.boardEntry?.date as Date).toLocaleTimeString(
-                  [],
+      <Stack direction={"row"} gap={4} maxW={"4xl"} mx="auto">
+        <Box
+          rounded={"lg"}
+          bg={boxBg}
+          boxShadow={"lg"}
+          maxW={"xl"}
+          mx="auto"
+          py={12}
+          px={6}
+        >
+          <Stack spacing={10}>
+            <Stack spacing={2}>
+              <HStack spacing={2}>
+                <Tag>
                   {
-                    hour: "2-digit",
-                    minute: "2-digit",
+                    GAME_SYSTEM[
+                      loader.boardEntry?.gameSystem as keyof typeof GAME_SYSTEM
+                    ]
                   }
-                )}
-              </Tag>
+                </Tag>
+                <Spacer />
+                <Tag>
+                  {new Date(
+                    loader.boardEntry?.date as Date
+                  ).toLocaleDateString()}
+                </Tag>
+                <Tag>
+                  {new Date(loader.boardEntry?.date as Date).toLocaleTimeString(
+                    [],
+                    {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    }
+                  )}
+                </Tag>
+              </HStack>
+              <HStack>
+                <Spacer />
+                <Tag>{loader.boardEntry?.location}</Tag>
+              </HStack>
+            </Stack>
+
+            <HStack justifyContent="space-between" gap={4}>
+              <Heading as="h1">{loader.boardEntry?.title}</Heading>
+              <NavLink to={`${ROUTES.PLAYERS}/${loader.boardEntry?.user.id}`}>
+                <Avatar
+                  size="md"
+                  src={loader.boardEntry?.user.avatar || undefined}
+                  name={`${loader.boardEntry?.user.firstName} ${loader.boardEntry?.user.lastName}`}
+                />
+              </NavLink>
             </HStack>
-            <HStack>
-              <Spacer />
-              <Tag>{data.boardEntry?.location}</Tag>
-            </HStack>
-          </Stack>
 
-          <HStack justifyContent="space-between" gap={4}>
-            <Heading as="h1">{data.boardEntry?.title}</Heading>
-            <NavLink to={`${ROUTES.PLAYERS}/${data.boardEntry?.user.id}`}>
-              <Avatar
-                size="md"
-                src={data.boardEntry?.user.avatar || undefined}
-                name={`${data.boardEntry?.user.firstName} ${data.boardEntry?.user.lastName}`}
-              />
-            </NavLink>
-          </HStack>
+            <Text>{loader.boardEntry?.body}</Text>
 
-          <Text>{data.boardEntry?.body}</Text>
+            <Divider />
 
-          <Divider />
-
-          <ButtonGroup>
-            <Form method="post">
-              <Button
-                colorScheme="teal"
-                gap={2}
-                type="submit"
-                name="_action"
-                value="sendMatchRequest"
-                disabled={matchIsRequestedByCurrentUser}
-              >
-                <FiInbox />
-                {matchIsRequestedByCurrentUser
-                  ? "Match has been requested"
-                  : "Send match request"}
-              </Button>
-            </Form>
-
-            {id === data.boardEntry?.user.id && (
+            <Stack flexWrap="wrap" gap={2}>
               <Form method="post">
                 <Button
+                  colorScheme="teal"
+                  gap={2}
                   type="submit"
-                  colorScheme="red"
                   name="_action"
-                  value="delete"
+                  value="sendMatchRequest"
+                  disabled={matchIsRequestedByCurrentUser}
                 >
-                  <FiTrash />
-                  Delete entry
+                  <FiInbox />
+                  {matchIsRequestedByCurrentUser
+                    ? "Match has been requested"
+                    : "Send match request"}
                 </Button>
               </Form>
-            )}
-          </ButtonGroup>
-        </Stack>
-      </Box>
+
+              {isOwner && (
+                <Form method="post">
+                  <Button
+                    colorScheme="red"
+                    gap={2}
+                    type="submit"
+                    name="_action"
+                    value="delete"
+                  >
+                    <FiTrash />
+                    Delete entry
+                  </Button>
+                </Form>
+              )}
+            </Stack>
+          </Stack>
+        </Box>
+
+        {isOwner && (
+          <Box
+            rounded={"lg"}
+            bg={boxBg}
+            boxShadow={"lg"}
+            w={"100%"}
+            py={12}
+            px={6}
+          >
+            <Stack spacing={10}>
+              <List>
+                {loader.boardEntry?.matchRequests.map((matchRequest) => (
+                  <ListItem key={matchRequest.id}>
+                    {matchRequest.createdAt}
+                  </ListItem>
+                ))}
+              </List>
+            </Stack>
+          </Box>
+        )}
+      </Stack>
     </>
   );
 }

@@ -51,6 +51,10 @@ Table MatchRequest {
 
 Table Notifications {
   id String [pk]
+  title String [not null]
+  body String [not null]
+  readAt DateTime [not null]
+  createdAt DateTime [default: `now()`, not null]
 }
 
 Ref: Password.userId - User.id [delete: Cascade]

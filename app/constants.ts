@@ -4,6 +4,7 @@ export const ROUTES = {
   JOIN: "/join",
   RESET_PASSWORD: "/reset-password",
   DASHBOARD: "/dashboard",
+  MATCH_REQUESTS: "/matchrequests",
   PLAYERS: "/players",
   FEATURES: "/features",
   ROADMAP: "/roadmap",
