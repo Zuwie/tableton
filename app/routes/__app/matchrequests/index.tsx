@@ -95,7 +95,7 @@ export default function MatchRequestsPage() {
             {loader.matchRequests.map((matchRequest) => (
               <Tr key={matchRequest.id}>
                 <Td>
-                  <NavLink to={matchRequest.fromUser.id}>
+                  <NavLink to={`${ROUTES.PLAYERS}/${matchRequest.fromUser.id}`}>
                     <HStack>
                       <Avatar
                         size="sm"
