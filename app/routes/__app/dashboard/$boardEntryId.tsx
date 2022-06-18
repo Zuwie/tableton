@@ -195,20 +195,18 @@ export default function BoardEntryDetailsPage() {
           >
             <Stack spacing={10}>
               <Heading fontSize="lg">Match requests</Heading>
-              {loader.boardEntry?.matchRequests.length === 0 ? (
-                <Text>No active match requests</Text>
-              ) : (
-                <>
-                  <NavLink to={ROUTES.MATCH_REQUESTS}>
-                    <Box rounded="lg" bg="orange.200" py={2} px={4}>
-                      <HStack justifyContent="space-between">
-                        <span>Open requests: {openMatchRequests}</span>{" "}
-                        <ArrowForwardIcon />
-                      </HStack>
-                    </Box>
-                  </NavLink>
-                </>
-              )}
+              <NavLink to={ROUTES.MATCH_REQUESTS}>
+                <Box rounded="lg" bg="orange.200" py={2} px={4}>
+                  <HStack justifyContent="space-between">
+                    {openMatchRequests === 0 ? (
+                      <Text>No open match requests</Text>
+                    ) : (
+                      <Text>Open requests: {openMatchRequests}</Text>
+                    )}
+                    <ArrowForwardIcon />
+                  </HStack>
+                </Box>
+              </NavLink>
             </Stack>
           </Box>
         )}
