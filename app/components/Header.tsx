@@ -1,25 +1,25 @@
 import {
   Box,
-  Flex,
-  Text,
-  IconButton,
   Button,
-  Stack,
   Collapse,
+  Flex,
   Icon,
+  IconButton,
   Link,
   Popover,
-  PopoverTrigger,
   PopoverContent,
-  useColorModeValue,
+  PopoverTrigger,
+  Stack,
+  Text,
   useBreakpointValue,
+  useColorModeValue,
   useDisclosure,
 } from "@chakra-ui/react";
 import {
-  HamburgerIcon,
-  CloseIcon,
   ChevronDownIcon,
   ChevronRightIcon,
+  CloseIcon,
+  HamburgerIcon,
 } from "@chakra-ui/icons";
 import { ROUTES } from "~/constants";
 import { NavLink } from "@remix-run/react";
@@ -273,6 +273,10 @@ const NAV_ITEMS: Array<NavItem> = [
   },
   {
     label: "Find players",
-    href: ROUTES.SETTINGS,
+    href: ROUTES.PLAYERS,
+  },
+  {
+    label: "Roadmap",
+    href: ROUTES.ROADMAP,
   },
 ];
