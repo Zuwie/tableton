@@ -14,8 +14,6 @@ import {
   Divider,
   Heading,
   HStack,
-  List,
-  ListItem,
   Spacer,
   Stack,
   Tag,
@@ -25,6 +23,7 @@ import {
 import { useUser } from "~/utils";
 import { FiInbox, FiTrash } from "react-icons/fi";
 import { createMatchRequest } from "~/models/matches.server";
+import { ArrowForwardIcon } from "@chakra-ui/icons";
 
 type LoaderData = {
   boardEntry: Awaited<ReturnType<typeof getBoardEntry>>;
@@ -75,10 +74,10 @@ export default function BoardEntryDetailsPage() {
   const matchIsRequestedByCurrentUser = loader.boardEntry?.matchRequests.some(
     (match) => match.fromUserId === id
   );
-  // const matchIsRequestedToCurrentUser = data.boardEntry?.matchRequests.some(
-  //   (match) => match.toUserId === id
-  // );
   const isOwner = id === loader.boardEntry?.user.id;
+  const openMatchRequests = loader.boardEntry?.matchRequests.filter(
+    (matchRequest) => matchRequest.status === 0
+  ).length;
 
   const boxBg = useColorModeValue("white", "gray.700");
 
@@ -192,15 +191,24 @@ export default function BoardEntryDetailsPage() {
             w={"100%"}
             py={12}
             px={6}
+            alignSelf="flex-start"
           >
             <Stack spacing={10}>
-              <List>
-                {loader.boardEntry?.matchRequests.map((matchRequest) => (
-                  <ListItem key={matchRequest.id}>
-                    {matchRequest.createdAt}
-                  </ListItem>
-                ))}
-              </List>
+              <Heading fontSize="lg">Match requests</Heading>
+              {loader.boardEntry?.matchRequests.length === 0 ? (
+                <Text>No active match requests</Text>
+              ) : (
+                <>
+                  <NavLink to={ROUTES.MATCH_REQUESTS}>
+                    <Box rounded="lg" bg="orange.200" py={2} px={4}>
+                      <HStack justifyContent="space-between">
+                        <span>Open requests: {openMatchRequests}</span>{" "}
+                        <ArrowForwardIcon />
+                      </HStack>
+                    </Box>
+                  </NavLink>
+                </>
+              )}
             </Stack>
           </Box>
         )}
