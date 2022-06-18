@@ -27,7 +27,7 @@ const LinkItems: Array<LinkItemProps> = [
   { name: "Dashboard", icon: FiClipboard, href: ROUTES.DASHBOARD },
   { name: "Players", icon: FiCompass, href: ROUTES.PLAYERS },
   { name: "League", icon: FiStar, href: ROUTES.PLAYERS },
-  { name: "Settings", icon: FiSettings, href: ROUTES.PLAYERS },
+  { name: "Settings", icon: FiSettings, href: ROUTES.SETTINGS },
 ];
 
 export default function __app() {
