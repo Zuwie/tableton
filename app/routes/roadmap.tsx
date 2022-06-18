@@ -41,7 +41,7 @@ export default function RoadmapPage() {
             boxShadow={"lg"}
             p={8}
           >
-            <List>
+            <List spacing={4}>
               <ListItem>
                 <ListIcon as={SettingsIcon} color="orange.500" /> Filters for
                 board
