@@ -20,6 +20,7 @@ import RemixLink from "~/components/RemixLink";
 import { ROUTES } from "~/constants";
 import React from "react";
 import { Form } from "@remix-run/react";
+import Logo from "~/components/Logo";
 
 interface MobileProps extends FlexProps {
   onOpen: () => void;
@@ -48,14 +49,9 @@ export default function MobileNav({ onOpen, ...rest }: MobileProps) {
         icon={<FiMenu />}
       />
 
-      <Text
-        display={{ base: "flex", md: "none" }}
-        fontSize="2xl"
-        fontFamily="monospace"
-        fontWeight="bold"
-      >
-        Logo
-      </Text>
+      <Box display={{ base: "flex", md: "none" }}>
+        <Logo />
+      </Box>
 
       <HStack spacing={{ base: "0", md: "6" }}>
         <IconButton

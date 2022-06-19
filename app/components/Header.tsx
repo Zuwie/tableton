@@ -23,6 +23,7 @@ import {
 } from "@chakra-ui/icons";
 import { ROUTES } from "~/constants";
 import { NavLink } from "@remix-run/react";
+import Logo from "~/components/Logo";
 
 export default function Header() {
   const { isOpen, onToggle } = useDisclosure();
@@ -56,16 +57,19 @@ export default function Header() {
         </Flex>
         <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
           <NavLink to={ROUTES.ROOT}>
-            <Text
+            <Box
               textAlign={useBreakpointValue({ base: "center", md: "left" })}
-              fontFamily={"heading"}
               color={useColorModeValue("gray.800", "white")}
             >
-              Logo
-            </Text>
+              <Logo />
+            </Box>
           </NavLink>
 
-          <Flex display={{ base: "none", md: "flex" }} ml={10}>
+          <Flex
+            display={{ base: "none", md: "flex" }}
+            alignItems={"center"}
+            ml={10}
+          >
             <DesktopNav />
           </Flex>
         </Flex>

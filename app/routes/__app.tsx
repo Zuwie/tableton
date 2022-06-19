@@ -6,7 +6,6 @@ import {
   Drawer,
   DrawerContent,
   Flex,
-  Text,
   useColorModeValue,
   useDisclosure,
 } from "@chakra-ui/react";
@@ -16,6 +15,7 @@ import { ROUTES } from "~/constants";
 import MobileNav from "~/components/MobileNav";
 import NavItem from "../components/NavItem";
 import { Outlet } from "@remix-run/react";
+import Logo from "~/components/Logo";
 
 interface LinkItemProps {
   name: string;
@@ -79,9 +79,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       {...rest}
     >
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-        <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
-          Logo
-        </Text>
+        <Logo />
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>
 
