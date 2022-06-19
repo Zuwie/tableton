@@ -71,7 +71,7 @@ export const action: ActionFunction = async ({ request }) => {
 
 export default function MatchRequestsPage() {
   const loader = useLoaderData() as LoaderData;
-  const backGround = useColorModeValue("white", "gray.800");
+  const background = useColorModeValue("white", "gray.800");
 
   return (
     <>
@@ -81,7 +81,7 @@ export default function MatchRequestsPage() {
         </Heading>
       </Stack>
 
-      <TableContainer bg={backGround} rounded="lg">
+      <TableContainer bg={background} rounded="lg">
         <Table variant="simple">
           <Thead>
             <Tr>

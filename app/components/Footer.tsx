@@ -22,7 +22,7 @@ const SocialButton = ({
   href: string;
 }) => {
   return (
-    <chakra.button
+    <Button
       bg={useColorModeValue("blackAlpha.100", "whiteAlpha.100")}
       rounded={"full"}
       w={8}
@@ -62,7 +62,6 @@ export default function Footer() {
         <Stack direction={"row"} spacing={6}>
           <Link href={"#"}>Home</Link>
           <Link href={"#"}>About</Link>
-          <Link href={"#"}>Blog</Link>
           <Link href={"#"}>Contact</Link>
         </Stack>
       </Container>
@@ -81,15 +80,20 @@ export default function Footer() {
           justify={{ base: "center", md: "space-between" }}
           align={{ base: "center", md: "center" }}
         >
-          <Text>© 2022 Chakra Templates. All rights reserved</Text>
+          <Text>
+            © {new Date().getFullYear()} rs-webdev. All rights reserved
+          </Text>
           <Stack direction={"row"} spacing={6}>
-            <SocialButton label={"Twitter"} href={"#"}>
+            <SocialButton
+              label={"Twitter"}
+              href={"https://twitter.com/RS_Webdev"}
+            >
               <FaTwitter />
             </SocialButton>
-            <SocialButton label={"YouTube"} href={"#"}>
-              <FaYoutube />
-            </SocialButton>
-            <SocialButton label={"Discord"} href={"#"}>
+            <SocialButton
+              label={"Discord"}
+              href={"https://discordapp.com/users/Aquila#3729"}
+            >
               <FaDiscord />
             </SocialButton>
           </Stack>
