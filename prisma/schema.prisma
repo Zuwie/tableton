@@ -52,6 +52,8 @@ model BoardEntry {
   user          User           @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId        String
   matchRequests MatchRequest[]
+
+  status Int @default(0)
 }
 
 model MatchRequest {

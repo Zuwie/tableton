@@ -35,6 +35,7 @@ Table BoardEntry {
   user User [not null]
   userId String [not null]
   matchRequests MatchRequest [not null]
+  status Int [not null, default: 0]
 }
 
 Table MatchRequest {
