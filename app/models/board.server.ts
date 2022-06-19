@@ -45,8 +45,39 @@ export function getBoardEntryListItems() {
       location: true,
       date: true,
       user: true,
+      status: true,
     },
-    orderBy: { updatedAt: "desc" },
+    orderBy: { date: "desc" },
+  });
+}
+
+/**
+ * "Get all the board entries for a user, ordered by date."
+ *
+ * The function takes a single argument, an object with a single property, userId. The userId property is of type
+ * User["id"], which is a string
+ * @param  - {
+ * @returns An array of board entry objects
+ */
+export function getBoardEntryListItemsFromUser({
+  userId,
+}: {
+  userId: User["id"];
+}) {
+  return prisma.boardEntry.findMany({
+    where: {
+      userId,
+    },
+    select: {
+      id: true,
+      title: true,
+      gameSystem: true,
+      location: true,
+      date: true,
+      user: true,
+      status: true,
+    },
+    orderBy: { date: "desc" },
   });
 }
 
