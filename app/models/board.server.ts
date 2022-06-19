@@ -20,16 +20,14 @@ export function getBoardEntry({ id }: Pick<BoardEntry, "id">) {
       date: true,
       user: true,
       matchRequests: true,
+      status: true,
     },
   });
 }
 
 /**
- * "Get all board entries, ordered by the most recently updated."
- *
- * The function is defined as an async function, which means it returns a promise. The function uses the
- * prisma.boardEntry.findMany() method to get all board entries. The select property is used to specify which fields to
- * return. The orderBy property is used to specify how to order the results
+ * It returns a list of board entries, ordered by date, with only the id, title, gameSystem, location, date, and user
+ * fields
  * @returns An array of objects with the following properties:
  *   id: true,
  *   title: true,
@@ -63,8 +61,12 @@ export function createBoardEntry({
   gameSystem,
   location,
   date,
+  status,
   userId,
-}: Pick<BoardEntry, "body" | "title" | "gameSystem" | "location" | "date"> & {
+}: Pick<
+  BoardEntry,
+  "body" | "title" | "gameSystem" | "location" | "date" | "status"
+> & {
   userId: User["id"];
 }) {
   return prisma.boardEntry.create({

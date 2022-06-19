@@ -97,6 +97,7 @@ export const action: ActionFunction = async ({ request }) => {
     location,
     date,
     userId,
+    status: 0,
   });
 
   return redirect(`/dashboard/${boardEntry.id}`);
