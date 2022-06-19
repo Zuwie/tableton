@@ -26,6 +26,7 @@ import { NavLink, useLoaderData } from "@remix-run/react";
 import { ROUTES } from "~/constants";
 import { FaDiscord, FaTwitter } from "react-icons/fa";
 import { IoLogoWhatsapp } from "react-icons/io";
+import { ArrowForwardIcon } from "@chakra-ui/icons";
 
 export const meta: MetaFunction = () => {
   return {
@@ -68,7 +69,7 @@ export default function ProfileIndexPage() {
       >
         <GridItem
           rowSpan={3}
-          colSpan={2}
+          colSpan={{ base: 6, xl: 4 }}
           bg={background}
           rounded={"lg"}
           boxShadow={"lg"}
@@ -86,7 +87,7 @@ export default function ProfileIndexPage() {
           </Text>
         </GridItem>
         <GridItem
-          colSpan={2}
+          colSpan={{ base: 6, sm: 3, xl: 2 }}
           bg={background}
           rounded={"lg"}
           boxShadow={"lg"}
@@ -103,7 +104,7 @@ export default function ProfileIndexPage() {
           </Stack>
         </GridItem>
         <GridItem
-          colSpan={2}
+          colSpan={{ base: 6, sm: 3, xl: 2 }}
           bg={background}
           rounded={"lg"}
           boxShadow={"lg"}
@@ -137,7 +138,7 @@ export default function ProfileIndexPage() {
           </ButtonGroup>
         </GridItem>
         <GridItem
-          colSpan={4}
+          colSpan={6}
           bg={background}
           rounded={"lg"}
           boxShadow={"lg"}
@@ -160,7 +161,7 @@ export default function ProfileIndexPage() {
                   <Tr key={boardEntry.id}>
                     <Td>
                       <NavLink to={`${ROUTES.DASHBOARD}/${boardEntry.id}`}>
-                        {boardEntry.title}
+                        {boardEntry.title} <ArrowForwardIcon />
                       </NavLink>
                     </Td>
                     <Td>{new Date(boardEntry.date).toLocaleDateString()}</Td>
