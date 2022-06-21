@@ -64,7 +64,10 @@ export const action: ActionFunction = async ({ request }) => {
   const password = formData.get("password");
   const firstName = formData.get("firstName");
   const lastName = formData.get("lastName");
-  const redirectTo = safeRedirect(formData.get("redirectTo"), ROUTES.DASHBOARD);
+  const redirectTo = safeRedirect(
+    formData.get("redirectTo"),
+    ROUTES.ONBOARDING
+  );
 
   if (!validateEmail(email)) {
     return json<ActionData>(
@@ -102,7 +105,7 @@ export const action: ActionFunction = async ({ request }) => {
   });
 };
 
-export default function JoinIndexPage() {
+export default function JoinPage() {
   const [searchParams] = useSearchParams();
   const actionData = useActionData() as ActionData;
   const [showPassword, setShowPassword] = useState(false);
