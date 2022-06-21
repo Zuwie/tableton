@@ -27,6 +27,7 @@ import { ROUTES } from "~/constants";
 import { FaDiscord, FaTwitter } from "react-icons/fa";
 import { IoLogoWhatsapp } from "react-icons/io";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
+import StatusDisplay from "~/components/StatusDisplay";
 
 export const meta: MetaFunction = () => {
   return {
@@ -86,6 +87,7 @@ export default function ProfileIndexPage() {
             leo et elit pretium malesuada. Duis elementum commodo dapibus.
           </Text>
         </GridItem>
+
         <GridItem
           colSpan={{ base: 6, sm: 3, xl: 2 }}
           bg={background}
@@ -96,7 +98,7 @@ export default function ProfileIndexPage() {
           <Heading fontSize={"3xl"} mb={4}>
             Factions
           </Heading>
-          <Stack spacing={2}>
+          <Stack spacing={4}>
             <Tag>Drukhari</Tag>
             <Tag>Harlequins</Tag>
             <Tag>Custodes</Tag>
@@ -137,6 +139,7 @@ export default function ProfileIndexPage() {
             </Link>
           </ButtonGroup>
         </GridItem>
+
         <GridItem
           colSpan={6}
           bg={background}
@@ -165,7 +168,9 @@ export default function ProfileIndexPage() {
                       </NavLink>
                     </Td>
                     <Td>{new Date(boardEntry.date).toLocaleDateString()}</Td>
-                    <Td>{boardEntry.status}</Td>
+                    <Td>
+                      <StatusDisplay status={boardEntry.status} />
+                    </Td>
                   </Tr>
                 ))}
               </Tbody>
