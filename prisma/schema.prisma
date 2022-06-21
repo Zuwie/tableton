@@ -19,7 +19,8 @@ model User {
   avatar    String?
   password  Password?
 
-  bio String?
+  bio     String?
+  faction String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

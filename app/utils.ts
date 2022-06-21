@@ -139,3 +139,14 @@ export function validateLastName(lastName: unknown) {
     );
   }
 }
+
+/**
+ * "Get a random entry from an array."
+ *
+ * The function takes an array as an argument and returns a random entry from that array
+ * @param {Type[]} entry - The array you want to get a random entry from.
+ * @returns A random entry from the array.
+ */
+export function getRandomEntry<Type>(entry: Type[]) {
+  return entry[Math.floor(Math.random() * entry.length)];
+}

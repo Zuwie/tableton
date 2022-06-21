@@ -2,7 +2,8 @@ import type { User } from "@prisma/client";
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import faker from "@faker-js/faker";
-import { GAME_SYSTEM } from "~/constants";
+import { FACTIONS, GAME_SYSTEM } from "~/constants";
+import { getRandomEntry } from "~/utils";
 
 const prisma = new PrismaClient();
 
@@ -32,7 +33,13 @@ async function seed() {
     },
   });
 
+  /**
+   * It returns a fake user object with a fake email, password, first name, last name, and avatar
+   * @returns An object with a data property that contains an object with the following properties: email, password,
+   * firstName, lastName, and avatar.
+   */
   function getFakeUser() {
+    const faction1 = getRandomEntry(Object.keys(FACTIONS));
     return {
       data: {
         email: faker.internet.email(),
@@ -44,17 +51,23 @@ async function seed() {
         firstName: faker.internet.userName("firstName"),
         lastName: faker.internet.userName("lastName"),
         avatar: faker.internet.avatar(),
+        faction: getRandomEntry(Object.keys(FACTIONS)),
       },
     };
   }
 
+  /**
+   * It returns an object with a data property that contains a fake board entry
+   * @param {User} user - User - This is the user that we're going to use to create the board entry.
+   * @returns An object with a data property that contains the data for a board entry.
+   */
   function getFakeBoardEntryData(user: User) {
     const gameSystems = Object.keys(GAME_SYSTEM);
     return {
       data: {
         title: faker.commerce.productName(),
         body: faker.commerce.productDescription(),
-        gameSystem: gameSystems[Math.floor(Math.random() * gameSystems.length)],
+        gameSystem: getRandomEntry(gameSystems),
         location: faker.address.city(),
         date: faker.date.future(),
         userId: user.id,
@@ -62,14 +75,16 @@ async function seed() {
     };
   }
 
+  /* It's creating 15 fake users and pushing them into an array. */
   for (let i = 0; i < 15; i++) {
     const fakeUser = prisma.user.create(getFakeUser());
     await fakeUser;
     userArray.push(await fakeUser);
   }
 
+  /* It's creating 30 board entries and assigning them to random users. */
   for (let i = 0; i < 30; i++) {
-    const randomUser = userArray[Math.floor(Math.random() * userArray.length)];
+    const randomUser = getRandomEntry(userArray);
     await prisma.boardEntry.create(getFakeBoardEntryData(randomUser));
   }
 
