@@ -54,6 +54,10 @@ export default function RoadmapPage() {
                 Factions
               </ListItem>
               <ListItem>
+                <ListIcon as={SettingsIcon} color="orange.500" /> Support
+                multiple languages
+              </ListItem>
+              <ListItem>
                 <ListIcon as={SettingsIcon} color="orange.500" /> Discord Bot
                 (automatically post new entries)
               </ListItem>
