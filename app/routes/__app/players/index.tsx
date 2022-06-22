@@ -76,6 +76,7 @@ export default function PlayersIndexPage() {
                         </HStack>
                       </NavLink>
                     </Td>
+                    {/* TODO: make dynamic and support multiple game-systems */}
                     <Td>{GAME_SYSTEM.WARHAMMER_40K}</Td>
                   </Tr>
                 ))}

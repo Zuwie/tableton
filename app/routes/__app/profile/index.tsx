@@ -18,7 +18,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import type { LoaderFunction, MetaFunction } from "@remix-run/node";
-import { json } from "@remix-run/node";
+import { json, redirect } from "@remix-run/node";
 import * as React from "react";
 import { getBoardEntryListItemsFromUser } from "~/models/board.server";
 import { requireUserId } from "~/session.server";
@@ -28,6 +28,7 @@ import { FaDiscord, FaTwitter } from "react-icons/fa";
 import { IoLogoWhatsapp } from "react-icons/io";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import StatusDisplay from "~/components/StatusDisplay";
+import { getExtendedProfileForUser } from "~/models/user.server";
 
 export const meta: MetaFunction = () => {
   return {
@@ -39,8 +40,18 @@ type LoaderData = {
   boardEntries: Awaited<ReturnType<typeof getBoardEntryListItemsFromUser>>;
 };
 
+/**
+ * It gets the userId from the request, then gets the board entries from the user, then returns the board entries as JSON
+ * @param  - LoaderFunction
+ * @returns A function that returns a promise that resolves to a json object.
+ */
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await requireUserId(request);
+  const extendedProfile = await getExtendedProfileForUser({ userId });
+
+  /* If the user has not completed the onboarding process, then redirect them to the onboarding page. */
+  if (!extendedProfile) throw redirect(ROUTES.ONBOARDING);
+
   const boardEntries = await getBoardEntryListItemsFromUser({
     userId,
   });
@@ -48,6 +59,10 @@ export const loader: LoaderFunction = async ({ request }) => {
   return json<LoaderData>({ boardEntries });
 };
 
+/**
+ * It renders a page with a heading, a paragraph, a list of tags, a list of social media links, and a table of board
+ * entries
+ */
 export default function ProfileIndexPage() {
   const background = useColorModeValue("white", "gray.700");
   const loader = useLoaderData() as LoaderData;

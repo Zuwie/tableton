@@ -7,6 +7,7 @@ import {
   FormLabel,
   Heading,
   Input,
+  Link,
   Select,
   Stack,
   Tab,
@@ -18,7 +19,7 @@ import {
   Textarea,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { Form } from "@remix-run/react";
+import { Form, NavLink } from "@remix-run/react";
 import * as React from "react";
 import type {
   ActionFunction,
@@ -93,7 +94,7 @@ export const action: ActionFunction = async ({ request }) => {
     userId,
   });
 
-  return redirect(ROUTES.DASHBOARD);
+  return redirect(ROUTES.PROFILE);
 };
 
 /**
@@ -122,8 +123,11 @@ export default function OnboardingPage() {
         <Heading fontSize={"4xl"} textAlign={"center"}>
           Setup your profile now
         </Heading>
-        <Text fontSize={"lg"} color={"gray.600"}>
-          or do it later if you don't feel like doing it now
+        <Text fontSize={"lg"} color={"gray.600"} textAlign={"center"}>
+          or do it later in your{" "}
+          <NavLink to={ROUTES.PROFILE}>
+            <Link as="span">profile</Link>
+          </NavLink>
         </Text>
       </Stack>
       <Box

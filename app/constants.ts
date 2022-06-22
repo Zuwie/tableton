@@ -2,7 +2,6 @@ export const ROUTES = {
   ROOT: "/",
   LOGIN: "/login",
   JOIN: "/join",
-  ONBOARDING: "/onboarding",
   RESET_PASSWORD: "/reset-password",
   DASHBOARD: "/dashboard",
   MATCH_REQUESTS: "/matchrequests",
@@ -10,6 +9,7 @@ export const ROUTES = {
   FEATURES: "/features",
   ROADMAP: "/roadmap",
   PROFILE: "/profile",
+  ONBOARDING: "/profile/onboarding",
   SETTINGS: "/settings",
 };
 
