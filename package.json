@@ -26,15 +26,13 @@
     "/public/build"
   ],
   "dependencies": {
-    "@chakra-ui/icons": "^2.0.1",
+    "@chakra-ui/icons": "^2.0.2",
     "@chakra-ui/provider": "^2.0.6",
-    "@chakra-ui/react": "^2.1.2",
+    "@chakra-ui/react": "^2.2.1",
     "@emotion/cache": "^11.7.1",
     "@emotion/react": "^11.9.0",
     "@emotion/server": "^11.4.0",
     "@emotion/styled": "^11.8.1",
-    "@headlessui/react": "^1.6.4",
-    "@heroicons/react": "^1.0.6",
     "@prisma/client": "^3.15.0",
     "@remix-run/node": "^1.5.1",
     "@remix-run/react": "^1.5.1",
