@@ -9,19 +9,19 @@ import * as React from "react";
 
 import { createUserSession, getUserId } from "~/session.server";
 import { verifyLogin } from "~/models/user.server";
-import { safeRedirect, validateEmail } from "~/utils";
+import { safeRedirect, validateEmail, validatePassword } from "~/utils";
 import { ROUTES } from "~/constants";
 
 import {
   Box,
-  FormControl,
-  FormLabel,
-  FormErrorMessage,
-  Input,
-  Checkbox,
-  Stack,
   Button,
+  Checkbox,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
   Heading,
+  Input,
+  Stack,
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
@@ -53,21 +53,9 @@ export const action: ActionFunction = async ({ request }) => {
     );
   }
 
-  if (typeof password !== "string" || password.length === 0) {
-    return json<ActionData>(
-      { errors: { password: "Password is required" } },
-      { status: 400 }
-    );
-  }
+  validatePassword(password);
 
-  if (password.length < 6) {
-    return json<ActionData>(
-      { errors: { password: "Password is too short" } },
-      { status: 400 }
-    );
-  }
-
-  const user = await verifyLogin(email, password);
+  const user = await verifyLogin(email, password as string);
 
   if (!user) {
     return json<ActionData>(
