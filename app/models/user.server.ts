@@ -1,4 +1,4 @@
-import type { Password, User } from "@prisma/client";
+import type { Contact, ExtendedProfile, Password, User } from "@prisma/client";
 import bcrypt from "bcryptjs";
 
 import { prisma } from "~/db.server";
@@ -65,6 +65,87 @@ export async function createUser(
       password: {
         create: {
           hash: hashedPassword,
+        },
+      },
+    },
+  });
+}
+
+/**
+ * It takes in a user's email, first name, last name, avatar, and user ID, and then updates the user's information in the
+ * database
+ * @param  - Pick<User, "email" | "firstName" | "lastName" | "avatar"> & {
+ * @returns The updated user
+ */
+export async function updateUser({
+  email,
+  firstName,
+  lastName,
+  avatar,
+  userId,
+}: Pick<User, "email" | "firstName" | "lastName" | "avatar"> & {
+  userId: User["id"];
+}) {
+  return prisma.user.update({
+    where: { id: userId },
+    data: {
+      email,
+      firstName,
+      lastName,
+      avatar,
+    },
+  });
+}
+
+/**
+ * It creates an extended profile for a user
+ * @param  - Pick<ExtendedProfile, "faction" | "biography"> & {
+ * @returns A promise that resolves to the created extended profile.
+ */
+export async function createExtendedProfile({
+  faction,
+  biography,
+  userId,
+}: Pick<ExtendedProfile, "faction" | "biography"> & {
+  userId: User["id"];
+}) {
+  return prisma.extendedProfile.create({
+    data: {
+      faction,
+      biography,
+      user: {
+        connect: {
+          id: userId,
+        },
+      },
+    },
+  });
+}
+
+export async function getExtendedProfileForUser({
+  userId,
+}: {
+  userId: User["id"];
+}) {
+  return prisma.extendedProfile.findFirst({
+    where: { userId },
+  });
+}
+
+export async function createContactInformation({
+  phone,
+  discord,
+  userId,
+}: Pick<Contact, "phone" | "discord"> & {
+  userId: User["id"];
+}) {
+  return prisma.contact.create({
+    data: {
+      phone,
+      discord,
+      user: {
+        connect: {
+          id: userId,
         },
       },
     },

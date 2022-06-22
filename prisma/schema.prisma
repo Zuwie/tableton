@@ -12,15 +12,14 @@ generator dbml {
 }
 
 model User {
-  id        String    @id @default(cuid())
-  email     String    @unique
+  id        String           @id @default(cuid())
+  email     String           @unique
   firstName String
   lastName  String
   avatar    String?
   password  Password?
-
-  bio     String?
-  faction String?
+  profile   ExtendedProfile?
+  contact   Contact?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -30,8 +29,27 @@ model User {
   outgoingMatchRequests MatchRequest[] @relation("outgoingMatchRequests")
 }
 
+model ExtendedProfile {
+  id        Int     @id @default(autoincrement())
+  biography String
+  faction   String?
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId String @unique
+}
+
 model Password {
   hash String
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId String @unique
+}
+
+model Contact {
+  id      String  @id @default(cuid())
+  phone   String?
+  discord String?
+  email   String?
 
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId String @unique
