@@ -50,6 +50,7 @@ model Contact {
   phone   String?
   discord String?
   email   String?
+  twitter String?
 
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId String @unique

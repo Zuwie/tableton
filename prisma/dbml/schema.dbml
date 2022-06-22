@@ -37,6 +37,7 @@ Table Contact {
   phone String
   discord String
   email String
+  twitter String
   user User [not null]
   userId String [unique, not null]
 }

@@ -136,8 +136,9 @@ export async function createContactInformation({
   phone,
   discord,
   email,
+  twitter,
   userId,
-}: Pick<Contact, "phone" | "discord" | "email"> & {
+}: Pick<Contact, "phone" | "discord" | "email" | "twitter"> & {
   userId: User["id"];
 }) {
   return prisma.contact.create({
@@ -145,6 +146,7 @@ export async function createContactInformation({
       phone,
       discord,
       email,
+      twitter,
       user: {
         connect: {
           id: userId,

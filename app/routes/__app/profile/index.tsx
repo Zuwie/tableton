@@ -15,7 +15,9 @@ import {
   Th,
   Thead,
   Tr,
+  useClipboard,
   useColorModeValue,
+  useToast,
 } from "@chakra-ui/react";
 import type { LoaderFunction, MetaFunction } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
@@ -23,13 +25,16 @@ import * as React from "react";
 import { getBoardEntryListItemsFromUser } from "~/models/board.server";
 import { requireUserId } from "~/session.server";
 import { useLoaderData } from "@remix-run/react";
-import { ROUTES } from "~/constants";
-import { FaDiscord, FaTwitter } from "react-icons/fa";
-import { IoLogoWhatsapp } from "react-icons/io";
+import { FACTIONS, ROUTES } from "~/constants";
+import { FaDiscord, FaEnvelope, FaPhone } from "react-icons/fa";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import StatusDisplay from "~/components/StatusDisplay";
-import { getExtendedProfileForUser } from "~/models/user.server";
+import {
+  getContactInformationForUser,
+  getExtendedProfileForUser,
+} from "~/models/user.server";
 import RemixLink from "~/components/RemixLink";
+import { FiTwitter } from "react-icons/fi";
 
 export const meta: MetaFunction = () => {
   return {
@@ -39,6 +44,8 @@ export const meta: MetaFunction = () => {
 
 type LoaderData = {
   boardEntries: Awaited<ReturnType<typeof getBoardEntryListItemsFromUser>>;
+  extendedProfile: Awaited<ReturnType<typeof getExtendedProfileForUser>>;
+  contact: Awaited<ReturnType<typeof getContactInformationForUser>>;
 };
 
 /**
@@ -49,6 +56,7 @@ type LoaderData = {
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await requireUserId(request);
   const extendedProfile = await getExtendedProfileForUser({ userId });
+  const contact = await getContactInformationForUser({ userId });
 
   /* If the user has not completed the onboarding process, then redirect them to the onboarding page. */
   if (!extendedProfile) throw redirect(ROUTES.ONBOARDING);
@@ -57,7 +65,7 @@ export const loader: LoaderFunction = async ({ request }) => {
     userId,
   });
 
-  return json<LoaderData>({ boardEntries });
+  return json<LoaderData>({ boardEntries, extendedProfile, contact });
 };
 
 /**
@@ -67,6 +75,8 @@ export const loader: LoaderFunction = async ({ request }) => {
 export default function ProfileIndexPage() {
   const background = useColorModeValue("white", "gray.700");
   const loader = useLoaderData() as LoaderData;
+  const { hasCopied, onCopy } = useClipboard(loader.contact?.discord || "");
+  const toast = useToast();
 
   return (
     <Stack spacing={8} mx={"auto"} maxW={"5xl"} py={12}>
@@ -95,13 +105,7 @@ export default function ProfileIndexPage() {
           <Heading fontSize={"3xl"} mb={4}>
             Bio
           </Heading>
-          <Text>
-            Mauris gravida pulvinar enim quis semper. Praesent pulvinar
-            fringilla diam. Proin ornare venenatis condimentum. Aenean egestas
-            varius dui, a dictum lacus varius finibus. Morbi vitae euismod
-            augue. Praesent ultrices ligula id massa interdum mattis. Etiam a
-            leo et elit pretium malesuada. Duis elementum commodo dapibus.
-          </Text>
+          <Text>{loader.extendedProfile?.biography}</Text>
         </GridItem>
 
         <GridItem
@@ -115,10 +119,14 @@ export default function ProfileIndexPage() {
             Factions
           </Heading>
           <Stack spacing={4}>
-            <Tag>Drukhari</Tag>
-            <Tag>Harlequins</Tag>
-            <Tag>Custodes</Tag>
-            <Tag>Chaos Demons</Tag>
+            {/* TODO: render all factions when multiple factions are implemented */}
+            <Tag>
+              {
+                FACTIONS[
+                  loader.extendedProfile?.faction as keyof typeof FACTIONS
+                ]
+              }
+            </Tag>
           </Stack>
         </GridItem>
         <GridItem
@@ -132,27 +140,53 @@ export default function ProfileIndexPage() {
             Contact
           </Heading>
           <ButtonGroup>
-            <Link href={"https://discord.com"} target="_blank">
+            {loader.contact?.discord && (
               <IconButton
                 as="span"
-                aria-label="Discord link"
+                aria-label="Link to user's discord"
                 icon={<FaDiscord />}
+                onClick={() => {
+                  toast({
+                    title: "Account created.",
+                    description: "We've created your account for you.",
+                    status: "success",
+                    duration: 9000,
+                    isClosable: true,
+                  });
+                  onCopy();
+                }}
               />
-            </Link>
-            <Link href={"https://twitter.com"} target="_blank">
-              <IconButton
-                as="span"
-                aria-label="Twitter link"
-                icon={<FaTwitter />}
-              />
-            </Link>
-            <Link href={"https://whatsapp.com"} target="_blank">
-              <IconButton
-                as="span"
-                aria-label="WhatsApp link"
-                icon={<IoLogoWhatsapp />}
-              />
-            </Link>
+            )}
+
+            {loader.contact?.phone && (
+              <Link href={`tel:${loader.contact.phone}`} target="_blank">
+                <IconButton
+                  as="span"
+                  aria-label="Link to user's phone number"
+                  icon={<FaPhone />}
+                />
+              </Link>
+            )}
+
+            {loader.contact?.twitter && (
+              <Link href={`tel:${loader.contact.twitter}`} target="_blank">
+                <IconButton
+                  as="span"
+                  aria-label="Link to user's twitter account"
+                  icon={<FiTwitter />}
+                />
+              </Link>
+            )}
+
+            {loader.contact?.email && (
+              <Link href={`mailto:${loader.contact.email}`} target="_blank">
+                <IconButton
+                  as="span"
+                  aria-label="Link to user's email"
+                  icon={<FaEnvelope />}
+                />
+              </Link>
+            )}
           </ButtonGroup>
         </GridItem>
 

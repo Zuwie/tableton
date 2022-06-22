@@ -66,6 +66,7 @@ export const action: ActionFunction = async ({ request }) => {
   const phone = formData.get("phone");
   const discord = formData.get("discord");
   const email = formData.get("email");
+  const twitter = formData.get("twitter");
 
   if (!validateEmail(email)) {
     return json<ActionData>(
@@ -78,7 +79,8 @@ export const action: ActionFunction = async ({ request }) => {
     typeof faction !== "string" ||
     typeof biography !== "string" ||
     typeof phone !== "string" ||
-    typeof discord !== "string"
+    typeof discord !== "string" ||
+    typeof twitter !== "string"
   ) {
     return;
   }
@@ -92,6 +94,7 @@ export const action: ActionFunction = async ({ request }) => {
     phone,
     discord,
     email,
+    twitter,
     userId,
   });
 
@@ -163,6 +166,7 @@ export default function OnboardingPage() {
                 <Tab>Phone</Tab>
                 <Tab>Discord</Tab>
                 <Tab>E-Mail</Tab>
+                <Tab>Twitter</Tab>
               </TabList>
               <TabPanels>
                 <TabPanel>
@@ -191,6 +195,15 @@ export default function OnboardingPage() {
                       defaultValue={user?.email}
                     />
                     <FormHelperText>e.g. example@gmail.com</FormHelperText>
+                  </FormControl>
+                </TabPanel>
+                <TabPanel>
+                  <FormControl id="contactTwitter">
+                    <FormLabel>Twitter</FormLabel>
+                    <Input type="text" name="twitter" />
+                    <FormHelperText>
+                      e.g. https://twitter.com/RS_Webdev
+                    </FormHelperText>
                   </FormControl>
                 </TabPanel>
               </TabPanels>
