@@ -32,6 +32,7 @@ import { requireUserId } from "~/session.server";
 import {
   createContactInformation,
   createExtendedProfile,
+  getContactInformationForUser,
   getExtendedProfileForUser,
 } from "~/models/user.server";
 
@@ -95,14 +96,15 @@ export const action: ActionFunction = async ({ request }) => {
 };
 
 /**
- * If the user is logged in, and they have an extended profile, redirect them to the dashboard. Otherwise, return null
+ * If the user has an extended profile or contact information, redirect them to the dashboard. Otherwise, return null
  * @param  - LoaderFunction
- * @returns A redirect to the dashboard if the user has an extended profile.
+ * @returns A redirect to the dashboard if the user has an extended profile or contact information.
  */
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await requireUserId(request);
   const extendedProfile = await getExtendedProfileForUser({ userId });
-  if (extendedProfile) return redirect(ROUTES.DASHBOARD);
+  const contactInformation = await getContactInformationForUser({ userId });
+  if (extendedProfile || contactInformation) return redirect(ROUTES.DASHBOARD);
   return null;
 };
 

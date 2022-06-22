@@ -152,6 +152,16 @@ export async function createContactInformation({
   });
 }
 
+export async function getContactInformationForUser({
+  userId,
+}: {
+  userId: User["id"];
+}) {
+  return prisma.contact.findFirst({
+    where: { userId },
+  });
+}
+
 /**
  * It deletes a user from the database by their email
  * @param email - User["email"]
