@@ -135,14 +135,16 @@ export async function getExtendedProfileForUser({
 export async function createContactInformation({
   phone,
   discord,
+  email,
   userId,
-}: Pick<Contact, "phone" | "discord"> & {
+}: Pick<Contact, "phone" | "discord" | "email"> & {
   userId: User["id"];
 }) {
   return prisma.contact.create({
     data: {
       phone,
       discord,
+      email,
       user: {
         connect: {
           id: userId,

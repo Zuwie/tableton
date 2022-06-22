@@ -89,6 +89,7 @@ export const action: ActionFunction = async ({ request }) => {
   await createContactInformation({
     phone,
     discord,
+    email,
     userId,
   });
 
