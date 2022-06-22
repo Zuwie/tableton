@@ -19,7 +19,7 @@ import {
   Textarea,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { Form, NavLink } from "@remix-run/react";
+import { Form } from "@remix-run/react";
 import * as React from "react";
 import type {
   ActionFunction,
@@ -36,6 +36,7 @@ import {
   getContactInformationForUser,
   getExtendedProfileForUser,
 } from "~/models/user.server";
+import RemixLink from "~/components/RemixLink";
 
 export const meta: MetaFunction = () => {
   return {
@@ -125,9 +126,9 @@ export default function OnboardingPage() {
         </Heading>
         <Text fontSize={"lg"} color={"gray.600"} textAlign={"center"}>
           or do it later in your{" "}
-          <NavLink to={ROUTES.PROFILE}>
+          <RemixLink to={ROUTES.PROFILE}>
             <Link as="span">profile</Link>
-          </NavLink>
+          </RemixLink>
         </Text>
       </Stack>
       <Box

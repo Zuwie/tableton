@@ -1,6 +1,6 @@
 import type { ActionFunction } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
-import { Form, NavLink, useActionData } from "@remix-run/react";
+import { Form, useActionData } from "@remix-run/react";
 import * as React from "react";
 import { requireUserId } from "~/session.server";
 import { createBoardEntry } from "~/models/board.server";
@@ -18,6 +18,7 @@ import {
   Textarea,
   useColorModeValue,
 } from "@chakra-ui/react";
+import RemixLink from "~/components/RemixLink";
 
 type ActionData = {
   errors?: {
@@ -121,11 +122,11 @@ export default function NewBoardEntryPage() {
   return (
     <>
       <Box mt="10" mb="20">
-        <NavLink to={ROUTES.DASHBOARD}>
+        <RemixLink to={ROUTES.DASHBOARD}>
           <Button as={"span"} colorScheme="teal">
             Back to dashboard
           </Button>
-        </NavLink>
+        </RemixLink>
       </Box>
 
       <Box

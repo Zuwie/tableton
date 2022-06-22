@@ -22,13 +22,14 @@ import { json, redirect } from "@remix-run/node";
 import * as React from "react";
 import { getBoardEntryListItemsFromUser } from "~/models/board.server";
 import { requireUserId } from "~/session.server";
-import { NavLink, useLoaderData } from "@remix-run/react";
+import { useLoaderData } from "@remix-run/react";
 import { ROUTES } from "~/constants";
 import { FaDiscord, FaTwitter } from "react-icons/fa";
 import { IoLogoWhatsapp } from "react-icons/io";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import StatusDisplay from "~/components/StatusDisplay";
 import { getExtendedProfileForUser } from "~/models/user.server";
+import RemixLink from "~/components/RemixLink";
 
 export const meta: MetaFunction = () => {
   return {
@@ -178,9 +179,9 @@ export default function ProfileIndexPage() {
                 {loader.boardEntries?.map((boardEntry) => (
                   <Tr key={boardEntry.id}>
                     <Td>
-                      <NavLink to={`${ROUTES.DASHBOARD}/${boardEntry.id}`}>
+                      <RemixLink to={`${ROUTES.DASHBOARD}/${boardEntry.id}`}>
                         {boardEntry.title} <ArrowForwardIcon />
-                      </NavLink>
+                      </RemixLink>
                     </Td>
                     <Td>{new Date(boardEntry.date).toLocaleDateString()}</Td>
                     <Td>

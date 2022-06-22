@@ -27,9 +27,10 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import * as React from "react";
-import { Form, NavLink, useLoaderData } from "@remix-run/react";
+import { Form, useLoaderData } from "@remix-run/react";
 import { ROUTES } from "~/constants";
 import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
+import RemixLink from "~/components/RemixLink";
 
 export const meta: MetaFunction = () => {
   return {
@@ -95,7 +96,9 @@ export default function MatchRequestsPage() {
             {loader.matchRequests.map((matchRequest) => (
               <Tr key={matchRequest.id}>
                 <Td>
-                  <NavLink to={`${ROUTES.PLAYERS}/${matchRequest.fromUser.id}`}>
+                  <RemixLink
+                    to={`${ROUTES.PLAYERS}/${matchRequest.fromUser.id}`}
+                  >
                     <HStack>
                       <Avatar
                         size="sm"
@@ -104,14 +107,14 @@ export default function MatchRequestsPage() {
                       />{" "}
                       <Text>{matchRequest.fromUser.firstName}</Text>
                     </HStack>
-                  </NavLink>
+                  </RemixLink>
                 </Td>
                 <Td>
-                  <NavLink
+                  <RemixLink
                     to={`${ROUTES.DASHBOARD}/${matchRequest.boardEntry.id}`}
                   >
                     {matchRequest.boardEntry.title}
-                  </NavLink>
+                  </RemixLink>
                 </Td>
                 <Td>{new Date(matchRequest.createdAt).toLocaleDateString()}</Td>
                 <Td>

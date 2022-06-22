@@ -1,6 +1,6 @@
 import type { ActionFunction, LoaderFunction } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
-import { Form, NavLink, useCatch, useLoaderData } from "@remix-run/react";
+import { Form, Link, useCatch, useLoaderData } from "@remix-run/react";
 import invariant from "tiny-invariant";
 
 import { requireUserId } from "~/session.server";
@@ -24,6 +24,7 @@ import { useUser } from "~/utils";
 import { FiInbox, FiTrash } from "react-icons/fi";
 import { createMatchRequest } from "~/models/matches.server";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
+import RemixLink from "~/components/RemixLink";
 
 type LoaderData = {
   boardEntry: Awaited<ReturnType<typeof getBoardEntry>>;
@@ -84,11 +85,11 @@ export default function BoardEntryDetailsPage() {
   return (
     <>
       <Box mt="10" mb="20">
-        <NavLink to={ROUTES.DASHBOARD}>
+        <Link to={ROUTES.DASHBOARD}>
           <Button as={"span"} colorScheme="teal">
             Back to dashboard
           </Button>
-        </NavLink>
+        </Link>
       </Box>
 
       <Stack direction={"row"} gap={4} maxW={"4xl"} mx="auto">
@@ -135,13 +136,13 @@ export default function BoardEntryDetailsPage() {
 
             <HStack justifyContent="space-between" gap={4}>
               <Heading as="h1">{loader.boardEntry?.title}</Heading>
-              <NavLink to={`${ROUTES.PLAYERS}/${loader.boardEntry?.user.id}`}>
+              <Link to={`${ROUTES.PLAYERS}/${loader.boardEntry?.user.id}`}>
                 <Avatar
                   size="md"
                   src={loader.boardEntry?.user.avatar || undefined}
                   name={`${loader.boardEntry?.user.firstName} ${loader.boardEntry?.user.lastName}`}
                 />
-              </NavLink>
+              </Link>
             </HStack>
 
             <Text>{loader.boardEntry?.body}</Text>
@@ -195,7 +196,7 @@ export default function BoardEntryDetailsPage() {
           >
             <Stack spacing={10}>
               <Heading fontSize="lg">Match requests</Heading>
-              <NavLink to={ROUTES.MATCH_REQUESTS}>
+              <RemixLink to={ROUTES.MATCH_REQUESTS}>
                 <Box rounded="lg" bg="orange.200" py={2} px={4}>
                   <HStack justifyContent="space-between">
                     {openMatchRequests === 0 ? (
@@ -206,7 +207,7 @@ export default function BoardEntryDetailsPage() {
                     <ArrowForwardIcon />
                   </HStack>
                 </Box>
-              </NavLink>
+              </RemixLink>
             </Stack>
           </Box>
         )}

@@ -16,10 +16,9 @@ import {
 } from "@chakra-ui/react";
 import { useUser } from "~/utils";
 import { FiBell, FiChevronDown, FiMenu } from "react-icons/fi";
-import RemixLink from "~/components/RemixLink";
 import { ROUTES } from "~/constants";
 import React from "react";
-import { Form } from "@remix-run/react";
+import { Form, NavLink } from "@remix-run/react";
 import Logo from "~/components/Logo";
 
 interface MobileProps extends FlexProps {
@@ -90,12 +89,12 @@ export default function MobileNav({ onOpen, ...rest }: MobileProps) {
               borderColor={useColorModeValue("gray.200", "gray.700")}
               py={0}
             >
-              <RemixLink to={ROUTES.PROFILE}>
+              <NavLink to={ROUTES.PROFILE}>
                 <MenuItem as="span">Profile</MenuItem>
-              </RemixLink>
-              <RemixLink to={ROUTES.SETTINGS}>
+              </NavLink>
+              <NavLink to={ROUTES.SETTINGS}>
                 <MenuItem as="span">Settings</MenuItem>
-              </RemixLink>
+              </NavLink>
               <MenuDivider />
               <Form action="/logout" method="post">
                 <MenuItem type="submit">Sign Out</MenuItem>

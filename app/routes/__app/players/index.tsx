@@ -15,8 +15,9 @@ import {
 import { getUsers } from "~/models/user.server";
 import type { LoaderFunction, MetaFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { NavLink, useLoaderData } from "@remix-run/react";
+import { useLoaderData } from "@remix-run/react";
 import { GAME_SYSTEM } from "~/constants";
+import RemixLink from "~/components/RemixLink";
 
 export const meta: MetaFunction = () => {
   return {
@@ -65,7 +66,7 @@ export default function PlayersIndexPage() {
                 {loader.users.map((user) => (
                   <Tr key={user.id}>
                     <Td>
-                      <NavLink to={user.id}>
+                      <RemixLink to={user.id}>
                         <HStack>
                           <Avatar
                             size="sm"
@@ -74,7 +75,7 @@ export default function PlayersIndexPage() {
                           />{" "}
                           <Text>{user.firstName}</Text>
                         </HStack>
-                      </NavLink>
+                      </RemixLink>
                     </Td>
                     {/* TODO: make dynamic and support multiple game-systems */}
                     <Td>{GAME_SYSTEM.WARHAMMER_40K}</Td>

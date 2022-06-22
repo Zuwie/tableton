@@ -1,4 +1,4 @@
-import { NavLink, useLoaderData } from "@remix-run/react";
+import { useLoaderData } from "@remix-run/react";
 import { getUserById } from "~/models/user.server";
 import type { LoaderFunction } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
@@ -16,6 +16,7 @@ import {
 import { ROUTES } from "~/constants";
 import * as React from "react";
 import { requireUserId } from "~/session.server";
+import RemixLink from "~/components/RemixLink";
 
 type LoaderData = {
   player: Awaited<ReturnType<typeof getUserById>>;
@@ -50,11 +51,11 @@ export default function PlayerDetailsPage() {
     <>
       {/* TODO: adjust link depending on where user came from e.g. dashboardEntry */}
       <Box mt="10" mb="20">
-        <NavLink to={ROUTES.PLAYERS}>
+        <RemixLink to={ROUTES.PLAYERS}>
           <Button as={"span"} colorScheme="teal">
             Back to players
           </Button>
-        </NavLink>
+        </RemixLink>
       </Box>
 
       <Box
