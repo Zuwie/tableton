@@ -15,11 +15,11 @@ import {
 } from "@chakra-ui/react";
 import { ROUTES } from "~/constants";
 import * as React from "react";
-import { requireUserId } from "~/session.server";
+import { getUserId } from "~/session.server";
 import RemixLink from "~/components/RemixLink";
 
 type LoaderData = {
-  player: Awaited<ReturnType<typeof getUserById>>;
+  user: Awaited<ReturnType<typeof getUserById>>;
 };
 
 /**
@@ -30,13 +30,14 @@ type LoaderData = {
 export const loader: LoaderFunction = async ({ request, params }) => {
   invariant(params.playerId, "playerId not found");
 
-  const userId = await requireUserId(request);
-  if (userId === params.playerId) throw redirect(ROUTES.PROFILE);
+  /* If the user is trying to view their own profile, redirect them to their profile page. */
+  const currentUserId = await getUserId(request);
+  if (currentUserId === params.playerId) throw redirect(ROUTES.PROFILE);
 
-  const player = await getUserById(params.playerId);
-  if (!player) throw new Response("Not Found", { status: 404 });
+  const user = await getUserById(params.playerId);
+  if (!user) throw new Response("Not Found", { status: 404 });
 
-  return json<LoaderData>({ player });
+  return json<LoaderData>({ user: user });
 };
 
 /**
@@ -69,11 +70,11 @@ export default function PlayerDetailsPage() {
       >
         <Stack spacing={10}>
           <HStack justifyContent="space-between" gap={4}>
-            <Heading as="h1">{data.player?.firstName}</Heading>
+            <Heading as="h1">{data.user?.firstName}</Heading>
             <Avatar
               size="md"
-              src={data.player?.avatar || undefined}
-              name={`${data.player?.firstName} ${data.player?.lastName}`}
+              src={data.user?.avatar || undefined}
+              name={`${data.user?.firstName} ${data.user?.lastName}`}
             />{" "}
           </HStack>
 
