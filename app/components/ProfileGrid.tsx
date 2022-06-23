@@ -17,7 +17,7 @@ import {
   Tr,
 } from "@chakra-ui/react";
 import { FACTIONS, ROUTES } from "~/constants";
-import { FaDiscord, FaEnvelope, FaPhone, FaTwitter } from "react-icons/fa";
+import { FaDiscord, FaEnvelope, FaSms, FaTwitter } from "react-icons/fa";
 import RemixLink from "~/components/RemixLink";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import StatusDisplay from "~/components/StatusDisplay";
@@ -111,11 +111,11 @@ export default function ProfileGrid(props: {
           )}
 
           {props.loader.contact?.phone && (
-            <Link href={`tel:${props.loader.contact.phone}`} target="_blank">
+            <Link href={`sms:${props.loader.contact.phone}`} target="_blank">
               <IconButton
                 as="span"
                 aria-label="Link to user's phone number"
-                icon={<FaPhone />}
+                icon={<FaSms />}
               />
             </Link>
           )}
