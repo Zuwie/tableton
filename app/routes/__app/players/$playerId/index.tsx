@@ -1,25 +1,31 @@
 import { useLoaderData } from "@remix-run/react";
-import { getUserById } from "~/models/user.server";
+import {
+  getContactInformationForUser,
+  getExtendedProfileForUser,
+  getUserById,
+} from "~/models/user.server";
 import type { LoaderFunction } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import invariant from "tiny-invariant";
 import {
-  Avatar,
   Box,
   Button,
-  Heading,
-  HStack,
-  Stack,
-  Text,
+  useClipboard,
   useColorModeValue,
+  useToast,
 } from "@chakra-ui/react";
 import { ROUTES } from "~/constants";
 import * as React from "react";
 import { getUserId } from "~/session.server";
 import RemixLink from "~/components/RemixLink";
+import { getBoardEntryListItemsFromUser } from "~/models/board.server";
+import ProfileGrid from "~/components/ProfileGrid";
 
 type LoaderData = {
   user: Awaited<ReturnType<typeof getUserById>>;
+  boardEntries: Awaited<ReturnType<typeof getBoardEntryListItemsFromUser>>;
+  extendedProfile: Awaited<ReturnType<typeof getExtendedProfileForUser>>;
+  contact: Awaited<ReturnType<typeof getContactInformationForUser>>;
 };
 
 /**
@@ -37,7 +43,17 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const user = await getUserById(params.playerId);
   if (!user) throw new Response("Not Found", { status: 404 });
 
-  return json<LoaderData>({ user: user });
+  const extendedProfile = await getExtendedProfileForUser({
+    userId: params.playerId,
+  });
+  const contact = await getContactInformationForUser({
+    userId: params.playerId,
+  });
+  const boardEntries = await getBoardEntryListItemsFromUser({
+    userId: params.playerId,
+  });
+
+  return json<LoaderData>({ user, extendedProfile, contact, boardEntries });
 };
 
 /**
@@ -46,7 +62,10 @@ export const loader: LoaderFunction = async ({ request, params }) => {
  * @returns A React element
  */
 export default function PlayerDetailsPage() {
-  const data = useLoaderData() as LoaderData;
+  const loader = useLoaderData() as LoaderData;
+  const background = useColorModeValue("white", "gray.700");
+  const { hasCopied, onCopy } = useClipboard(loader.contact?.discord || "");
+  const toast = useToast();
 
   return (
     <>
@@ -59,38 +78,20 @@ export default function PlayerDetailsPage() {
         </RemixLink>
       </Box>
 
-      <Box
-        rounded={"lg"}
-        bg={useColorModeValue("white", "gray.700")}
-        boxShadow={"lg"}
-        maxW={"xl"}
-        mx="auto"
-        py={12}
-        px={6}
-      >
-        <Stack spacing={10}>
-          <HStack justifyContent="space-between" gap={4}>
-            <Heading as="h1">{data.user?.firstName}</Heading>
-            <Avatar
-              size="md"
-              src={data.user?.avatar || undefined}
-              name={`${data.user?.firstName} ${data.user?.lastName}`}
-            />{" "}
-          </HStack>
-
-          <Stack spacing={2}>
-            <Heading as="h2" size="md">
-              Bio
-            </Heading>
-            <Text>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Accusamus, assumenda aut corporis cumque eaque facere fuga fugiat
-              harum id illum incidunt minus nemo nostrum officiis quasi sed unde
-              velit voluptates?
-            </Text>
-          </Stack>
-        </Stack>
-      </Box>
+      <ProfileGrid
+        bg={background}
+        loader={loader}
+        onClick={() => {
+          toast({
+            title: "Account created.",
+            description: "We've created your account for you.",
+            status: "success",
+            duration: 9000,
+            isClosable: true,
+          });
+          onCopy();
+        }}
+      />
     </>
   );
 }
