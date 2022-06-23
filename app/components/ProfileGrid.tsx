@@ -41,6 +41,7 @@ export default function ProfileGrid(props: {
   onClick: () => void;
 }) {
   return (
+    // TODO: add name of user
     <Grid
       templateRows="repeat(2, 1fr)"
       templateColumns="repeat(6, 1fr)"

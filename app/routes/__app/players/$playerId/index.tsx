@@ -4,12 +4,16 @@ import {
   getExtendedProfileForUser,
   getUserById,
 } from "~/models/user.server";
-import type { LoaderFunction } from "@remix-run/node";
+import type { LoaderFunction, MetaFunction } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import invariant from "tiny-invariant";
 import {
+  Avatar,
   Box,
   Button,
+  Heading,
+  HStack,
+  Stack,
   useClipboard,
   useColorModeValue,
   useToast,
@@ -20,6 +24,12 @@ import { getUserId } from "~/session.server";
 import RemixLink from "~/components/RemixLink";
 import { getBoardEntryListItemsFromUser } from "~/models/board.server";
 import ProfileGrid from "~/components/ProfileGrid";
+
+export const meta: MetaFunction = () => {
+  return {
+    title: "Player Profile",
+  };
+};
 
 type LoaderData = {
   user: Awaited<ReturnType<typeof getUserById>>;
@@ -68,15 +78,28 @@ export default function PlayerDetailsPage() {
   const toast = useToast();
 
   return (
-    <>
-      {/* TODO: adjust link depending on where user came from e.g. dashboardEntry */}
-      <Box mt="10" mb="20">
+    <Stack spacing={8}>
+      <Box mt="10">
         <RemixLink to={ROUTES.PLAYERS}>
+          {/* TODO: adjust link depending on where user came from e.g. dashboardEntry */}
           <Button as={"span"} colorScheme="teal">
             Back to players
           </Button>
         </RemixLink>
       </Box>
+
+      <Stack align={"center"}>
+        <HStack>
+          <Heading as="h1" fontSize={"4xl"}>
+            Profile of {loader.user?.firstName}
+          </Heading>
+          <Avatar
+            size="md"
+            src={loader.user?.avatar || undefined}
+            name={`${loader.user?.firstName} ${loader.user?.lastName}`}
+          />{" "}
+        </HStack>
+      </Stack>
 
       <ProfileGrid
         bg={background}
@@ -92,6 +115,6 @@ export default function PlayerDetailsPage() {
           onCopy();
         }}
       />
-    </>
+    </Stack>
   );
 }
