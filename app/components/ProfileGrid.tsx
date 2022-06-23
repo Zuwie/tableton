@@ -146,32 +146,36 @@ export default function ProfileGrid(props: {
         <Heading fontSize={"3xl"} mb={4}>
           Active board-entries
         </Heading>
-        <TableContainer bg={props.bg} rounded="lg">
-          <Table variant="simple">
-            <Thead>
-              <Tr>
-                <Th>Title</Th>
-                <Th>Date</Th>
-                <Th>Status</Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              {props.loader.boardEntries?.map((boardEntry) => (
-                <Tr key={boardEntry.id}>
-                  <Td>
-                    <RemixLink to={`${ROUTES.DASHBOARD}/${boardEntry.id}`}>
-                      {boardEntry.title} <ArrowForwardIcon />
-                    </RemixLink>
-                  </Td>
-                  <Td>{new Date(boardEntry.date).toLocaleDateString()}</Td>
-                  <Td>
-                    <StatusDisplay status={boardEntry.status} />
-                  </Td>
+        {props.loader.boardEntries.length ? (
+          <TableContainer bg={props.bg} rounded="lg">
+            <Table variant="simple">
+              <Thead>
+                <Tr>
+                  <Th>Title</Th>
+                  <Th>Date</Th>
+                  <Th>Status</Th>
                 </Tr>
-              ))}
-            </Tbody>
-          </Table>
-        </TableContainer>
+              </Thead>
+              <Tbody>
+                {props.loader.boardEntries?.map((boardEntry) => (
+                  <Tr key={boardEntry.id}>
+                    <Td>
+                      <RemixLink to={`${ROUTES.DASHBOARD}/${boardEntry.id}`}>
+                        {boardEntry.title} <ArrowForwardIcon />
+                      </RemixLink>
+                    </Td>
+                    <Td>{new Date(boardEntry.date).toLocaleDateString()}</Td>
+                    <Td>
+                      <StatusDisplay status={boardEntry.status} />
+                    </Td>
+                  </Tr>
+                ))}
+              </Tbody>
+            </Table>
+          </TableContainer>
+        ) : (
+          <Text>No board-entries are currently active.</Text>
+        )}
       </GridItem>
     </Grid>
   );
