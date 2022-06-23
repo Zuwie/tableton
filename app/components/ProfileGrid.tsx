@@ -57,7 +57,10 @@ export default function ProfileGrid(props: {
         <Heading fontSize={"3xl"} mb={4}>
           Bio
         </Heading>
-        <Text>{props.loader.extendedProfile?.biography}</Text>
+        <Text>
+          {props.loader.extendedProfile?.biography ||
+            "No biography has been filled out."}
+        </Text>
       </GridItem>
 
       <GridItem
@@ -72,7 +75,7 @@ export default function ProfileGrid(props: {
         </Heading>
         <Stack spacing={4}>
           {/* TODO: render all factions when multiple factions are implemented */}
-          {props.loader.extendedProfile?.faction && (
+          {props.loader.extendedProfile?.faction ? (
             <Tag>
               {
                 FACTIONS[
@@ -80,6 +83,8 @@ export default function ProfileGrid(props: {
                 ]
               }
             </Tag>
+          ) : (
+            <Text>No faction has been selected.</Text>
           )}
         </Stack>
       </GridItem>
@@ -94,6 +99,8 @@ export default function ProfileGrid(props: {
           Contact
         </Heading>
         <ButtonGroup>
+          {!props.loader.contact && <Text>No contact has been given.</Text>}
+
           {props.loader.contact?.discord && (
             <IconButton
               as="span"
