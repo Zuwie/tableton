@@ -1,7 +1,6 @@
 import {
   Box,
   Button,
-  Checkbox,
   FormControl,
   FormHelperText,
   FormLabel,
@@ -161,7 +160,7 @@ export default function OnboardingPage() {
             <Heading fontSize="md" pt={4}>
               How do you want to get contacted?
             </Heading>
-            <Tabs variant="enclosed">
+            <Tabs variant="enclosed" isFitted>
               <TabList>
                 <Tab>Phone</Tab>
                 <Tab>Discord</Tab>
@@ -176,7 +175,6 @@ export default function OnboardingPage() {
                       <Input type="text" name="phone" />
                       <FormHelperText>e.g. +436761234567</FormHelperText>
                     </FormControl>
-                    <Checkbox name="saveAsWhatsApp">Save as WhatsApp?</Checkbox>
                   </Stack>
                 </TabPanel>
                 <TabPanel>
