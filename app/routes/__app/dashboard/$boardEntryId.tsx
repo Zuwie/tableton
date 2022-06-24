@@ -182,22 +182,24 @@ export default function BoardEntryDetailsPage() {
 
             <HStack justifyContent="space-between" gap={4}>
               <Heading as="h1">{loader.boardEntry?.title}</Heading>
-              <AvatarGroup size="md" max={2}>
-                <Avatar
-                  size="md"
-                  src={loader.boardEntry?.user.avatar || undefined}
-                  name={`${loader.boardEntry?.user.firstName} ${loader.boardEntry?.user.lastName}`}
-                />
-                {loader.boardEntry?.challenger ? (
+              <Link to={`${ROUTES.PLAYERS}/${loader.boardEntry?.user.id}`}>
+                <AvatarGroup size="md" max={2}>
                   <Avatar
                     size="md"
-                    src={loader.boardEntry?.challenger.avatar || undefined}
-                    name={`${loader.boardEntry?.challenger.firstName} ${loader.boardEntry?.challenger.lastName}`}
+                    src={loader.boardEntry?.user.avatar || undefined}
+                    name={`${loader.boardEntry?.user.firstName} ${loader.boardEntry?.user.lastName}`}
                   />
-                ) : (
-                  <Avatar bg="gray.200" icon={<HiPlus />} />
-                )}
-              </AvatarGroup>
+                  {loader.boardEntry?.challenger ? (
+                    <Avatar
+                      size="md"
+                      src={loader.boardEntry?.challenger.avatar || undefined}
+                      name={`${loader.boardEntry?.challenger.firstName} ${loader.boardEntry?.challenger.lastName}`}
+                    />
+                  ) : (
+                    <Avatar bg="gray.200" icon={<HiPlus />} />
+                  )}
+                </AvatarGroup>
+              </Link>
             </HStack>
 
             <Text>{loader.boardEntry?.body}</Text>
