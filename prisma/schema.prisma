@@ -99,6 +99,6 @@ model Notifications {
 
   title     String
   body      String
-  readAt    DateTime
-  createdAt DateTime @default(now())
+  readAt    DateTime?
+  createdAt DateTime  @default(now())
 }

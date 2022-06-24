@@ -76,7 +76,7 @@ Table Notifications {
   id String [pk]
   title String [not null]
   body String [not null]
-  readAt DateTime [not null]
+  readAt DateTime
   createdAt DateTime [default: `now()`, not null]
 }
 

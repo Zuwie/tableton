@@ -15,7 +15,7 @@ async function seed() {
     // no worries if it doesn't exist yet
   });
 
-  const hashedPassword = await bcrypt.hash("123456", 10);
+  const hashedPassword = await bcrypt.hash("12345678", 10);
 
   const userArray: User[] = [];
 
@@ -32,6 +32,7 @@ async function seed() {
       avatar: faker.internet.avatar(),
     },
   });
+  userArray.push(user1);
 
   /**
    * It returns a fake user object with a fake email, password, first name, last name, and avatar
@@ -39,7 +40,6 @@ async function seed() {
    * firstName, lastName, and avatar.
    */
   function getFakeUser() {
-    const faction1 = getRandomEntry(Object.keys(FACTIONS));
     return {
       data: {
         email: faker.internet.email(),
@@ -51,7 +51,6 @@ async function seed() {
         firstName: faker.internet.userName("firstName"),
         lastName: faker.internet.userName("lastName"),
         avatar: faker.internet.avatar(),
-        faction: getRandomEntry(Object.keys(FACTIONS)),
       },
     };
   }
@@ -77,8 +76,29 @@ async function seed() {
 
   /* It's creating 15 fake users and pushing them into an array. */
   for (let i = 0; i < 15; i++) {
-    const fakeUser = prisma.user.create(getFakeUser());
+    const fakeUser = await prisma.user.create(getFakeUser());
+    const fakeExtendedProfile = prisma.extendedProfile.create({
+      data: {
+        biography: faker.lorem.paragraph(10),
+        faction: getRandomEntry(Object.keys(FACTIONS)),
+        user: {
+          connect: { id: fakeUser.id },
+        },
+      },
+    });
+    const fakeContactInfo = prisma.contact.create({
+      data: {
+        phone: faker.phone.phoneNumber(),
+        email: fakeUser.email,
+        discord: faker.random.word() + "#" + faker.random.numeric(4),
+        user: {
+          connect: { id: fakeUser.id },
+        },
+      },
+    });
     await fakeUser;
+    await fakeExtendedProfile;
+    await fakeContactInfo;
     userArray.push(await fakeUser);
   }
 
