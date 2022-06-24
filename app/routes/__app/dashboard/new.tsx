@@ -1,4 +1,4 @@
-import type { ActionFunction } from "@remix-run/node";
+import type { ActionFunction, MetaFunction } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { Form, useActionData } from "@remix-run/react";
 import * as React from "react";
@@ -19,6 +19,12 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import RemixLink from "~/components/RemixLink";
+
+export const meta: MetaFunction = () => {
+  return {
+    title: "Create a new board-entry",
+  };
+};
 
 type ActionData = {
   errors?: {
