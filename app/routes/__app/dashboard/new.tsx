@@ -107,7 +107,7 @@ export const action: ActionFunction = async ({ request }) => {
     status: 0,
   });
 
-  return redirect(`/dashboard/${boardEntry.id}`);
+  return redirect(`${ROUTES.DASHBOARD}/${boardEntry.id}`);
 };
 
 /* A React component that renders a form to create a new board entry. */

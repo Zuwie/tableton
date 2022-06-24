@@ -70,7 +70,7 @@ export const action: ActionFunction = async ({ request, params }) => {
 
   if (action === "delete") {
     await deleteBoardEntry({ userId, id: params.boardEntryId });
-    return redirect("/dashboard");
+    return redirect(ROUTES.DASHBOARD);
   }
 
   if (action === "sendMatchRequest") {
