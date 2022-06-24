@@ -1,4 +1,8 @@
-import type { ActionFunction, LoaderFunction } from "@remix-run/node";
+import type {
+  ActionFunction,
+  LoaderFunction,
+  MetaFunction,
+} from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { Form, Link, useCatch, useLoaderData } from "@remix-run/react";
 import invariant from "tiny-invariant";
@@ -27,6 +31,12 @@ import { createMatchRequest } from "~/models/matches.server";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import RemixLink from "~/components/RemixLink";
 import { HiPlus } from "react-icons/hi";
+
+export const meta: MetaFunction = () => {
+  return {
+    title: "Board-Entry-Details",
+  };
+};
 
 type LoaderData = {
   boardEntry: Awaited<ReturnType<typeof getBoardEntry>>;
@@ -94,12 +104,46 @@ export default function BoardEntryDetailsPage() {
         </Link>
       </Box>
 
-      <Stack direction={"row"} gap={4} maxW={"4xl"} mx="auto">
+      <Stack
+        direction={{ base: "column", md: "row-reverse" }}
+        gap={4}
+        maxW={"4xl"}
+        mx="auto"
+      >
+        {isOwner && (
+          <Box
+            rounded={"lg"}
+            bg={boxBg}
+            boxShadow={"lg"}
+            py={12}
+            px={6}
+            flexGrow={1}
+            alignSelf="flex-start"
+          >
+            <Stack spacing={10}>
+              <Heading fontSize="lg">Match requests</Heading>
+              <RemixLink to={ROUTES.MATCH_REQUESTS}>
+                <Box rounded="lg" bg="orange.200" py={2} px={4}>
+                  <HStack justifyContent="space-between">
+                    {openMatchRequests === 0 ? (
+                      <Text>No open match requests</Text>
+                    ) : (
+                      <Text>Open requests: {openMatchRequests}</Text>
+                    )}
+                    <ArrowForwardIcon />
+                  </HStack>
+                </Box>
+              </RemixLink>
+            </Stack>
+          </Box>
+        )}
+
         <Box
           rounded={"lg"}
           bg={boxBg}
           boxShadow={"lg"}
           maxW={"xl"}
+          flexGrow={2}
           mx="auto"
           py={12}
           px={6}
@@ -194,34 +238,6 @@ export default function BoardEntryDetailsPage() {
             </Stack>
           </Stack>
         </Box>
-
-        {isOwner && (
-          <Box
-            rounded={"lg"}
-            bg={boxBg}
-            boxShadow={"lg"}
-            w={"100%"}
-            py={12}
-            px={6}
-            alignSelf="flex-start"
-          >
-            <Stack spacing={10}>
-              <Heading fontSize="lg">Match requests</Heading>
-              <RemixLink to={ROUTES.MATCH_REQUESTS}>
-                <Box rounded="lg" bg="orange.200" py={2} px={4}>
-                  <HStack justifyContent="space-between">
-                    {openMatchRequests === 0 ? (
-                      <Text>No open match requests</Text>
-                    ) : (
-                      <Text>Open requests: {openMatchRequests}</Text>
-                    )}
-                    <ArrowForwardIcon />
-                  </HStack>
-                </Box>
-              </RemixLink>
-            </Stack>
-          </Box>
-        )}
       </Stack>
     </>
   );
