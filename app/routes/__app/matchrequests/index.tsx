@@ -1,4 +1,5 @@
 import {
+  getMatchRequestById,
   getMatchRequestForUser,
   updateMatchRequestStatus,
 } from "~/models/matches.server";
@@ -65,12 +66,13 @@ export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
   const action = formData.get("_action");
   const matchRequestId = formData.get("matchRequestId");
-  const boardEntryId = formData.get("boardEntryId");
 
-  if (typeof boardEntryId !== "string")
-    throw new Error("boardEntryId is required");
   if (typeof matchRequestId !== "string")
     throw new Error("matchRequestId is required");
+
+  const matchRequest = await getMatchRequestById({ id: matchRequestId });
+  if (!matchRequestId)
+    throw new Error("matchRequestId does not match any existing entries");
 
   if (action === "delete") {
     await updateMatchRequestStatus({ id: matchRequestId, status: 2 });
@@ -78,7 +80,11 @@ export const action: ActionFunction = async ({ request }) => {
   }
 
   if (action === "accept") {
-    await updateBoardEntry({ id: boardEntryId, status: 1 });
+    await updateBoardEntry({
+      id: matchRequest?.boardEntryId,
+      challengerId: matchRequest?.fromUserId,
+      status: 1,
+    });
     await updateMatchRequestStatus({ id: matchRequestId, status: 1 });
     return redirect(ROUTES.MATCH_REQUESTS);
   }
@@ -143,11 +149,6 @@ export default function MatchRequestsPage() {
                           name="matchRequestId"
                           value={matchRequest.id}
                         />
-                        <input
-                          type="hidden"
-                          name="boardEntryId"
-                          value={matchRequest.boardEntry.id}
-                        />
                         <IconButton
                           type="submit"
                           name="_action"
@@ -162,11 +163,6 @@ export default function MatchRequestsPage() {
                           type="hidden"
                           name="matchRequestId"
                           value={matchRequest.id}
-                        />
-                        <input
-                          type="hidden"
-                          name="boardEntryId"
-                          value={matchRequest.boardEntry.id}
                         />
                         <IconButton
                           type="submit"

@@ -16,6 +16,7 @@ Table User {
   boardEntries BoardEntry [not null]
   incomingMatchRequests MatchRequest [not null]
   outgoingMatchRequests MatchRequest [not null]
+  challenger BoardEntry [not null]
 }
 
 Table ExtendedProfile {
@@ -55,6 +56,8 @@ Table BoardEntry {
   userId String [not null]
   matchRequests MatchRequest [not null]
   status Int [not null, default: 0]
+  challenger User
+  challengerId String
 }
 
 Table MatchRequest {
@@ -84,6 +87,8 @@ Ref: Password.userId - User.id [delete: Cascade]
 Ref: Contact.userId - User.id [delete: Cascade]
 
 Ref: BoardEntry.userId > User.id [delete: Cascade]
+
+Ref: BoardEntry.challengerId > User.id [delete: Cascade]
 
 Ref: MatchRequest.fromUserId > User.id [delete: Cascade]
 

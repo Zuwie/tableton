@@ -24,6 +24,19 @@ export function getMatchRequestForUser({ userId }: { userId: User["id"] }) {
 }
 
 /**
+ * "Get a match request by its id."
+ *
+ * The function takes in an object with a single property, id, which is the id of the match request we want to get
+ * @param  - MatchRequest["id"]
+ * @returns A MatchRequest
+ */
+export function getMatchRequestById({ id }: { id: MatchRequest["id"] }) {
+  return prisma.matchRequest.findUnique({
+    where: { id },
+  });
+}
+
+/**
  * It creates a match request from a user to a board entry
  * @param  - Pick<BoardEntry, "id"> & { userId: User["id"] }
  * @returns A match request

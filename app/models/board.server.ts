@@ -21,6 +21,7 @@ export function getBoardEntry({ id }: Pick<BoardEntry, "id">) {
       user: true,
       matchRequests: true,
       status: true,
+      challenger: true,
     },
   });
 }
@@ -128,6 +129,7 @@ export function updateBoardEntry({
   location,
   date,
   status,
+  challengerId,
   id,
 }: Partial<BoardEntry>) {
   return prisma.boardEntry.update({
@@ -138,7 +140,8 @@ export function updateBoardEntry({
       gameSystem: gameSystem || undefined,
       location: location || undefined,
       date: date || undefined,
-      status: status,
+      challengerId: challengerId || undefined,
+      status: status || undefined,
     },
   });
 }

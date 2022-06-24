@@ -27,6 +27,7 @@ model User {
   boardEntries          BoardEntry[]
   incomingMatchRequests MatchRequest[] @relation("incomingMatchRequests")
   outgoingMatchRequests MatchRequest[] @relation("outgoingMatchRequests")
+  challenger            BoardEntry[]   @relation("challenger")
 }
 
 model ExtendedProfile {
@@ -73,7 +74,9 @@ model BoardEntry {
   userId        String
   matchRequests MatchRequest[]
 
-  status Int @default(0)
+  status       Int     @default(0)
+  challenger   User?   @relation("challenger", fields: [challengerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  challengerId String?
 }
 
 model MatchRequest {

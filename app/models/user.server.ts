@@ -89,10 +89,10 @@ export async function updateUser({
   return prisma.user.update({
     where: { id: userId },
     data: {
-      email,
-      firstName,
-      lastName,
-      avatar,
+      email: email || undefined,
+      firstName: firstName || undefined,
+      lastName: lastName || undefined,
+      avatar: avatar || undefined,
     },
   });
 }
