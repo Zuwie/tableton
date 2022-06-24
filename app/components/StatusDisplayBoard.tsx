@@ -1,6 +1,6 @@
 import { Text } from "@chakra-ui/react";
 
-export default function StatusDisplay({ status }: { status: Number }) {
+export default function StatusDisplayBoard({ status }: { status: Number }) {
   return (
     <>
       {status === 0 ? (

@@ -117,6 +117,33 @@ export function createBoardEntry({
 }
 
 /**
+ * It updates a board entry with the given data
+ * @param  - Pick<BoardEntry, "body" | "title" | "gameSystem" | "location" | "date" | "status">
+ * @returns A BoardEntry
+ */
+export function updateBoardEntry({
+  title,
+  body,
+  gameSystem,
+  location,
+  date,
+  status,
+  id,
+}: Partial<BoardEntry>) {
+  return prisma.boardEntry.update({
+    where: { id },
+    data: {
+      title: title || undefined,
+      body: body || undefined,
+      gameSystem: gameSystem || undefined,
+      location: location || undefined,
+      date: date || undefined,
+      status: status,
+    },
+  });
+}
+
+/**
  * It deletes a board entry
  * @param  - Pick<BoardEntry, "id"> & { userId: User["id"] }
  * @returns A promise that resolves to the number of deleted entries.

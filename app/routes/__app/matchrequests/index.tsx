@@ -1,7 +1,6 @@
 import {
-  acceptMatchRequest,
-  deleteMatchRequest,
   getMatchRequestForUser,
+  updateMatchRequestStatus,
 } from "~/models/matches.server";
 import type {
   ActionFunction,
@@ -31,6 +30,8 @@ import { Form, useLoaderData } from "@remix-run/react";
 import { ROUTES } from "~/constants";
 import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
 import RemixLink from "~/components/RemixLink";
+import { updateBoardEntry } from "~/models/board.server";
+import StatusDisplayMatchRequests from "~/components/StatusDisplayMatchRequests";
 
 export const meta: MetaFunction = () => {
   return {
@@ -42,6 +43,12 @@ type LoaderData = {
   matchRequests: Awaited<ReturnType<typeof getMatchRequestForUser>>;
 };
 
+/**
+ * It gets the userId from the request, then gets the match requests for that user, and returns the match requests as JSON
+ * @param  - LoaderFunction - This is the type of the loader function. It's a function that takes a single parameter, which
+ * is an object with a single property, `request`.
+ * @returns A loader function that returns a promise that resolves to a loader data object.
+ */
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await requireUserId(request);
   const matchRequests = await getMatchRequestForUser({ userId });
@@ -49,27 +56,37 @@ export const loader: LoaderFunction = async ({ request }) => {
   return json<LoaderData>({ matchRequests });
 };
 
+/**
+ * It takes a form submission, and depending on the action, either marks the match request as accepted or declined
+ * @param  - `action` - The name of the action function.
+ * @returns The return value is a function that takes an object with a request property.
+ */
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
   const action = formData.get("_action");
+  const matchRequestId = formData.get("matchRequestId");
   const boardEntryId = formData.get("boardEntryId");
 
   if (typeof boardEntryId !== "string")
     throw new Error("boardEntryId is required");
+  if (typeof matchRequestId !== "string")
+    throw new Error("matchRequestId is required");
 
   if (action === "delete") {
-    await deleteMatchRequest({ id: boardEntryId });
+    await updateMatchRequestStatus({ id: matchRequestId, status: 2 });
     return redirect(ROUTES.MATCH_REQUESTS);
   }
 
   if (action === "accept") {
-    await acceptMatchRequest({ id: boardEntryId });
+    await updateBoardEntry({ id: boardEntryId, status: 1 });
+    await updateMatchRequestStatus({ id: matchRequestId, status: 1 });
     return redirect(ROUTES.MATCH_REQUESTS);
   }
 
   return null;
 };
 
+/* It's a React component that displays the match requests for the user. */
 export default function MatchRequestsPage() {
   const loader = useLoaderData() as LoaderData;
   const background = useColorModeValue("white", "gray.800");
@@ -118,40 +135,52 @@ export default function MatchRequestsPage() {
                 </Td>
                 <Td>{new Date(matchRequest.createdAt).toLocaleDateString()}</Td>
                 <Td>
-                  <HStack>
-                    <Form method="post">
-                      <input
-                        type="hidden"
-                        name="boardEntryId"
-                        value={matchRequest.id}
-                      />
-                      <IconButton
-                        type="submit"
-                        name="_action"
-                        value="accept"
-                        colorScheme="green"
-                        aria-label="Accept match request"
-                        isDisabled={matchRequest.status === 2}
-                        icon={<CheckIcon />}
-                      />
-                    </Form>
-                    <Form method="post">
-                      <input
-                        type="hidden"
-                        name="boardEntryId"
-                        value={matchRequest.id}
-                      />
-                      <IconButton
-                        type="submit"
-                        name="_action"
-                        value="delete"
-                        colorScheme="red"
-                        aria-label="Decline match request"
-                        isDisabled={matchRequest.status === 1}
-                        icon={<CloseIcon />}
-                      />
-                    </Form>
-                  </HStack>
+                  {matchRequest.status === 0 ? (
+                    <HStack>
+                      <Form method="post">
+                        <input
+                          type="hidden"
+                          name="matchRequestId"
+                          value={matchRequest.id}
+                        />
+                        <input
+                          type="hidden"
+                          name="boardEntryId"
+                          value={matchRequest.boardEntry.id}
+                        />
+                        <IconButton
+                          type="submit"
+                          name="_action"
+                          value="accept"
+                          colorScheme="green"
+                          aria-label="Accept match request"
+                          icon={<CheckIcon />}
+                        />
+                      </Form>
+                      <Form method="post">
+                        <input
+                          type="hidden"
+                          name="matchRequestId"
+                          value={matchRequest.id}
+                        />
+                        <input
+                          type="hidden"
+                          name="boardEntryId"
+                          value={matchRequest.boardEntry.id}
+                        />
+                        <IconButton
+                          type="submit"
+                          name="_action"
+                          value="delete"
+                          colorScheme="red"
+                          aria-label="Decline match request"
+                          icon={<CloseIcon />}
+                        />
+                      </Form>
+                    </HStack>
+                  ) : (
+                    <StatusDisplayMatchRequests status={matchRequest.status} />
+                  )}
                 </Td>
               </Tr>
             ))}

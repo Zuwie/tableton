@@ -20,7 +20,7 @@ import { FACTIONS, ROUTES } from "~/constants";
 import { FaDiscord, FaEnvelope, FaSms, FaTwitter } from "react-icons/fa";
 import RemixLink from "~/components/RemixLink";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
-import StatusDisplay from "~/components/StatusDisplay";
+import StatusDisplayBoard from "~/components/StatusDisplayBoard";
 import * as React from "react";
 import type {
   getContactInformationForUser,
@@ -166,7 +166,7 @@ export default function ProfileGrid(props: {
                     </Td>
                     <Td>{new Date(boardEntry.date).toLocaleDateString()}</Td>
                     <Td>
-                      <StatusDisplay status={boardEntry.status} />
+                      <StatusDisplayBoard status={boardEntry.status} />
                     </Td>
                   </Tr>
                 ))}

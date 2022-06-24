@@ -1,4 +1,4 @@
-import type { BoardEntry, User } from "@prisma/client";
+import type { BoardEntry, MatchRequest, User } from "@prisma/client";
 import { prisma } from "~/db.server";
 import { getBoardEntry } from "~/models/board.server";
 
@@ -70,17 +70,20 @@ export async function deleteMatchRequest({ id }: Pick<BoardEntry, "id">) {
 }
 
 /**
- * It accepts a match request
- * @param  - Pick<BoardEntry, "id">
- * @returns A promise that resolves to a MatchRequest object.
+ * It updates the status of a match request
+ * @param  - Pick<MatchRequest, "id" | "status">
+ * @returns A promise that resolves to the updated match request.
  */
-export async function acceptMatchRequest({ id }: Pick<BoardEntry, "id">) {
+export async function updateMatchRequestStatus({
+  id,
+  status,
+}: Pick<MatchRequest, "id" | "status">) {
   return prisma.matchRequest.update({
     where: {
       id,
     },
     data: {
-      status: 1,
+      status,
     },
   });
 }
