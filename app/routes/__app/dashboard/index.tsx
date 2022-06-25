@@ -2,7 +2,6 @@ import { Link, useLoaderData } from "@remix-run/react";
 import type { LoaderFunction, MetaFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { getBoardEntryListItems } from "~/models/board.server";
-import { requireUserId } from "~/session.server";
 import {
   Avatar,
   Box,
@@ -21,6 +20,7 @@ import {
 import { GAME_SYSTEM } from "~/constants";
 import * as React from "react";
 import RemixLink from "~/components/RemixLink";
+import { getClientLocales } from "remix-utils";
 
 export const meta: MetaFunction = () => {
   return {
@@ -38,9 +38,21 @@ type LoaderData = {
  * @returns The userBoardEntries are being returned.
  */
 export const loader: LoaderFunction = async ({ request }) => {
-  const userId = await requireUserId(request);
   const userBoardEntries = await getBoardEntryListItems();
-  return json<LoaderData>({ userBoardEntries });
+  let locales = await getClientLocales(request);
+  let formattedBoardEntries = userBoardEntries.map((entry) => {
+    return {
+      ...entry,
+      date: new Date(entry.date).toLocaleDateString(locales),
+      time: new Date(entry.date).toLocaleTimeString(locales, {
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
+    };
+  });
+
+  // @ts-ignore
+  return json<LoaderData>({ userBoardEntries: formattedBoardEntries });
 };
 
 export default function DashboardIndexPage() {
@@ -95,13 +107,10 @@ export default function DashboardIndexPage() {
                           }
                         </Tag>
                         <Spacer />
-                        <Tag>{new Date(entry.date).toLocaleDateString()}</Tag>
-                        <Tag>
-                          {new Date(entry.date).toLocaleTimeString([], {
-                            hour: "2-digit",
-                            minute: "2-digit",
-                          })}
-                        </Tag>
+                        <Tag>{entry.date}</Tag>
+                        {/* TODO: find better typing to remove ts-ignore */}
+                        {/* @ts-ignore*/}
+                        <Tag>{entry.time}</Tag>
                       </HStack>
                       <HStack>
                         <Spacer />
