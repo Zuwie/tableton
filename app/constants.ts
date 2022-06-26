@@ -56,8 +56,5 @@ export const FACTIONS = {
 };
 
 export const NOTIFICATIONS = {
-  MATCH_REQUEST_NEW: {
-    title: "New Match-Request:",
-    body: "You have a new match-request. Click to see more details.",
-  },
+  MATCH_REQUEST_NEW: "You have a new match-request.",
 };
