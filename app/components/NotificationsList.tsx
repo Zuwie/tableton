@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { List, ListItem, Stack, Text } from "@chakra-ui/react";
 import { NOTIFICATIONS, ROUTES } from "~/constants";
 import InternalLink from "~/components/InternalLink";
+import * as timeAgo from "timeago.js";
 
 /**
  * It fetches notifications from the server and displays them in a list
@@ -38,10 +39,12 @@ export default function NotificationsList() {
                   {
                     NOTIFICATIONS[
                       notification.type as keyof typeof NOTIFICATIONS
-                    ].body
+                    ]
                   }
                 </Text>
-                <Text fontSize="xs">{notification.createdAt}</Text>
+                <Text fontSize="xs">
+                  {timeAgo.format(notification.createdAt)}
+                </Text>
               </Stack>
             </InternalLink>
           </ListItem>
