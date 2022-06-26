@@ -43,6 +43,11 @@ export const meta: MetaFunction = () => {
   };
 };
 
+/**
+ * If the user is logged in, redirect to the home page, otherwise return an empty object
+ * @param  - LoaderFunction: This is the type of the loader function.
+ * @returns An object with a key of "userId" and a value of the userId.
+ */
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request);
   if (userId) return redirect("/");
@@ -58,6 +63,13 @@ interface ActionData {
   };
 }
 
+/**
+ * It creates a new user account and then creates a new session for that user
+ * @param  - ActionFunction - This is a function that takes an object with a request property and returns a Promise that
+ * resolves to an ActionData object.
+ * @returns A function that takes an object with a request property and returns a promise that resolves to an object with
+ * an errors property and a status property.
+ */
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
   const email = formData.get("email");
@@ -105,6 +117,9 @@ export const action: ActionFunction = async ({ request }) => {
   });
 };
 
+/**
+ * It renders a form that allows a user to sign up for an account
+ */
 export default function JoinPage() {
   const [searchParams] = useSearchParams();
   const actionData = useActionData() as ActionData;
