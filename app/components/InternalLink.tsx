@@ -6,7 +6,7 @@ import type { RemixLinkProps } from "@remix-run/react/components";
 
 export default function InternalLink(props: RemixLinkProps & ChakraLinkProps) {
   return (
-    <ChakraLink as={RemixLink} {...props}>
+    <ChakraLink as={RemixLink} _hover={{ textDecoration: "none" }} {...props}>
       {props.children}
     </ChakraLink>
   );
