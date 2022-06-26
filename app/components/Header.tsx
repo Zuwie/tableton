@@ -196,6 +196,7 @@ const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
   );
 };
 
+// TODO: refactor to have no name-collision with app-navigation
 const MobileNav = () => {
   return (
     <Stack
