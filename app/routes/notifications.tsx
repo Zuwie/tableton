@@ -1,6 +1,9 @@
-import type { LoaderFunction } from "@remix-run/node";
+import type { ActionFunction, LoaderFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { getNotificationForUser } from "~/models/notification.server";
+import {
+  getNotificationForUser,
+  setNotificationsToRead,
+} from "~/models/notification.server";
 import { requireUserId } from "~/session.server";
 
 /**
@@ -24,4 +27,13 @@ export const loader: LoaderFunction = async ({ request }) => {
   const notifications = await getNotificationForUser({ userId });
 
   return json<LoaderDataNotifications>({ notifications });
+};
+
+export const action: ActionFunction = async ({ request }) => {
+  const userId = await requireUserId(request);
+  await setNotificationsToRead({
+    readAt: new Date(),
+    userId,
+  });
+  return null;
 };

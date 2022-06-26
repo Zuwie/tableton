@@ -10,23 +10,17 @@ import {
   MenuDivider,
   MenuItem,
   MenuList,
-  Popover,
-  PopoverArrow,
-  PopoverBody,
-  PopoverContent,
-  PopoverHeader,
-  PopoverTrigger,
   Text,
   useColorModeValue,
   VStack,
 } from "@chakra-ui/react";
 import { useUser } from "~/utils";
-import { FiBell, FiChevronDown, FiMenu } from "react-icons/fi";
+import { FiChevronDown, FiMenu } from "react-icons/fi";
 import { ROUTES } from "~/constants";
 import React from "react";
 import { Form, NavLink } from "@remix-run/react";
 import Logo from "~/components/Logo";
-import NotificationsList from "./NotificationsList";
+import Notifications from "~/components/Notifications";
 
 interface MobileProps extends FlexProps {
   onOpen: () => void;
@@ -60,23 +54,7 @@ export default function MobileNav({ onOpen, ...rest }: MobileProps) {
       </Box>
 
       <HStack spacing={{ base: "0", md: "6" }}>
-        <Popover>
-          <PopoverTrigger>
-            <IconButton
-              size="lg"
-              variant="ghost"
-              aria-label="open menu"
-              icon={<FiBell />}
-            />
-          </PopoverTrigger>
-          <PopoverContent>
-            <PopoverArrow />
-            <PopoverHeader>Notifications</PopoverHeader>
-            <PopoverBody p={0}>
-              <NotificationsList />
-            </PopoverBody>
-          </PopoverContent>
-        </Popover>
+        <Notifications />
 
         <Flex alignItems={"center"}>
           <Menu>
