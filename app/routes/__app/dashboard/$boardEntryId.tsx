@@ -4,7 +4,7 @@ import type {
   MetaFunction,
 } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
-import { Form, Link, useCatch, useLoaderData } from "@remix-run/react";
+import { Form, useCatch, useLoaderData } from "@remix-run/react";
 import invariant from "tiny-invariant";
 
 import { requireUserId } from "~/session.server";
@@ -29,7 +29,7 @@ import { useUser } from "~/utils";
 import { FiInbox, FiTrash } from "react-icons/fi";
 import { createMatchRequest } from "~/models/matches.server";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
-import RemixLink from "~/components/RemixLink";
+import InternalLink from "~/components/InternalLink";
 import { HiPlus } from "react-icons/hi";
 
 export const meta: MetaFunction = () => {
@@ -97,11 +97,11 @@ export default function BoardEntryDetailsPage() {
   return (
     <>
       <Box mt="10" mb="20">
-        <Link to={ROUTES.DASHBOARD}>
+        <InternalLink to={ROUTES.DASHBOARD}>
           <Button as={"span"} colorScheme="teal">
             Back to dashboard
           </Button>
-        </Link>
+        </InternalLink>
       </Box>
 
       <Stack
@@ -122,7 +122,7 @@ export default function BoardEntryDetailsPage() {
           >
             <Stack spacing={10}>
               <Heading fontSize="lg">Match requests</Heading>
-              <RemixLink to={ROUTES.MATCH_REQUESTS}>
+              <InternalLink to={ROUTES.MATCH_REQUESTS}>
                 <Box rounded="lg" bg="orange.200" py={2} px={4}>
                   <HStack justifyContent="space-between">
                     {openMatchRequests === 0 ? (
@@ -133,7 +133,7 @@ export default function BoardEntryDetailsPage() {
                     <ArrowForwardIcon />
                   </HStack>
                 </Box>
-              </RemixLink>
+              </InternalLink>
             </Stack>
           </Box>
         )}
@@ -182,7 +182,9 @@ export default function BoardEntryDetailsPage() {
 
             <HStack justifyContent="space-between" gap={4}>
               <Heading as="h1">{loader.boardEntry?.title}</Heading>
-              <Link to={`${ROUTES.PLAYERS}/${loader.boardEntry?.user.id}`}>
+              <InternalLink
+                to={`${ROUTES.PLAYERS}/${loader.boardEntry?.user.id}`}
+              >
                 <AvatarGroup size="md" max={2}>
                   <Avatar
                     size="md"
@@ -199,7 +201,7 @@ export default function BoardEntryDetailsPage() {
                     <Avatar bg="gray.200" icon={<HiPlus />} />
                   )}
                 </AvatarGroup>
-              </Link>
+              </InternalLink>
             </HStack>
 
             <Text>{loader.boardEntry?.body}</Text>

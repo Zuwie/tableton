@@ -18,7 +18,7 @@ import {
 } from "@chakra-ui/react";
 import { FACTIONS, ROUTES } from "~/constants";
 import { FaDiscord, FaEnvelope, FaSms, FaTwitter } from "react-icons/fa";
-import RemixLink from "~/components/RemixLink";
+import InternalLink from "~/components/InternalLink";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import StatusDisplayBoard from "~/components/StatusDisplayBoard";
 import * as React from "react";
@@ -160,9 +160,9 @@ export default function ProfileGrid(props: {
                 {props.loader.boardEntries?.map((boardEntry) => (
                   <Tr key={boardEntry.id}>
                     <Td>
-                      <RemixLink to={`${ROUTES.DASHBOARD}/${boardEntry.id}`}>
+                      <InternalLink to={`${ROUTES.DASHBOARD}/${boardEntry.id}`}>
                         {boardEntry.title} <ArrowForwardIcon />
-                      </RemixLink>
+                      </InternalLink>
                     </Td>
                     <Td>{new Date(boardEntry.date).toLocaleDateString()}</Td>
                     <Td>

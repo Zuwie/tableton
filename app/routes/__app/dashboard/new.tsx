@@ -18,7 +18,7 @@ import {
   Textarea,
   useColorModeValue,
 } from "@chakra-ui/react";
-import RemixLink from "~/components/RemixLink";
+import InternalLink from "~/components/InternalLink";
 
 export const meta: MetaFunction = () => {
   return {
@@ -128,11 +128,11 @@ export default function NewBoardEntryPage() {
   return (
     <>
       <Box mt="10" mb="20">
-        <RemixLink to={ROUTES.DASHBOARD}>
+        <InternalLink to={ROUTES.DASHBOARD}>
           <Button as={"span"} colorScheme="teal">
             Back to dashboard
           </Button>
-        </RemixLink>
+        </InternalLink>
       </Box>
 
       <Box

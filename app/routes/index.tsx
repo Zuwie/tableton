@@ -6,7 +6,7 @@ import { getUserId } from "~/session.server";
 import type { LoaderFunction } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
 import { ROUTES } from "~/constants";
-import RemixLink from "~/components/RemixLink";
+import InternalLink from "~/components/InternalLink";
 
 /**
  * If the user is logged in, redirect to the dashboard. Otherwise, do nothing
@@ -52,7 +52,7 @@ export default function RootIndexPage() {
             alignSelf={"center"}
             position={"relative"}
           >
-            <RemixLink to={ROUTES.JOIN}>
+            <InternalLink to={ROUTES.JOIN}>
               <Button
                 as="span"
                 colorScheme={"teal"}
@@ -63,7 +63,7 @@ export default function RootIndexPage() {
               >
                 Get Started
               </Button>
-            </RemixLink>
+            </InternalLink>
             <Button variant={"link"} colorScheme={"blue"} size={"sm"}>
               Learn more
             </Button>

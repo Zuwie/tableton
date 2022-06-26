@@ -21,7 +21,7 @@ import {
 import { ROUTES } from "~/constants";
 import * as React from "react";
 import { getUserId } from "~/session.server";
-import RemixLink from "~/components/RemixLink";
+import InternalLink from "~/components/InternalLink";
 import { getBoardEntryListItemsFromUser } from "~/models/board.server";
 import ProfileGrid from "~/components/ProfileGrid";
 
@@ -80,12 +80,12 @@ export default function PlayerDetailsPage() {
   return (
     <Stack spacing={8}>
       <Box mt="10">
-        <RemixLink to={ROUTES.PLAYERS}>
+        <InternalLink to={ROUTES.PLAYERS}>
           {/* TODO: adjust link depending on where user came from e.g. dashboardEntry */}
           <Button as={"span"} colorScheme="teal">
             Back to players
           </Button>
-        </RemixLink>
+        </InternalLink>
       </Box>
 
       <Stack align={"center"}>

@@ -3,7 +3,7 @@ import { Flex, Icon, Text } from "@chakra-ui/react";
 import type { ReactText } from "react";
 import React from "react";
 import type { IconType } from "react-icons";
-import RemixLink from "~/components/RemixLink";
+import InternalLink from "~/components/InternalLink";
 
 interface NavItemProps extends FlexProps {
   icon: IconType;
@@ -18,7 +18,7 @@ export default function NavItem({
   ...rest
 }: NavItemProps) {
   return (
-    <RemixLink to={href}>
+    <InternalLink to={href}>
       <Text
         as="span"
         style={{ textDecoration: "none" }}
@@ -50,6 +50,6 @@ export default function NavItem({
           {children}
         </Flex>
       </Text>
-    </RemixLink>
+    </InternalLink>
   );
 }

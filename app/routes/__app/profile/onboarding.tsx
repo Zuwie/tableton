@@ -6,7 +6,6 @@ import {
   FormLabel,
   Heading,
   Input,
-  Link,
   Select,
   Stack,
   Tab,
@@ -35,7 +34,7 @@ import {
   getContactInformationForUser,
   getExtendedProfileForUser,
 } from "~/models/user.server";
-import RemixLink from "~/components/RemixLink";
+import InternalLink from "~/components/InternalLink";
 
 export const meta: MetaFunction = () => {
   return {
@@ -128,9 +127,12 @@ export default function OnboardingPage() {
         </Heading>
         <Text fontSize={"lg"} color={"gray.600"} textAlign={"center"}>
           or do it later in your{" "}
-          <RemixLink to={ROUTES.PROFILE}>
-            <Link as="span">profile</Link>
-          </RemixLink>
+          <InternalLink
+            to={ROUTES.PROFILE}
+            _hover={{ textDecoration: "underline" }}
+          >
+            profile
+          </InternalLink>
         </Text>
       </Stack>
       <Box

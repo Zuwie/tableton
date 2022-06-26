@@ -1,4 +1,4 @@
-import { Link, useLoaderData } from "@remix-run/react";
+import { useLoaderData } from "@remix-run/react";
 import type { LoaderFunction, MetaFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { getBoardEntryListItems } from "~/models/board.server";
@@ -19,7 +19,7 @@ import {
 } from "@chakra-ui/react";
 import { GAME_SYSTEM } from "~/constants";
 import * as React from "react";
-import RemixLink from "~/components/RemixLink";
+import InternalLink from "~/components/InternalLink";
 import { getClientLocales } from "remix-utils";
 
 export const meta: MetaFunction = () => {
@@ -63,11 +63,11 @@ export default function DashboardIndexPage() {
     <>
       <Flex justifyContent="space-between" mt="10" mb="20">
         <Heading as="h1">Find matches</Heading>
-        <Link to="new">
+        <InternalLink to="new">
           <Button as={"span"} colorScheme="teal">
             + New Entry
           </Button>
-        </Link>
+        </InternalLink>
       </Flex>
 
       {loader.userBoardEntries.length === 0 ? (
@@ -81,7 +81,7 @@ export default function DashboardIndexPage() {
               bg={backGround}
               key={entry.id}
             >
-              <RemixLink to={entry.id}>
+              <InternalLink to={entry.id}>
                 <Box pos="relative" p="6" h="100%">
                   <Avatar
                     size={"sm"}
@@ -119,7 +119,7 @@ export default function DashboardIndexPage() {
                     </Stack>
                   </Stack>
                 </Box>
-              </RemixLink>
+              </InternalLink>
             </GridItem>
           ))}
         </Grid>
