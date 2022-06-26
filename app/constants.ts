@@ -11,6 +11,7 @@ export const ROUTES = {
   PROFILE: "/profile",
   ONBOARDING: "/profile/onboarding",
   SETTINGS: "/settings",
+  NOTIFICATIONS: "/notifications",
 };
 
 export const GAME_SYSTEM = {
@@ -52,4 +53,11 @@ export const FACTIONS = {
   TAU_EMPIRE: "T’au Empire",
   TYRANIDS: "Tyranids",
   UNALIGNED: "Unaligned",
+};
+
+export const NOTIFICATIONS = {
+  MATCH_REQUEST_NEW: {
+    title: "New Match-Request:",
+    body: "You have a new match-request. Click to see more details.",
+  },
 };

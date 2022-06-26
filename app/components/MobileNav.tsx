@@ -10,6 +10,12 @@ import {
   MenuDivider,
   MenuItem,
   MenuList,
+  Popover,
+  PopoverArrow,
+  PopoverBody,
+  PopoverContent,
+  PopoverHeader,
+  PopoverTrigger,
   Text,
   useColorModeValue,
   VStack,
@@ -20,6 +26,7 @@ import { ROUTES } from "~/constants";
 import React from "react";
 import { Form, NavLink } from "@remix-run/react";
 import Logo from "~/components/Logo";
+import NotificationsList from "./NotificationsList";
 
 interface MobileProps extends FlexProps {
   onOpen: () => void;
@@ -53,12 +60,24 @@ export default function MobileNav({ onOpen, ...rest }: MobileProps) {
       </Box>
 
       <HStack spacing={{ base: "0", md: "6" }}>
-        <IconButton
-          size="lg"
-          variant="ghost"
-          aria-label="open menu"
-          icon={<FiBell />}
-        />
+        <Popover>
+          <PopoverTrigger>
+            <IconButton
+              size="lg"
+              variant="ghost"
+              aria-label="open menu"
+              icon={<FiBell />}
+            />
+          </PopoverTrigger>
+          <PopoverContent>
+            <PopoverArrow />
+            <PopoverHeader>Notifications</PopoverHeader>
+            <PopoverBody p={0}>
+              <NotificationsList />
+            </PopoverBody>
+          </PopoverContent>
+        </Popover>
+
         <Flex alignItems={"center"}>
           <Menu>
             <MenuButton

@@ -30,9 +30,10 @@ import * as React from "react";
 import { Form, useLoaderData } from "@remix-run/react";
 import { ROUTES } from "~/constants";
 import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
-import RemixLink from "~/components/RemixLink";
+import InternalLink from "~/components/InternalLink";
 import { updateBoardEntry } from "~/models/board.server";
 import StatusDisplayMatchRequests from "~/components/StatusDisplayMatchRequests";
+import { createNotification } from "~/models/notification.server";
 
 export const meta: MetaFunction = () => {
   return {
@@ -71,8 +72,7 @@ export const action: ActionFunction = async ({ request }) => {
     throw new Error("matchRequestId is required");
 
   const matchRequest = await getMatchRequestById({ id: matchRequestId });
-  if (!matchRequestId)
-    throw new Error("matchRequestId does not match any existing entries");
+  if (!matchRequest) throw new Error("matchRequest not found");
 
   if (action === "delete") {
     await updateMatchRequestStatus({ id: matchRequestId, status: 2 });
@@ -86,6 +86,7 @@ export const action: ActionFunction = async ({ request }) => {
       status: 1,
     });
     await updateMatchRequestStatus({ id: matchRequestId, status: 1 });
+    await createNotification({ userId: matchRequest?.fromUserId });
     return redirect(ROUTES.MATCH_REQUESTS);
   }
 
@@ -119,7 +120,7 @@ export default function MatchRequestsPage() {
             {loader.matchRequests.map((matchRequest) => (
               <Tr key={matchRequest.id}>
                 <Td>
-                  <RemixLink
+                  <InternalLink
                     to={`${ROUTES.PLAYERS}/${matchRequest.fromUser.id}`}
                   >
                     <HStack>
@@ -130,14 +131,14 @@ export default function MatchRequestsPage() {
                       />{" "}
                       <Text>{matchRequest.fromUser.firstName}</Text>
                     </HStack>
-                  </RemixLink>
+                  </InternalLink>
                 </Td>
                 <Td>
-                  <RemixLink
+                  <InternalLink
                     to={`${ROUTES.DASHBOARD}/${matchRequest.boardEntry.id}`}
                   >
                     {matchRequest.boardEntry.title}
-                  </RemixLink>
+                  </InternalLink>
                 </Td>
                 <Td>{new Date(matchRequest.createdAt).toLocaleDateString()}</Td>
                 <Td>

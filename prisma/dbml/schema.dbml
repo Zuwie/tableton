@@ -17,6 +17,7 @@ Table User {
   incomingMatchRequests MatchRequest [not null]
   outgoingMatchRequests MatchRequest [not null]
   challenger BoardEntry [not null]
+  notifications Notification [not null]
 }
 
 Table ExtendedProfile {
@@ -72,12 +73,13 @@ Table MatchRequest {
   boardEntryId String [not null]
 }
 
-Table Notifications {
+Table Notification {
   id String [pk]
-  title String [not null]
-  body String [not null]
+  type String [not null]
   readAt DateTime
   createdAt DateTime [default: `now()`, not null]
+  user User [not null]
+  userId String [not null]
 }
 
 Ref: ExtendedProfile.userId - User.id [delete: Cascade]
@@ -95,3 +97,5 @@ Ref: MatchRequest.fromUserId > User.id [delete: Cascade]
 Ref: MatchRequest.toUserId > User.id [delete: Cascade]
 
 Ref: MatchRequest.boardEntryId > BoardEntry.id [delete: Cascade]
+
+Ref: Notification.userId > User.id
