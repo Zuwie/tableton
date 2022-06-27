@@ -1,26 +1,23 @@
-import faker from "@faker-js/faker";
-
 describe("smoke tests", () => {
   afterEach(() => {
     cy.cleanupUser();
   });
 
   it("should allow you to register and login", () => {
-    const loginForm = {
-      email: `${faker.internet.userName()}@example.com`,
-      password: faker.internet.password(),
-      firstname: faker.internet.userName(),
-    };
-    cy.then(() => ({ email: loginForm.email })).as("user");
-
-    cy.visit("/");
-    cy.findByRole("link", { name: /sign up/i }).click();
-
-    cy.findByRole("textbox", { name: /email/i }).type(loginForm.email);
-    cy.findByRole("textbox", { name: /First Name/i }).type(loginForm.firstname);
-    cy.findByLabelText(/password/i).type(loginForm.password);
-    cy.findByRole("button", { name: /sign up/i }).click();
-
+    // const loginForm = {
+    //   email: `${faker.internet.userName()}@example.com`,
+    //   password: faker.internet.password(),
+    //   firstname: faker.internet.userName(),
+    // };
+    // cy.then(() => ({ email: loginForm.email })).as("user");
+    //
+    // cy.visit("/");
+    // cy.findByRole("link", { name: /sign up/i }).click();
+    //
+    // cy.findByRole("textbox", { name: /email/i }).type(loginForm.email);
+    // cy.findByRole("textbox", { name: /First Name/i }).type(loginForm.firstname);
+    // cy.findByLabelText(/password/i).type(loginForm.password);
+    // cy.findByRole("button", { name: /sign up/i }).click();
     // cy.findByRole("button", { name: /Admin/i }).click();
     // cy.wait(1);
     // cy.findByText(/sign out/i).click();
