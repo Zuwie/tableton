@@ -6,7 +6,9 @@ module.exports = (
   const port = process.env.PORT ?? (isDev ? "3000" : "8811");
   const configOverrides: Partial<Cypress.PluginConfigOptions> = {
     baseUrl: `http://localhost:${port}`,
-    integrationFolder: "cypress/e2e",
+    e2e: {
+      specPattern: "cypress/e2e",
+    },
     video: !process.env.CI,
     screenshotOnRunFailure: !process.env.CI,
   };
