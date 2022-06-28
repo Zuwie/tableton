@@ -98,11 +98,7 @@ export default function LoginPage() {
       <Stack align={"center"}>
         <Heading fontSize={"4xl"}>Sign in to your account</Heading>
         <Text fontSize={"lg"} color={"gray.600"}>
-          to enjoy all of our cool{" "}
-          <Link to={ROUTES.FEATURES} color={"blue.400"}>
-            features
-          </Link>{" "}
-          ✌️
+          to continue where you left off 💪🏽
         </Text>
       </Stack>
       <Box
