@@ -16,7 +16,6 @@ import { getUser } from "./session.server";
 import { useContext, useEffect } from "react";
 import { ClientStyleContext, ServerStyleContext } from "~/context";
 import { withEmotionCache } from "@emotion/react";
-import { ColorModeScript } from "@chakra-ui/react";
 import { ChakraProvider } from "@chakra-ui/provider";
 import { theme } from "~/chakra-theme";
 
@@ -78,7 +77,7 @@ const Document = withEmotionCache(
           <ScrollRestoration />
           <Scripts />
           <LiveReload />
-          <ColorModeScript initialColorMode={theme.config.initialColorMode} />
+          {/*<ColorModeScript initialColorMode={theme.config.initialColorMode} />*/}
         </body>
       </html>
     );
