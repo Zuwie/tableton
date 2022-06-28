@@ -5,6 +5,7 @@
   ],
   "include": [
     "./index.ts",
+    "**/*.test.ts",
     "e2e/**/*",
     "plugins/**/*",
     "support/**/*",

@@ -1,6 +1,7 @@
 {
   "exclude": [
-    "./cypress"
+    "./cypress",
+    "**/*.test.ts"
   ],
   "include": [
     "remix.env.d.ts",
