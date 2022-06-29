@@ -11,6 +11,7 @@ import {
 import { FaDiscord, FaTwitter } from "react-icons/fa";
 import type { ReactNode } from "react";
 import Logo from "~/components/Logo";
+import { CONTACT, ROUTES } from "~/constants";
 
 const SocialButton = ({
   children,
@@ -60,9 +61,9 @@ export default function Footer() {
       >
         <Logo />
         <Stack direction={"row"} spacing={6}>
-          <Link href={"#"}>Home</Link>
-          <Link href={"#"}>About</Link>
-          <Link href={"#"}>Contact</Link>
+          <Link href={ROUTES.ROOT}>Home</Link>
+          <Link href={ROUTES.ABOUT}>About</Link>
+          <Link href={ROUTES.CONTACT}>Contact</Link>
         </Stack>
       </Container>
 
@@ -84,16 +85,10 @@ export default function Footer() {
             © {new Date().getFullYear()} rs-webdev. All rights reserved
           </Text>
           <Stack direction={"row"} spacing={6}>
-            <SocialButton
-              label={"Twitter"}
-              href={"https://twitter.com/RS_Webdev"}
-            >
+            <SocialButton label={"Twitter"} href={CONTACT.TWITTER}>
               <FaTwitter />
             </SocialButton>
-            <SocialButton
-              label={"Discord"}
-              href={"https://discordapp.com/users/Aquila#3729"}
-            >
+            <SocialButton label={"Discord"} href={CONTACT.DISCORD}>
               <FaDiscord />
             </SocialButton>
           </Stack>

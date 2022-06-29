@@ -36,20 +36,20 @@ export default function LandingFeatures() {
                   fontSize={"xl"}
                   color={"gray.500"}
                 >
-                  Technology
+                  Features
                 </Text>
                 <Heading
                   color={"white"}
                   mb={5}
                   fontSize={{ base: "3xl", md: "5xl" }}
                 >
-                  21st century agriculture
+                  21st century player finder
                 </Heading>
                 <Text fontSize={"xl"} color={"gray.400"}>
-                  The NewLife™ technology allows you to monitor your crops and
-                  get complete insights at real time. The proprietary
-                  software/hardware ecosystem prevents your plants from getting
-                  neglected.
+                  Donec magna nisl, finibus eu felis sed, semper viverra tortor.
+                  Aenean at libero vel nisi pellentesque sollicitudin. Maecenas
+                  scelerisque libero eu mauris ultricies faucibus. Suspendisse
+                  sed sodales quam.
                 </Text>
               </Box>
 
@@ -93,11 +93,10 @@ const StatsText = ({ children }: { children: ReactNode }) => (
 
 const stats = [
   {
-    title: "10+",
+    title: "6+",
     content: (
       <>
-        <StatsText>Software modules</StatsText> for detailed monitoring and
-        real-time analytics
+        <StatsText>Game-Systems</StatsText> supported and more to come
       </>
     ),
   },
@@ -105,27 +104,26 @@ const stats = [
     title: "24/7",
     content: (
       <>
-        <StatsText>Analytics</StatsText> enabled right in your dashboard without
-        history limitations
+        <StatsText>Available</StatsText> for you to plan your next match
       </>
     ),
   },
-  {
-    title: "13%",
-    content: (
-      <>
-        <StatsText>Farms</StatsText> in North America has chosen NewLife™ as
-        their management solution
-      </>
-    ),
-  },
-  {
-    title: "250M+",
-    content: (
-      <>
-        <StatsText>Plants</StatsText> currently connected and monitored by the
-        NewLife™ software
-      </>
-    ),
-  },
+  // {
+  //   title: "13%",
+  //   content: (
+  //     <>
+  //       <StatsText>Farms</StatsText> in North America has chosen NewLife™ as
+  //       their management solution
+  //     </>
+  //   ),
+  // },
+  // {
+  //   title: "25+",
+  //   content: (
+  //     <>
+  //       <StatsText>Players</StatsText> currently registered and monitored by the
+  //       NewLife™ software
+  //     </>
+  //   ),
+  // },
 ];

@@ -1,5 +1,7 @@
 export const ROUTES = {
   ROOT: "/",
+  ABOUT: "/about",
+  CONTACT: "/contact",
   LOGIN: "/login",
   JOIN: "/join",
   RESET_PASSWORD: "/reset-password",
@@ -57,4 +59,10 @@ export const FACTIONS = {
 
 export const NOTIFICATIONS = {
   MATCH_REQUEST_NEW: "You have a new match-request.",
+};
+
+export const CONTACT = {
+  DISCORD: "Aquila#3729",
+  EMAIL: "rs.frontend@gmail.com",
+  TWITTER: "https://twitter.com/RS_Webdev",
 };

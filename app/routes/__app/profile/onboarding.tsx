@@ -92,7 +92,7 @@ export const action: ActionFunction = async ({ request }) => {
     phone,
     discord,
     email,
-    twitter,
+    twitter: TWITTER,
     userId,
   });
 
