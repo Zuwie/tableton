@@ -25,6 +25,7 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
+import InternalLink from "~/components/InternalLink";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request);
@@ -96,7 +97,9 @@ export default function LoginPage() {
   return (
     <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
       <Stack align={"center"}>
-        <Heading fontSize={"4xl"}>Sign in to your account</Heading>
+        <Heading fontSize={"4xl"} textAlign={"center"}>
+          Sign in to your account
+        </Heading>
         <Text fontSize={"lg"} color={"gray.600"}>
           to continue where you left off 💪🏽
         </Text>
@@ -164,14 +167,15 @@ export default function LoginPage() {
             <Stack>
               <Text fontSize={"sm"} align={"center"}>
                 Don't have an account?{" "}
-                <Link
+                <InternalLink
                   to={{
                     pathname: ROUTES.JOIN,
                     search: searchParams.toString(),
                   }}
+                  color={"blue.400"}
                 >
                   Sign up
-                </Link>
+                </InternalLink>
               </Text>
             </Stack>
           </Stack>

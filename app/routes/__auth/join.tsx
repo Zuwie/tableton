@@ -4,7 +4,7 @@ import type {
   MetaFunction,
 } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
-import { Form, Link, useActionData, useSearchParams } from "@remix-run/react";
+import { Form, useActionData, useSearchParams } from "@remix-run/react";
 import * as React from "react";
 import { useState } from "react";
 
@@ -36,6 +36,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import InternalLink from "~/components/InternalLink";
 
 export const meta: MetaFunction = () => {
   return {
@@ -233,9 +234,9 @@ export default function JoinPage() {
               </Button>
             </Stack>
             <Stack pt={6}>
-              <Text align={"center"}>
+              <Text fontSize={"sm"} align={"center"}>
                 Already a user?{" "}
-                <Link
+                <InternalLink
                   to={{
                     pathname: ROUTES.LOGIN,
                     search: searchParams.toString(),
@@ -243,7 +244,7 @@ export default function JoinPage() {
                   color={"blue.400"}
                 >
                   Login
-                </Link>
+                </InternalLink>
               </Text>
             </Stack>
           </Stack>
