@@ -1,15 +1,22 @@
 import { prisma } from "~/db.server";
 import type { User } from "@prisma/client";
+import type { NotificationsType } from "~/constants";
 
 /**
- * It creates a new notification for the user with the given userId
- * @param  - userId: User["id"]
- * @returns A promise that resolves to a Notification object
+ * It creates a notification for a user
+ * @param  - Pick<Notification, "type">: This is a TypeScript type that picks the type property from the Notification type.
+ * @returns A promise that resolves to a Notification object.
  */
-export async function createNotification({ userId }: { userId: User["id"] }) {
+export async function createNotification({
+  type,
+  userId,
+}: {
+  type: NotificationsType;
+  userId: User["id"];
+}) {
   return prisma.notification.create({
     data: {
-      type: "MATCH_REQUEST_NEW",
+      type,
       user: {
         connect: { id: userId },
       },

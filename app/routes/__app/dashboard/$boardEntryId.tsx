@@ -31,6 +31,7 @@ import { createMatchRequest } from "~/models/matches.server";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import InternalLink from "~/components/InternalLink";
 import { HiPlus } from "react-icons/hi";
+import { createNotification } from "~/models/notification.server";
 
 export const meta: MetaFunction = () => {
   return {
@@ -62,11 +63,14 @@ export const loader: LoaderFunction = async ({ request, params }) => {
  * @returns The redirect function is being returned.
  */
 export const action: ActionFunction = async ({ request, params }) => {
-  const userId = await requireUserId(request);
   invariant(params.boardEntryId, "boardEntryId not found");
+  const userId = await requireUserId(request);
+  const boardEntry = await getBoardEntry({ id: params.boardEntryId });
 
   const formData = await request.formData();
   const action = formData.get("_action");
+
+  if (!boardEntry) throw new Error("boardEntry not found");
 
   if (action === "delete") {
     await deleteBoardEntry({ userId, id: params.boardEntryId });
@@ -75,6 +79,10 @@ export const action: ActionFunction = async ({ request, params }) => {
 
   if (action === "sendMatchRequest") {
     await createMatchRequest({ userId, id: params.boardEntryId });
+    await createNotification({
+      type: "MATCH_REQUEST_NEW",
+      userId: boardEntry.user.id,
+    });
   }
 
   return null;

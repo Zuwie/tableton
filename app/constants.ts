@@ -57,8 +57,11 @@ export const FACTIONS = {
   UNALIGNED: "Unaligned",
 };
 
+export type NotificationsType = "MATCH_REQUEST_NEW" | "MATCH_REQUEST_ACCEPTED";
+
 export const NOTIFICATIONS = {
   MATCH_REQUEST_NEW: "You have a new match-request.",
+  MATCH_REQUEST_ACCEPTED: "Your match-request was accepted!",
 };
 
 export const CONTACT = {

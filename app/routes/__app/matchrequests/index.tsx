@@ -86,7 +86,10 @@ export const action: ActionFunction = async ({ request }) => {
       status: 1,
     });
     await updateMatchRequestStatus({ id: matchRequestId, status: 1 });
-    await createNotification({ userId: matchRequest?.fromUserId });
+    await createNotification({
+      type: "MATCH_REQUEST_ACCEPTED",
+      userId: matchRequest?.fromUserId,
+    });
     return redirect(ROUTES.MATCH_REQUESTS);
   }
 
