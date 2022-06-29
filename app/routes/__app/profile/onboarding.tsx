@@ -16,6 +16,7 @@ import {
   Text,
   Textarea,
   useColorModeValue,
+  VisuallyHidden,
 } from "@chakra-ui/react";
 import { Form } from "@remix-run/react";
 import * as React from "react";
@@ -35,6 +36,8 @@ import {
   getExtendedProfileForUser,
 } from "~/models/user.server";
 import InternalLink from "~/components/InternalLink";
+import { PhoneIcon } from "@chakra-ui/icons";
+import { FaDiscord, FaEnvelope, FaTwitter } from "react-icons/fa";
 
 export const meta: MetaFunction = () => {
   return {
@@ -120,7 +123,7 @@ export default function OnboardingPage() {
   const user = useOptionalUser();
 
   return (
-    <Stack spacing={8} mx={"auto"} maxW={"lg"} w="100%" py={12} px={6}>
+    <Stack spacing={8} mx={"auto"} maxW={"lg"} w="100%" py={12}>
       <Stack align={"center"}>
         <Heading fontSize={"4xl"} textAlign={"center"}>
           Setup your profile now
@@ -135,6 +138,7 @@ export default function OnboardingPage() {
           </InternalLink>
         </Text>
       </Stack>
+
       <Box
         rounded={"lg"}
         bg={useColorModeValue("white", "gray.700")}
@@ -164,10 +168,20 @@ export default function OnboardingPage() {
             </Heading>
             <Tabs variant="enclosed" isFitted>
               <TabList>
-                <Tab>Phone</Tab>
-                <Tab>Discord</Tab>
-                <Tab>E-Mail</Tab>
-                <Tab>Twitter</Tab>
+                <Tab>
+                  <PhoneIcon /> <VisuallyHidden>Phone</VisuallyHidden>
+                </Tab>
+                <Tab>
+                  <FaDiscord /> <VisuallyHidden>Discord</VisuallyHidden>
+                </Tab>
+                <Tab>
+                  <FaEnvelope /> <VisuallyHidden>E-Mail</VisuallyHidden>
+                </Tab>
+                <Tab>
+                  <Text>
+                    <FaTwitter /> <VisuallyHidden>Twitter</VisuallyHidden>
+                  </Text>
+                </Tab>
               </TabList>
               <TabPanels>
                 <TabPanel>
