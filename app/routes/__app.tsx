@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import type { BoxProps } from "@chakra-ui/react";
 import {
   Box,
@@ -14,7 +14,7 @@ import type { IconType } from "react-icons";
 import { ROUTES } from "~/constants";
 import MobileNav from "~/components/MobileNav";
 import NavItem from "../components/NavItem";
-import { Outlet } from "@remix-run/react";
+import { Outlet, useLocation } from "@remix-run/react";
 import Logo from "~/components/Logo";
 import styles from "~/styles/nav.css";
 
@@ -37,6 +37,11 @@ const LinkItems: Array<LinkItemProps> = [
 
 export default function __app() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (isOpen) onClose();
+  }, [location]);
 
   return (
     <Box minH="100vh" bg={useColorModeValue("gray.100", "gray.900")}>
