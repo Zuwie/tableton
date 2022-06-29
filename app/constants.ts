@@ -59,7 +59,11 @@ export const FACTIONS = {
 
 export type NotificationsType = "MATCH_REQUEST_NEW" | "MATCH_REQUEST_ACCEPTED";
 
-export const NOTIFICATIONS = {
+type Notifications = {
+  [key in NotificationsType]: string;
+};
+
+export const NOTIFICATIONS: Notifications = {
   MATCH_REQUEST_NEW: "You have a new match-request.",
   MATCH_REQUEST_ACCEPTED: "Your match-request was accepted!",
 };
