@@ -146,7 +146,7 @@ export async function createContactInformation({
       phone,
       discord,
       email,
-      twitter: TWITTER,
+      twitter,
       user: {
         connect: {
           id: userId,
