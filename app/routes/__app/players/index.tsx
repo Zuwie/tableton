@@ -18,6 +18,7 @@ import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { GAME_SYSTEM } from "~/constants";
 import InternalLink from "~/components/InternalLink";
+import { requireUserId } from "~/session.server";
 
 export const meta: MetaFunction = () => {
   return {
@@ -35,6 +36,7 @@ type LoaderData = {
  * @returns A function that returns a promise that resolves to a json object.
  */
 export const loader: LoaderFunction = async ({ request }) => {
+  const userId = await requireUserId(request);
   const users = await getUsers();
   return json<LoaderData>({ users });
 };

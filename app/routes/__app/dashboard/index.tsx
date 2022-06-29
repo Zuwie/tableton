@@ -21,6 +21,7 @@ import { GAME_SYSTEM } from "~/constants";
 import * as React from "react";
 import InternalLink from "~/components/InternalLink";
 import { getClientLocales } from "remix-utils";
+import { requireUserId } from "~/session.server";
 
 export const meta: MetaFunction = () => {
   return {
@@ -38,6 +39,7 @@ type LoaderData = {
  * @returns The userBoardEntries are being returned.
  */
 export const loader: LoaderFunction = async ({ request }) => {
+  const userId = await requireUserId(request);
   const userBoardEntries = await getBoardEntryListItems();
   let locales = await getClientLocales(request);
   let formattedBoardEntries = userBoardEntries.map((entry) => {
