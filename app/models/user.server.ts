@@ -122,6 +122,14 @@ export async function createExtendedProfile({
   });
 }
 
+/**
+ * "Get the extended profile for a user."
+ *
+ * The function takes a single argument, an object with a single property, userId. The userId property is of type
+ * User["id"]
+ * @param  - {
+ * @returns ExtendedProfile
+ */
 export async function getExtendedProfileForUser({
   userId,
 }: {
@@ -132,6 +140,11 @@ export async function getExtendedProfileForUser({
   });
 }
 
+/**
+ * It creates a new contact information record in the database
+ * @param  - Pick<Contact, "phone" | "discord" | "email" | "twitter">
+ * @returns A promise that resolves to a Contact object
+ */
 export async function createContactInformation({
   phone,
   discord,
@@ -156,6 +169,14 @@ export async function createContactInformation({
   });
 }
 
+/**
+ * "Get the contact information for a user."
+ *
+ * The function takes a single argument, an object with a single property, userId. The userId property is of type
+ * User["id"]
+ * @param  - {
+ * @returns Contact
+ */
 export async function getContactInformationForUser({
   userId,
 }: {
