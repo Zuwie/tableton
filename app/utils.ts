@@ -1,8 +1,9 @@
 import { useMatches } from "@remix-run/react";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 
 import type { User } from "~/models/user.server";
 import { json } from "@remix-run/node";
+import { useDataRefresh } from "remix-utils";
 
 const DEFAULT_REDIRECT = "/";
 
@@ -149,4 +150,15 @@ export function validateLastName(lastName: unknown) {
  */
 export function getRandomEntry<Type>(entry: Type[]) {
   return entry[Math.floor(Math.random() * entry.length)];
+}
+
+/**
+ * Every 5 seconds, refresh the data.
+ */
+export function useDataRefreshOnInterval() {
+  let { refresh } = useDataRefresh();
+  useEffect(() => {
+    let interval = setInterval(refresh, 5000);
+    return () => clearInterval(interval);
+  }, [refresh]);
 }
