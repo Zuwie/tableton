@@ -9,7 +9,7 @@ import {
   PopoverHeader,
   PopoverTrigger,
   Text,
-  useDisclosure,
+  useDisclosure
 } from "@chakra-ui/react";
 import { FiBell } from "react-icons/fi";
 import React, { useEffect, useState } from "react";
@@ -46,6 +46,11 @@ export default function Notifications() {
       )
     );
   }, [fetcher]);
+
+  /* Setting an interval to refresh the notifications every 36000 milliseconds. */
+  useEffect(() => {
+    setInterval(() => fetcher.load(ROUTES.NOTIFICATIONS), 36000)
+  })
 
   return (
     <Popover isOpen={isOpen} onClose={onClose}>
