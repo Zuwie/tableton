@@ -8,12 +8,11 @@ type LoaderData = {
 };
 
 /**
- * It returns a JSON response with a list of users
+ * It gets a list of users from the database, and returns a JSON response with the list of users
  * @param  - LoaderFunction
- * @returns A function that returns a promise that resolves to a json object.
+ * @returns A function that returns a promise that resolves to a response object.
  */
 export const loader: LoaderFunction = async ({ request }) => {
   const users = await getUsers();
   return await cors(request, json<LoaderData>({ users }));
-  // return json<LoaderData>({ users });
 };
