@@ -109,7 +109,7 @@ your staging environment.
 ### Connecting to your database
 
 The sqlite database lives at `/data/sqlite.db` in your deployed application. You can connect to the live database by
-running `fly ssh console -C database-cli`.
+running `fly ssh console -C database-cli` or to the staging database by running `fly ssh console -C database-cli -a yourappname-staging`
 
 ## GitHub Actions
 
