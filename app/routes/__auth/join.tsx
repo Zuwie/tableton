@@ -1,23 +1,11 @@
-import type {
-  ActionFunction,
-  LoaderFunction,
-  MetaFunction,
-} from "@remix-run/node";
+import type { ActionFunction, LoaderFunction, MetaFunction } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { Form, useActionData, useSearchParams } from "@remix-run/react";
 import * as React from "react";
 import { useState } from "react";
-
 import { createUserSession, getUserId } from "~/session.server";
-
 import { createUser, getUserByEmail } from "~/models/user.server";
-import {
-  safeRedirect,
-  validateEmail,
-  validateFirstName,
-  validateLastName,
-  validatePassword,
-} from "~/utils";
+import { safeRedirect, validateEmail, validateFirstName, validateLastName, validatePassword } from "~/utils";
 import { ROUTES } from "~/constants";
 
 import {
@@ -33,7 +21,7 @@ import {
   InputRightElement,
   Stack,
   Text,
-  useColorModeValue,
+  useColorModeValue
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import InternalLink from "~/components/InternalLink";
