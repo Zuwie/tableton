@@ -143,18 +143,17 @@ export default function BoardEntryDetailsPage() {
             >
               <Stack spacing={10}>
                 <Heading fontSize="lg">Match requests</Heading>
-                <InternalLink to={ROUTES.MATCH_REQUESTS}>
-                  <Box rounded="lg" bg="orange.200" py={2} px={4}>
-                    <HStack justifyContent="space-between">
-                      {openMatchRequests === 0 ? (
-                        <Text>No open match requests</Text>
-                      ) : (
-                        <Text>Open requests: {openMatchRequests}</Text>
-                      )}
-                      <ArrowForwardIcon />
-                    </HStack>
-                  </Box>
-                </InternalLink>
+                <Button
+                  as={RemixLink}
+                  to={ROUTES.MATCH_REQUESTS}
+                  rightIcon={<ArrowForwardIcon />}
+                >
+                  {openMatchRequests === 0 ? (
+                    <Text>No requests yet</Text>
+                  ) : (
+                    <Text>Open requests: {openMatchRequests}</Text>
+                  )}
+                </Button>
               </Stack>
             </Box>
             <Box
