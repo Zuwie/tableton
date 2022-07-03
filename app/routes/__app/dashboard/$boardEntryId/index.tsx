@@ -19,21 +19,31 @@ import {
   Divider,
   Heading,
   HStack,
+  IconButton,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   Spacer,
   Stack,
   Tag,
   Text,
   useColorModeValue,
+  useDisclosure,
   VStack,
 } from "@chakra-ui/react";
 import { useUser } from "~/utils/utils";
 import { FiInbox, FiTrash } from "react-icons/fi";
 import { createMatchRequest } from "~/models/matches.server";
-import { ArrowForwardIcon } from "@chakra-ui/icons";
+import { ArrowForwardIcon, EditIcon } from "@chakra-ui/icons";
 import InternalLink from "~/components/InternalLink";
 import { HiPlus } from "react-icons/hi";
 import { createNotification } from "~/models/notification.server";
 import { ClientOnly } from "remix-utils";
+import { Link as RemixLink } from "@remix-run/react/components";
 
 export const meta: MetaFunction = () => {
   return {
@@ -103,6 +113,7 @@ export default function BoardEntryDetailsPage() {
   ).length;
 
   const boxBg = useColorModeValue("white", "gray.700");
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <>
@@ -156,7 +167,49 @@ export default function BoardEntryDetailsPage() {
             >
               <Stack spacing={10}>
                 <Heading fontSize="lg">Actions</Heading>
-                <InternalLink to="edit">Edit</InternalLink>
+                <HStack>
+                  <IconButton
+                    as={RemixLink}
+                    to={"edit"}
+                    icon={<EditIcon />}
+                    aria-label={"Edit board-entry"}
+                  />
+                  <IconButton
+                    onClick={onOpen}
+                    icon={<FiTrash />}
+                    colorScheme="red"
+                    aria-label={"Delete board-entry"}
+                  />
+
+                  <Modal isOpen={isOpen} onClose={onClose}>
+                    <ModalOverlay />
+                    <ModalContent>
+                      <ModalHeader>Delete entry</ModalHeader>
+                      <ModalCloseButton />
+                      <ModalBody>
+                        Are you sure you want to delete this entry? This action
+                        can't be reversed
+                      </ModalBody>
+
+                      <ModalFooter>
+                        <Button mr={2} onClick={onClose}>
+                          Close
+                        </Button>
+                        <Form method="post">
+                          <Button
+                            colorScheme="red"
+                            type="submit"
+                            name="_action"
+                            value="delete"
+                            leftIcon={<FiTrash />}
+                          >
+                            Delete
+                          </Button>
+                        </Form>
+                      </ModalFooter>
+                    </ModalContent>
+                  </Modal>
+                </HStack>
               </Stack>
             </Box>
           </VStack>
@@ -240,38 +293,21 @@ export default function BoardEntryDetailsPage() {
 
             <Divider />
 
-            <Stack flexWrap="wrap" gap={2}>
-              <Form method="post">
-                <Button
-                  colorScheme="teal"
-                  gap={2}
-                  type="submit"
-                  name="_action"
-                  value="sendMatchRequest"
-                  disabled={matchIsRequestedByCurrentUser}
-                >
-                  <FiInbox />
-                  {matchIsRequestedByCurrentUser
-                    ? "Match has been requested"
-                    : "Send match request"}
-                </Button>
-              </Form>
-
-              {isOwner && (
-                <Form method="post">
-                  <Button
-                    colorScheme="red"
-                    gap={2}
-                    type="submit"
-                    name="_action"
-                    value="delete"
-                  >
-                    <FiTrash />
-                    Delete entry
-                  </Button>
-                </Form>
-              )}
-            </Stack>
+            <Form method="post">
+              <Button
+                colorScheme="teal"
+                gap={2}
+                type="submit"
+                name="_action"
+                value="sendMatchRequest"
+                disabled={matchIsRequestedByCurrentUser}
+              >
+                <FiInbox />
+                {matchIsRequestedByCurrentUser
+                  ? "Match has been requested"
+                  : "Send match request"}
+              </Button>
+            </Form>
           </Stack>
         </Box>
       </Stack>
