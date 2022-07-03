@@ -9,7 +9,7 @@ import * as React from "react";
 
 import { createUserSession, getUserId } from "~/session.server";
 import { verifyLogin } from "~/models/user.server";
-import { safeRedirect, validateEmail, validatePassword } from "~/utils";
+import { safeRedirect } from "~/utils/utils";
 import { ROUTES } from "~/constants";
 
 import {
@@ -26,6 +26,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import InternalLink from "~/components/InternalLink";
+import { validateEmail, validatePassword } from "~/utils/validateUser";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request);

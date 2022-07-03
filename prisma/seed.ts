@@ -3,7 +3,7 @@ import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import faker from "@faker-js/faker";
 import { FACTIONS, GAME_SYSTEM } from "~/constants";
-import { getRandomEntry } from "~/utils";
+import { getRandomEntry } from "~/utils/utils";
 
 const prisma = new PrismaClient();
 

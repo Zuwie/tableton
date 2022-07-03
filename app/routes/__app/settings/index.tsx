@@ -14,16 +14,9 @@ import {
   useColorMode,
   useColorModeValue,
 } from "@chakra-ui/react";
-import type { MetaFunction } from "@remix-run/node";
-import { ActionFunction, json } from "@remix-run/node";
-import {
-  safeRedirect,
-  useUser,
-  validateEmail,
-  validateFirstName,
-  validateLastName,
-  validatePassword,
-} from "~/utils";
+import type { MetaFunction, ActionFunction } from "@remix-run/node";
+import { json } from "@remix-run/node";
+import { safeRedirect, useUser } from "~/utils/utils";
 import { ROUTES } from "~/constants";
 import { createUser, getUserByEmail } from "~/models/user.server";
 import { createUserSession } from "~/session.server";
@@ -31,6 +24,12 @@ import { Form, useActionData } from "@remix-run/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import * as React from "react";
 import { useState } from "react";
+import {
+  validateEmail,
+  validateFirstName,
+  validateLastName,
+  validatePassword,
+} from "~/utils/validateUser";
 
 export const meta: MetaFunction = () => {
   return {

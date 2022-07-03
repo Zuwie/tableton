@@ -14,7 +14,7 @@ import {
   useColorModeValue,
   VStack,
 } from "@chakra-ui/react";
-import { useUser } from "~/utils";
+import { useUser } from "~/utils/utils";
 import { FiChevronDown, FiMenu } from "react-icons/fi";
 import { ROUTES } from "~/constants";
 import React from "react";

@@ -27,7 +27,7 @@ import type {
 } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { FACTIONS, ROUTES } from "~/constants";
-import { useOptionalUser, validateEmail } from "~/utils";
+import { useOptionalUser } from "~/utils/utils";
 import { requireUserId } from "~/session.server";
 import {
   createContactInformation,
@@ -38,6 +38,7 @@ import {
 import InternalLink from "~/components/InternalLink";
 import { PhoneIcon } from "@chakra-ui/icons";
 import { FaDiscord, FaEnvelope, FaTwitter } from "react-icons/fa";
+import { validateEmail } from "~/utils/validateUser";
 
 export const meta: MetaFunction = () => {
   return {

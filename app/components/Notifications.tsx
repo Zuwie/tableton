@@ -9,7 +9,7 @@ import {
   PopoverHeader,
   PopoverTrigger,
   Text,
-  useDisclosure
+  useDisclosure,
 } from "@chakra-ui/react";
 import { FiBell } from "react-icons/fi";
 import React, { useEffect, useState } from "react";
@@ -17,7 +17,7 @@ import { useFetcher } from "@remix-run/react";
 import type { LoaderDataNotifications } from "~/routes/notifications";
 import { ROUTES } from "~/constants";
 import NotificationsListItem from "~/components/NotificationsListItem";
-import { useUser } from "~/utils";
+import { useUser } from "~/utils/utils";
 
 export default function Notifications() {
   const fetcher = useFetcher<LoaderDataNotifications>();
@@ -49,8 +49,8 @@ export default function Notifications() {
 
   /* Setting an interval to refresh the notifications every 36000 milliseconds. */
   useEffect(() => {
-    setInterval(() => fetcher.load(ROUTES.NOTIFICATIONS), 36000)
-  })
+    setInterval(() => fetcher.load(ROUTES.NOTIFICATIONS), 36000);
+  });
 
   return (
     <Popover isOpen={isOpen} onClose={onClose}>
