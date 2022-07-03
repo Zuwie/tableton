@@ -33,6 +33,7 @@ import {
   validateTime,
   validateTitle,
 } from "~/utils/validateBoardEntry";
+import { ClientOnly } from "remix-utils";
 
 export const meta: MetaFunction = () => {
   return {
@@ -178,24 +179,32 @@ export default function EditBoardEntryPage() {
               <HStack>
                 <FormControl isRequired>
                   <FormLabel>Date</FormLabel>
-                  <Input
-                    type="date"
-                    name="date"
-                    defaultValue={new Date(loader.boardEntry?.date)
-                      .toISOString()
-                      .substr(0, 10)}
-                  />
+                  <ClientOnly>
+                    {() => (
+                      <Input
+                        type="date"
+                        name="date"
+                        defaultValue={new Date(loader.boardEntry?.date as Date)
+                          .toISOString()
+                          .substr(0, 10)}
+                      />
+                    )}
+                  </ClientOnly>
                 </FormControl>
                 <FormControl isRequired>
                   <FormLabel>Time</FormLabel>
-                  <Input
-                    type="time"
-                    name="time"
-                    pattern="[0-9]{2}:[0-9]{2}"
-                    defaultValue={new Date(loader.boardEntry?.date)
-                      .toISOString()
-                      .substr(11, 8)}
-                  />
+                  <ClientOnly>
+                    {() => (
+                      <Input
+                        type="time"
+                        name="time"
+                        pattern="[0-9]{2}:[0-9]{2}"
+                        defaultValue={new Date(loader.boardEntry?.date as Date)
+                          .toISOString()
+                          .substr(11, 8)}
+                      />
+                    )}
+                  </ClientOnly>
                 </FormControl>
               </HStack>
 
