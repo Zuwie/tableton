@@ -33,6 +33,7 @@ import { ArrowForwardIcon } from "@chakra-ui/icons";
 import InternalLink from "~/components/InternalLink";
 import { HiPlus } from "react-icons/hi";
 import { createNotification } from "~/models/notification.server";
+import { ClientOnly } from "remix-utils";
 
 export const meta: MetaFunction = () => {
   return {
@@ -182,20 +183,28 @@ export default function BoardEntryDetailsPage() {
                   }
                 </Tag>
                 <Spacer />
-                <Tag>
-                  {new Date(
-                    loader.boardEntry?.date as Date
-                  ).toLocaleDateString()}
-                </Tag>
-                <Tag>
-                  {new Date(loader.boardEntry?.date as Date).toLocaleTimeString(
-                    [],
-                    {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    }
+                <ClientOnly>
+                  {() => (
+                    <Tag>
+                      {new Date(
+                        loader.boardEntry?.date as Date
+                      ).toLocaleDateString()}
+                    </Tag>
                   )}
-                </Tag>
+                </ClientOnly>
+
+                <ClientOnly>
+                  {() => (
+                    <Tag>
+                      {new Date(
+                        loader.boardEntry?.date as Date
+                      ).toLocaleTimeString([], {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
+                    </Tag>
+                  )}
+                </ClientOnly>
               </HStack>
               <HStack>
                 <Spacer />

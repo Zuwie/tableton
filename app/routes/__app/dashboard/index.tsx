@@ -20,8 +20,8 @@ import {
 import { GAME_SYSTEM } from "~/constants";
 import * as React from "react";
 import InternalLink from "~/components/InternalLink";
-import { getClientLocales } from "remix-utils";
 import { requireUserId } from "~/session.server";
+import { ClientOnly } from "remix-utils";
 
 export const meta: MetaFunction = () => {
   return {
@@ -41,20 +41,7 @@ type LoaderData = {
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await requireUserId(request);
   const userBoardEntries = await getBoardEntryListItems();
-  let locales = await getClientLocales(request);
-  let formattedBoardEntries = userBoardEntries.map((entry) => {
-    return {
-      ...entry,
-      date: new Date(entry.date).toLocaleDateString(locales),
-      time: new Date(entry.date).toLocaleTimeString(locales, {
-        hour: "2-digit",
-        minute: "2-digit",
-      }),
-    };
-  });
-
-  // @ts-ignore
-  return json<LoaderData>({ userBoardEntries: formattedBoardEntries });
+  return json<LoaderData>({ userBoardEntries });
 };
 
 export default function DashboardIndexPage() {
@@ -109,10 +96,23 @@ export default function DashboardIndexPage() {
                           }
                         </Tag>
                         <Spacer />
-                        <Tag>{entry.date}</Tag>
-                        {/* TODO: find better typing to remove ts-ignore */}
-                        {/* @ts-ignore*/}
-                        <Tag>{entry.time}</Tag>
+                        <ClientOnly>
+                          {() => (
+                            <Tag>
+                              {new Date(entry.date).toLocaleDateString()}
+                            </Tag>
+                          )}
+                        </ClientOnly>
+                        <ClientOnly>
+                          {() => (
+                            <Tag>
+                              {new Date(entry.date).toLocaleTimeString([], {
+                                hour: "2-digit",
+                                minute: "2-digit",
+                              })}
+                            </Tag>
+                          )}
+                        </ClientOnly>
                       </HStack>
                       <HStack>
                         <Spacer />

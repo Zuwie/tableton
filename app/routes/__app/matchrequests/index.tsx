@@ -34,6 +34,7 @@ import InternalLink from "~/components/InternalLink";
 import { updateBoardEntry } from "~/models/board.server";
 import StatusDisplayMatchRequests from "~/components/StatusDisplayMatchRequests";
 import { createNotification } from "~/models/notification.server";
+import { ClientOnly } from "remix-utils";
 
 export const meta: MetaFunction = () => {
   return {
@@ -143,7 +144,13 @@ export default function MatchRequestsPage() {
                     {matchRequest.boardEntry.title}
                   </InternalLink>
                 </Td>
-                <Td>{new Date(matchRequest.createdAt).toLocaleDateString()}</Td>
+                <ClientOnly>
+                  {() => (
+                    <Td>
+                      {new Date(matchRequest.createdAt).toLocaleDateString()}
+                    </Td>
+                  )}
+                </ClientOnly>
                 <Td>
                   {matchRequest.status === 0 ? (
                     <HStack>
