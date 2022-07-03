@@ -91,105 +91,103 @@ export default function SettingsIndexPage() {
   const passwordRef = React.useRef<HTMLInputElement>(null);
 
   return (
-    <>
-      <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
-        <Stack align={"center"}>
-          <Heading fontSize={"4xl"}>Account Settings</Heading>
-        </Stack>
-        <Box
-          rounded={"lg"}
-          bg={useColorModeValue("white", "gray.700")}
-          boxShadow={"lg"}
-          p={8}
-        >
-          <Form method="post">
-            <Stack spacing={4}>
-              <HStack>
-                <Box>
-                  <FormControl id="firstName" isRequired>
-                    <FormLabel>First Name</FormLabel>
-                    <Input
-                      type="text"
-                      name="firstName"
-                      autoComplete="firstName"
-                      value={user.firstName}
-                    />
-                  </FormControl>
-                </Box>
-                <Box>
-                  <FormControl id="lastName">
-                    <FormLabel>Last Name</FormLabel>
-                    <Input
-                      type="text"
-                      name="lastName"
-                      autoComplete="lastName"
-                      value={user.lastName}
-                    />
-                  </FormControl>
-                </Box>
-              </HStack>
-
-              <FormControl
-                id="email"
-                isRequired
-                isInvalid={!!actionData?.errors?.email}
-              >
-                <FormLabel>Email address</FormLabel>
-                <Input
-                  ref={emailRef}
-                  autoComplete="email"
-                  type="email"
-                  name="email"
-                  value={user.email}
-                />
-                {actionData?.errors?.email && (
-                  <FormErrorMessage>{actionData.errors.email}</FormErrorMessage>
-                )}
-              </FormControl>
-
-              <FormControl
-                id="password"
-                isRequired
-                isInvalid={!!actionData?.errors?.password}
-              >
-                <FormLabel>Password</FormLabel>
-                <InputGroup>
-                  <Input
-                    ref={passwordRef}
-                    type={showPassword ? "text" : "password"}
-                    name="password"
-                  />
-                  <InputRightElement h={"full"}>
-                    <Button
-                      variant={"ghost"}
-                      onClick={() =>
-                        setShowPassword((showPassword) => !showPassword)
-                      }
-                    >
-                      {showPassword ? <ViewIcon /> : <ViewOffIcon />}
-                    </Button>
-                  </InputRightElement>
-                </InputGroup>
-                {actionData?.errors?.password && (
-                  <FormErrorMessage id="password-error">
-                    {actionData.errors.password}
-                  </FormErrorMessage>
-                )}
-              </FormControl>
-              <Stack spacing={10} pt={2}>
-                <Button
-                  type="submit"
-                  loadingText="Submitting"
-                  size="lg"
-                  colorScheme="teal"
-                >
-                  Update profile
-                </Button>
-              </Stack>
-            </Stack>
-          </Form>
-        </Box>
+    <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
+      <Stack align={"center"}>
+        <Heading fontSize={"4xl"}>Account Settings</Heading>
       </Stack>
-    </>
+      <Box
+        rounded={"lg"}
+        bg={useColorModeValue("white", "gray.700")}
+        boxShadow={"lg"}
+        p={8}
+      >
+        <Form method="post">
+          <Stack spacing={4}>
+            <HStack>
+              <Box>
+                <FormControl id="firstName" isRequired>
+                  <FormLabel>First Name</FormLabel>
+                  <Input
+                    type="text"
+                    name="firstName"
+                    autoComplete="firstName"
+                    value={user.firstName}
+                  />
+                </FormControl>
+              </Box>
+              <Box>
+                <FormControl id="lastName">
+                  <FormLabel>Last Name</FormLabel>
+                  <Input
+                    type="text"
+                    name="lastName"
+                    autoComplete="lastName"
+                    value={user.lastName}
+                  />
+                </FormControl>
+              </Box>
+            </HStack>
+
+            <FormControl
+              id="email"
+              isRequired
+              isInvalid={!!actionData?.errors?.email}
+            >
+              <FormLabel>Email address</FormLabel>
+              <Input
+                ref={emailRef}
+                autoComplete="email"
+                type="email"
+                name="email"
+                value={user.email}
+              />
+              {actionData?.errors?.email && (
+                <FormErrorMessage>{actionData.errors.email}</FormErrorMessage>
+              )}
+            </FormControl>
+
+            <FormControl
+              id="password"
+              isRequired
+              isInvalid={!!actionData?.errors?.password}
+            >
+              <FormLabel>Password</FormLabel>
+              <InputGroup>
+                <Input
+                  ref={passwordRef}
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                />
+                <InputRightElement h={"full"}>
+                  <Button
+                    variant={"ghost"}
+                    onClick={() =>
+                      setShowPassword((showPassword) => !showPassword)
+                    }
+                  >
+                    {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                  </Button>
+                </InputRightElement>
+              </InputGroup>
+              {actionData?.errors?.password && (
+                <FormErrorMessage id="password-error">
+                  {actionData.errors.password}
+                </FormErrorMessage>
+              )}
+            </FormControl>
+            <Stack spacing={10} pt={2}>
+              <Button
+                type="submit"
+                loadingText="Submitting"
+                size="lg"
+                colorScheme="teal"
+              >
+                Update profile
+              </Button>
+            </Stack>
+          </Stack>
+        </Form>
+      </Box>
+    </Stack>
   );
 }
