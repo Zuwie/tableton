@@ -71,22 +71,16 @@ interface ActionData {
  */
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
-  const email = formData.get("email");
-  const password = formData.get("password");
-  const firstName = formData.get("firstName");
-  const lastName = formData.get("lastName");
+  const email = formData.get("email") as string;
+  const password = formData.get("password") as string;
+  const firstName = formData.get("firstName") as string;
+  const lastName = formData.get("lastName") as string;
   const redirectTo = safeRedirect(
     formData.get("redirectTo"),
     ROUTES.ONBOARDING
   );
 
-  if (!validateEmail(email)) {
-    return json<ActionData>(
-      { errors: { email: "Email is invalid" } },
-      { status: 400 }
-    );
-  }
-
+  validateEmail(email);
   validatePassword(password);
   validateFirstName(firstName);
   validateLastName(lastName);
@@ -102,9 +96,9 @@ export const action: ActionFunction = async ({ request }) => {
   let avatar;
   const user = await createUser(
     email,
-    password as string,
-    firstName as string,
-    lastName as string,
+    password,
+    firstName,
+    lastName,
     (avatar = null)
   );
 

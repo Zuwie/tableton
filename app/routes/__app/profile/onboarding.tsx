@@ -25,7 +25,7 @@ import type {
   LoaderFunction,
   MetaFunction,
 } from "@remix-run/node";
-import { json, redirect } from "@remix-run/node";
+import { redirect } from "@remix-run/node";
 import { FACTIONS, ROUTES } from "~/constants";
 import { useOptionalUser } from "~/utils/utils";
 import { requireUserId } from "~/session.server";
@@ -62,30 +62,15 @@ export const action: ActionFunction = async ({ request }) => {
   const userId = await requireUserId(request);
 
   const formData = await request.formData();
-  const faction = formData.get("faction");
-  const biography = formData.get("biography");
+  const faction = formData.get("faction") as string;
+  const biography = formData.get("biography") as string;
 
-  const phone = formData.get("phone");
-  const discord = formData.get("discord");
-  const email = formData.get("email");
-  const twitter = formData.get("twitter");
+  const phone = formData.get("phone") as string;
+  const discord = formData.get("discord") as string;
+  const email = formData.get("email") as string;
+  const twitter = formData.get("twitter") as string;
 
-  if (!validateEmail(email)) {
-    return json<ActionData>(
-      { errors: { email: "Email is invalid" } },
-      { status: 400 }
-    );
-  }
-
-  if (
-    typeof faction !== "string" ||
-    typeof biography !== "string" ||
-    typeof phone !== "string" ||
-    typeof discord !== "string" ||
-    typeof twitter !== "string"
-  ) {
-    return;
-  }
+  validateEmail(email);
 
   await createExtendedProfile({
     faction,

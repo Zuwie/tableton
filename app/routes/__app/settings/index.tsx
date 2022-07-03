@@ -10,11 +10,9 @@ import {
   InputGroup,
   InputRightElement,
   Stack,
-  Switch,
-  useColorMode,
   useColorModeValue,
 } from "@chakra-ui/react";
-import type { MetaFunction, ActionFunction } from "@remix-run/node";
+import type { ActionFunction, MetaFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { safeRedirect, useUser } from "~/utils/utils";
 import { ROUTES } from "~/constants";
@@ -48,19 +46,13 @@ interface ActionData {
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
-  const email = formData.get("email");
-  const password = formData.get("password");
-  const firstName = formData.get("firstName");
-  const lastName = formData.get("lastName");
+  const email = formData.get("email") as string;
+  const password = formData.get("password") as string;
+  const firstName = formData.get("firstName") as string;
+  const lastName = formData.get("lastName") as string;
   const redirectTo = safeRedirect(formData.get("redirectTo"), ROUTES.DASHBOARD);
 
-  if (!validateEmail(email)) {
-    return json<ActionData>(
-      { errors: { email: "Email is invalid" } },
-      { status: 400 }
-    );
-  }
-
+  validateEmail(email);
   validatePassword(password);
   validateFirstName(firstName);
   validateLastName(lastName);
@@ -77,9 +69,9 @@ export const action: ActionFunction = async ({ request }) => {
   let avatar;
   const user = await createUser(
     email,
-    password as string,
-    firstName as string,
-    lastName as string,
+    password,
+    firstName,
+    lastName,
     (avatar = null)
   );
 
@@ -97,7 +89,6 @@ export default function SettingsIndexPage() {
   const [showPassword, setShowPassword] = useState(false);
   const emailRef = React.useRef<HTMLInputElement>(null);
   const passwordRef = React.useRef<HTMLInputElement>(null);
-  const { colorMode, toggleColorMode } = useColorMode();
 
   return (
     <>
@@ -197,13 +188,6 @@ export default function SettingsIndexPage() {
               </Stack>
             </Stack>
           </Form>
-
-          <FormControl display="flex" alignItems="center">
-            <FormLabel htmlFor="toggleColorMode" mb="0">
-              Toggle dark-mode
-            </FormLabel>
-            <Switch id="email-alerts" onClick={toggleColorMode} />
-          </FormControl>
         </Box>
       </Stack>
     </>
