@@ -24,8 +24,9 @@ import {
   Tag,
   Text,
   useColorModeValue,
+  VStack,
 } from "@chakra-ui/react";
-import { useUser } from "~/utils";
+import { useUser } from "~/utils/utils";
 import { FiInbox, FiTrash } from "react-icons/fi";
 import { createMatchRequest } from "~/models/matches.server";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
@@ -114,36 +115,50 @@ export default function BoardEntryDetailsPage() {
 
       <Stack
         direction={{ base: "column", md: "row-reverse" }}
-        gap={4}
+        spacing={4}
         maxW={"4xl"}
         mx="auto"
       >
         {isOwner && (
-          <Box
-            rounded={"lg"}
-            bg={boxBg}
-            boxShadow={"lg"}
-            py={12}
-            px={6}
-            flexGrow={1}
-            alignSelf="flex-start"
-          >
-            <Stack spacing={10}>
-              <Heading fontSize="lg">Match requests</Heading>
-              <InternalLink to={ROUTES.MATCH_REQUESTS}>
-                <Box rounded="lg" bg="orange.200" py={2} px={4}>
-                  <HStack justifyContent="space-between">
-                    {openMatchRequests === 0 ? (
-                      <Text>No open match requests</Text>
-                    ) : (
-                      <Text>Open requests: {openMatchRequests}</Text>
-                    )}
-                    <ArrowForwardIcon />
-                  </HStack>
-                </Box>
-              </InternalLink>
-            </Stack>
-          </Box>
+          <VStack spacing={4} alignSelf="flex-start">
+            <Box
+              rounded={"lg"}
+              bg={boxBg}
+              boxShadow={"lg"}
+              py={12}
+              px={6}
+              w={"100%"}
+            >
+              <Stack spacing={10}>
+                <Heading fontSize="lg">Match requests</Heading>
+                <InternalLink to={ROUTES.MATCH_REQUESTS}>
+                  <Box rounded="lg" bg="orange.200" py={2} px={4}>
+                    <HStack justifyContent="space-between">
+                      {openMatchRequests === 0 ? (
+                        <Text>No open match requests</Text>
+                      ) : (
+                        <Text>Open requests: {openMatchRequests}</Text>
+                      )}
+                      <ArrowForwardIcon />
+                    </HStack>
+                  </Box>
+                </InternalLink>
+              </Stack>
+            </Box>
+            <Box
+              rounded={"lg"}
+              bg={boxBg}
+              boxShadow={"lg"}
+              py={12}
+              px={6}
+              w={"100%"}
+            >
+              <Stack spacing={10}>
+                <Heading fontSize="lg">Actions</Heading>
+                <InternalLink to="edit">Edit</InternalLink>
+              </Stack>
+            </Box>
+          </VStack>
         )}
 
         <Box

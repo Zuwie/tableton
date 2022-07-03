@@ -1,9 +1,14 @@
-import type { ActionFunction, MetaFunction } from "@remix-run/node";
-import { redirect } from "@remix-run/node";
-import { Form, useActionData } from "@remix-run/react";
+import type {
+  ActionFunction,
+  LoaderFunction,
+  MetaFunction,
+} from "@remix-run/node";
+import { json, redirect } from "@remix-run/node";
+import { Form, useActionData, useLoaderData } from "@remix-run/react";
 import * as React from "react";
+import { useEffect } from "react";
 import { requireUserId } from "~/session.server";
-import { createBoardEntry } from "~/models/board.server";
+import { getBoardEntry, updateBoardEntry } from "~/models/board.server";
 import { GAME_SYSTEM, ROUTES } from "~/constants";
 import {
   Box,
@@ -19,6 +24,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import InternalLink from "~/components/InternalLink";
+import invariant from "tiny-invariant";
 import {
   validateBody,
   validateDate,
@@ -30,8 +36,12 @@ import {
 
 export const meta: MetaFunction = () => {
   return {
-    title: "Create a new board-entry",
+    title: "Edit board-entry",
   };
+};
+
+type LoaderData = {
+  boardEntry: Awaited<ReturnType<typeof getBoardEntry>>;
 };
 
 type ActionData = {
@@ -41,7 +51,17 @@ type ActionData = {
     gameSystem?: string;
     location?: string;
     date?: string;
+    time?: string;
   };
+};
+
+export const loader: LoaderFunction = async ({ request, params }) => {
+  invariant(params.boardEntryId, "boardEntryId not found");
+
+  const boardEntry = await getBoardEntry({ id: params.boardEntryId });
+  if (!boardEntry) throw new Response("Not Found", { status: 404 });
+
+  return json<LoaderData>({ boardEntry });
 };
 
 /**
@@ -50,7 +70,8 @@ type ActionData = {
  * @returns A function that takes an object with a request property and returns a promise that resolves to a redirect to
  * the dashboard with the id of the newly created board entry.
  */
-export const action: ActionFunction = async ({ request }) => {
+export const action: ActionFunction = async ({ request, params }) => {
+  invariant(params.boardEntryId, "boardEntryId not found");
   const userId = await requireUserId(request);
 
   const formData = await request.formData();
@@ -70,27 +91,27 @@ export const action: ActionFunction = async ({ request }) => {
 
   const dateFormat = new Date(date + " " + time);
 
-  const boardEntry = await createBoardEntry({
+  const boardEntry = await updateBoardEntry({
+    id: params.boardEntryId,
     title,
     body,
     gameSystem,
     location,
     date: dateFormat,
-    userId,
-    status: 0,
   });
 
   return redirect(`${ROUTES.DASHBOARD}/${boardEntry.id}`);
 };
 
 /* A React component that renders a form to create a new board entry. */
-export default function NewBoardEntryPage() {
+export default function EditBoardEntryPage() {
+  const loader = useLoaderData() as LoaderData;
   const actionData = useActionData() as ActionData;
   const titleRef = React.useRef<HTMLInputElement>(null);
   const bodyRef = React.useRef<HTMLTextAreaElement>(null);
   const locationRef = React.useRef<HTMLInputElement>(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (actionData?.errors?.title) {
       titleRef.current?.focus();
     } else if (actionData?.errors?.body) {
@@ -122,7 +143,11 @@ export default function NewBoardEntryPage() {
             <Stack spacing={4}>
               <FormControl isRequired isInvalid={!!actionData?.errors?.title}>
                 <FormLabel>Title</FormLabel>
-                <Input ref={titleRef} name="title" />
+                <Input
+                  ref={titleRef}
+                  name="title"
+                  defaultValue={loader.boardEntry?.title}
+                />
                 {actionData?.errors?.title && (
                   <FormErrorMessage>{actionData.errors.title}</FormErrorMessage>
                 )}
@@ -133,7 +158,10 @@ export default function NewBoardEntryPage() {
                 isInvalid={!!actionData?.errors?.gameSystem}
               >
                 <FormLabel>Select the game you want to play</FormLabel>
-                <Select name="gameSystem">
+                <Select
+                  name="gameSystem"
+                  defaultValue={loader.boardEntry?.gameSystem}
+                >
                   {Object.entries(GAME_SYSTEM).map(([key, value]) => (
                     <option key={key} value={key}>
                       {value}
@@ -150,11 +178,24 @@ export default function NewBoardEntryPage() {
               <HStack>
                 <FormControl isRequired>
                   <FormLabel>Date</FormLabel>
-                  <Input type="date" name="date" />
+                  <Input
+                    type="date"
+                    name="date"
+                    defaultValue={new Date(loader.boardEntry?.date)
+                      .toISOString()
+                      .substr(0, 10)}
+                  />
                 </FormControl>
                 <FormControl isRequired>
                   <FormLabel>Time</FormLabel>
-                  <Input type="time" name="time" pattern="[0-9]{2}:[0-9]{2}" />
+                  <Input
+                    type="time"
+                    name="time"
+                    pattern="[0-9]{2}:[0-9]{2}"
+                    defaultValue={new Date(loader.boardEntry?.date)
+                      .toISOString()
+                      .substr(11, 8)}
+                  />
                 </FormControl>
               </HStack>
 
@@ -163,7 +204,11 @@ export default function NewBoardEntryPage() {
                 isInvalid={!!actionData?.errors?.location}
               >
                 <FormLabel>Location</FormLabel>
-                <Input ref={locationRef} name="location" />
+                <Input
+                  ref={locationRef}
+                  name="location"
+                  defaultValue={loader.boardEntry?.location}
+                />
                 {actionData?.errors?.location && (
                   <FormErrorMessage>
                     {actionData.errors.location}
@@ -173,7 +218,11 @@ export default function NewBoardEntryPage() {
 
               <FormControl isRequired isInvalid={!!actionData?.errors?.body}>
                 <FormLabel>Add any additional information here</FormLabel>
-                <Textarea ref={bodyRef} name="body" />
+                <Textarea
+                  ref={bodyRef}
+                  name="body"
+                  defaultValue={loader.boardEntry?.body}
+                />
                 {actionData?.errors?.body && (
                   <FormErrorMessage>{actionData.errors.body}</FormErrorMessage>
                 )}
@@ -181,7 +230,7 @@ export default function NewBoardEntryPage() {
             </Stack>
 
             <Button type="submit" colorScheme="teal">
-              Create new entry
+              Submit changes
             </Button>
           </Stack>
         </Form>
