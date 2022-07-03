@@ -18,6 +18,7 @@ import type { LoaderDataNotifications } from "~/routes/notifications";
 import { ROUTES } from "~/constants";
 import NotificationsListItem from "~/components/NotificationsListItem";
 import { useUser } from "~/utils/utils";
+import { clearInterval } from "timers";
 
 export default function Notifications() {
   const fetcher = useFetcher<LoaderDataNotifications>();
@@ -49,7 +50,12 @@ export default function Notifications() {
 
   /* Setting an interval to refresh the notifications every 36000 milliseconds. */
   useEffect(() => {
-    setInterval(() => fetcher.load(ROUTES.NOTIFICATIONS), 36000);
+    const interval = setInterval(
+      () => fetcher.load(ROUTES.NOTIFICATIONS),
+      36000
+    );
+
+    return () => clearInterval(interval);
   });
 
   return (
