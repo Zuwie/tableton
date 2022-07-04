@@ -14,8 +14,7 @@ import {
 } from "@chakra-ui/react";
 import type { ActionFunction, MetaFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { safeRedirect, useUser } from "~/utils/utils";
-import { ROUTES } from "~/constants";
+import { useUser } from "~/utils/utils";
 import { getUserByEmail, updateUser } from "~/models/user.server";
 import { requireUserId } from "~/session.server";
 import { Form, useActionData } from "@remix-run/react";
@@ -58,7 +57,6 @@ export const action: ActionFunction = async ({ request }) => {
   const password = formData.get("password") as string;
   const firstName = formData.get("firstName") as string;
   const lastName = formData.get("lastName") as string;
-  const redirectTo = safeRedirect(formData.get("redirectTo"), ROUTES.DASHBOARD);
 
   validateEmail(email);
   validatePassword(password);
@@ -78,6 +76,7 @@ export const action: ActionFunction = async ({ request }) => {
     email,
     firstName,
     lastName,
+    password,
     userId,
   });
 
@@ -114,6 +113,11 @@ export default function SettingsIndexPage() {
                     autoComplete="firstName"
                     defaultValue={user.firstName}
                   />
+                  {actionData?.errors?.firstName && (
+                    <FormErrorMessage>
+                      {actionData.errors.firstName}
+                    </FormErrorMessage>
+                  )}
                 </FormControl>
               </Box>
               <Box>

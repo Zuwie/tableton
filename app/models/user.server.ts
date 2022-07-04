@@ -72,9 +72,8 @@ export async function createUser(
 }
 
 /**
- * It takes in a user's email, first name, last name, avatar, and user ID, and then updates the user's information in the
- * database
- * @param  - Pick<User, "email" | "firstName" | "lastName" | "avatar"> & {
+ * It updates a user's information, including their password
+ * @param  - Partial<User> & { userId: User["id"]; password: string }
  * @returns The updated user
  */
 export async function updateUser({
@@ -82,10 +81,14 @@ export async function updateUser({
   firstName,
   lastName,
   avatar,
+  password,
   userId,
 }: Partial<User> & {
   userId: User["id"];
+  password: string;
 }) {
+  const hashedPassword = await bcrypt.hash(password, 10);
+
   return prisma.user.update({
     where: { id: userId },
     data: {
@@ -93,6 +96,11 @@ export async function updateUser({
       firstName: firstName || undefined,
       lastName: lastName || undefined,
       avatar: avatar || undefined,
+      password: {
+        update: {
+          hash: hashedPassword,
+        },
+      },
     },
   });
 }

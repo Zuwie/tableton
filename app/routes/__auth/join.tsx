@@ -151,13 +151,22 @@ export default function JoinPage() {
           <Stack spacing={4}>
             <HStack>
               <Box>
-                <FormControl id="firstName" isRequired>
+                <FormControl
+                  id="firstName"
+                  isRequired
+                  isInvalid={!!actionData?.errors?.firstName}
+                >
                   <FormLabel>First Name</FormLabel>
                   <Input
                     type="text"
                     name="firstName"
                     autoComplete="firstName"
                   />
+                  {actionData?.errors?.firstName && (
+                    <FormErrorMessage>
+                      {actionData.errors.firstName}
+                    </FormErrorMessage>
+                  )}
                 </FormControl>
               </Box>
               <Box>
