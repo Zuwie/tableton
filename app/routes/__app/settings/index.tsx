@@ -16,8 +16,8 @@ import type { ActionFunction, MetaFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { safeRedirect, useUser } from "~/utils/utils";
 import { ROUTES } from "~/constants";
-import { createUser, getUserByEmail } from "~/models/user.server";
-import { createUserSession } from "~/session.server";
+import { getUserByEmail, updateUser } from "~/models/user.server";
+import { requireUserId } from "~/session.server";
 import { Form, useActionData } from "@remix-run/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import * as React from "react";
@@ -44,7 +44,15 @@ interface ActionData {
   };
 }
 
+/**
+ * It creates a new user and then creates a new session for that user
+ * @param  - ActionFunction - This is a type that is defined in the `@types/server` package. It's a function that takes an
+ * object with a `request` property and returns a `Promise<ActionData>`.
+ * @returns A function that takes an object with a request property and returns a promise that resolves to an object with a
+ * status property and a json property.
+ */
 export const action: ActionFunction = async ({ request }) => {
+  const userId = await requireUserId(request);
   const formData = await request.formData();
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
@@ -66,21 +74,14 @@ export const action: ActionFunction = async ({ request }) => {
     );
   }
 
-  let avatar;
-  const user = await createUser(
+  const user = await updateUser({
     email,
-    password,
     firstName,
     lastName,
-    (avatar = null)
-  );
-
-  return createUserSession({
-    request,
-    userId: user.id,
-    remember: false,
-    redirectTo,
+    userId,
   });
+
+  return null;
 };
 
 export default function SettingsIndexPage() {
@@ -91,7 +92,7 @@ export default function SettingsIndexPage() {
   const passwordRef = React.useRef<HTMLInputElement>(null);
 
   return (
-    <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
+    <Stack spacing={8} mx={"auto"} maxW={"md"} py={12}>
       <Stack align={"center"}>
         <Heading fontSize={"4xl"}>Account Settings</Heading>
       </Stack>
