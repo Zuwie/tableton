@@ -11,11 +11,12 @@ import {
   InputRightElement,
   Stack,
   useColorModeValue,
+  useToast,
 } from "@chakra-ui/react";
 import type { ActionFunction, MetaFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { useUser } from "~/utils/utils";
-import { getUserByEmail, updateUser } from "~/models/user.server";
+import { getUserById, updateUser } from "~/models/user.server";
 import { requireUserId } from "~/session.server";
 import { Form, useActionData } from "@remix-run/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
@@ -80,7 +81,7 @@ export const action: ActionFunction = async ({ request }) => {
     );
   }
 
-  const existingUser = await getUserByEmail(email);
+  const existingUser = await getUserById(userId);
 
   if (existingUser && existingUser.id !== userId) {
     return json<ActionData>(
@@ -208,6 +209,7 @@ export default function SettingsIndexPage() {
                 </FormErrorMessage>
               )}
             </FormControl>
+
             <Stack spacing={10} pt={2}>
               <Button
                 type="submit"
