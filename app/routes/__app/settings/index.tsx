@@ -53,15 +53,32 @@ interface ActionData {
 export const action: ActionFunction = async ({ request }) => {
   const userId = await requireUserId(request);
   const formData = await request.formData();
-  const email = formData.get("email") as string;
-  const password = formData.get("password") as string;
-  const firstName = formData.get("firstName") as string;
-  const lastName = formData.get("lastName") as string;
+  const email = formData.get("email");
+  const password = formData.get("password");
+  const firstName = formData.get("firstName");
+  const lastName = formData.get("lastName");
 
-  validateEmail(email);
-  validatePassword(password);
-  validateFirstName(firstName);
-  validateLastName(lastName);
+  if (!validateEmail(email)) {
+    return json({ errors: { email: "Email is invalid" } }, { status: 400 });
+  }
+  if (!validatePassword(password)) {
+    return json(
+      { errors: { password: "Password should contain at least 8 letters" } },
+      { status: 400 }
+    );
+  }
+  if (!validateFirstName(firstName)) {
+    return json(
+      { errors: { firstName: "Firstname must contain at least 2 letters" } },
+      { status: 400 }
+    );
+  }
+  if (!validateLastName(lastName)) {
+    return json(
+      { errors: { lastName: "Lastname should only contain letters" } },
+      { status: 400 }
+    );
+  }
 
   const existingUser = await getUserByEmail(email);
 
@@ -90,6 +107,8 @@ export default function SettingsIndexPage() {
   const emailRef = React.useRef<HTMLInputElement>(null);
   const passwordRef = React.useRef<HTMLInputElement>(null);
 
+  console.log("actionData?.errors?.firstName", actionData?.errors?.firstName);
+
   return (
     <Stack spacing={8} mx={"auto"} maxW={"md"} py={12}>
       <Stack align={"center"}>
@@ -105,7 +124,11 @@ export default function SettingsIndexPage() {
           <Stack spacing={4}>
             <HStack>
               <Box>
-                <FormControl id="firstName" isRequired>
+                <FormControl
+                  id="firstName"
+                  isRequired
+                  isInvalid={!!actionData?.errors?.firstName}
+                >
                   <FormLabel>First Name</FormLabel>
                   <Input
                     type="text"
@@ -121,7 +144,10 @@ export default function SettingsIndexPage() {
                 </FormControl>
               </Box>
               <Box>
-                <FormControl id="lastName">
+                <FormControl
+                  id="lastName"
+                  isInvalid={!!actionData?.errors?.lastName}
+                >
                   <FormLabel>Last Name</FormLabel>
                   <Input
                     type="text"
@@ -129,6 +155,11 @@ export default function SettingsIndexPage() {
                     autoComplete="lastName"
                     defaultValue={user.lastName}
                   />
+                  {actionData?.errors?.lastName && (
+                    <FormErrorMessage>
+                      {actionData.errors.lastName}
+                    </FormErrorMessage>
+                  )}
                 </FormControl>
               </Box>
             </HStack>

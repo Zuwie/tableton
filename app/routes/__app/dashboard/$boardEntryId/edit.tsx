@@ -76,19 +76,48 @@ export const action: ActionFunction = async ({ request, params }) => {
   const userId = await requireUserId(request);
 
   const formData = await request.formData();
-  const title = formData.get("title") as string;
-  const body = formData.get("body") as string;
-  const gameSystem = formData.get("gameSystem") as string;
-  const location = formData.get("location") as string;
-  const date = formData.get("date") as string;
-  const time = formData.get("time") as string;
+  const title = formData.get("title");
+  const body = formData.get("body");
+  const gameSystem = formData.get("gameSystem");
+  const location = formData.get("location");
+  const date = formData.get("date");
+  const time = formData.get("time");
 
-  validateTitle(title);
-  validateBody(body);
-  validateGameSystem(gameSystem);
-  validateLocation(location);
-  validateDate(date);
-  validateTime(time);
+  if (!validateTitle(title)) {
+    return json(
+      {
+        errors: {
+          title: `Title is too short. It should at least be 8 letters long`,
+        },
+      },
+      { status: 400 }
+    );
+  }
+  if (!validateBody(body)) {
+    return json(
+      {
+        errors: {
+          body: `Body is too short. It should at least be 10 letters long`,
+        },
+      },
+      { status: 400 }
+    );
+  }
+  if (!validateGameSystem(gameSystem)) {
+    return json(
+      { errors: { body: "GameSystem is required" } },
+      { status: 400 }
+    );
+  }
+  if (!validateLocation(location)) {
+    return json({ errors: { body: "Location is required" } }, { status: 400 });
+  }
+  if (!validateDate(date)) {
+    return json({ errors: { body: "Date is required" } }, { status: 400 });
+  }
+  if (!validateTime(time)) {
+    return json({ errors: { body: "Time is required" } }, { status: 400 });
+  }
 
   const dateFormat = new Date(date + " " + time);
 

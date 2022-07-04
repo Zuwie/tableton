@@ -71,19 +71,36 @@ interface ActionData {
  */
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
-  const email = formData.get("email") as string;
-  const password = formData.get("password") as string;
-  const firstName = formData.get("firstName") as string;
-  const lastName = formData.get("lastName") as string;
+  const email = formData.get("email");
+  const password = formData.get("password");
+  const firstName = formData.get("firstName");
+  const lastName = formData.get("lastName");
   const redirectTo = safeRedirect(
     formData.get("redirectTo"),
     ROUTES.ONBOARDING
   );
 
-  validateEmail(email);
-  validatePassword(password);
-  validateFirstName(firstName);
-  validateLastName(lastName);
+  if (!validateEmail(email)) {
+    return json({ errors: { email: "Email is invalid" } }, { status: 400 });
+  }
+  if (!validatePassword(password)) {
+    return json(
+      { errors: { password: "Password should contain at least 8 letters" } },
+      { status: 400 }
+    );
+  }
+  if (!validateFirstName(firstName)) {
+    return json(
+      { errors: { firstName: "Firstname must contain at least 2 letters" } },
+      { status: 400 }
+    );
+  }
+  if (!validateLastName(lastName)) {
+    return json(
+      { errors: { lastName: "Lastname should only contain letters" } },
+      { status: 400 }
+    );
+  }
 
   const existingUser = await getUserByEmail(email);
   if (existingUser) {
