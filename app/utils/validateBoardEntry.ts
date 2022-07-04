@@ -4,11 +4,37 @@ export function validateTitle(title: unknown) {
   if (typeof title !== "string" || title.length === 0) {
     return json({ errors: { title: "Title is required" } }, { status: 400 });
   }
+
+  const minLength = 8;
+
+  if (title.length < minLength) {
+    return json(
+      {
+        errors: {
+          title: `Title is too short. It should at least be ${minLength} letters long`,
+        },
+      },
+      { status: 400 }
+    );
+  }
 }
 
 export function validateBody(body: unknown) {
   if (typeof body !== "string" || body.length === 0) {
     return json({ errors: { title: "Body is required" } }, { status: 400 });
+  }
+
+  const minLength = 20;
+
+  if (body.length < minLength) {
+    return json(
+      {
+        errors: {
+          body: `Body is too short. It should at least be ${minLength} letters long`,
+        },
+      },
+      { status: 400 }
+    );
   }
 }
 
