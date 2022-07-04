@@ -74,7 +74,7 @@ export default function Notifications() {
         <PopoverArrow />
         <PopoverHeader>Notifications</PopoverHeader>
         <PopoverBody p={0}>
-          {fetcher.data?.notifications ? (
+          {fetcher.data?.notifications.length ? (
             <List>
               <NotificationsListItem
                 notificationListItems={fetcher.data?.notifications}
@@ -82,7 +82,7 @@ export default function Notifications() {
             </List>
           ) : (
             <Box px={2} py={3}>
-              <Text>You have no notifications.</Text>
+              <Text>You have no notifications. 🥲</Text>
             </Box>
           )}
         </PopoverBody>
