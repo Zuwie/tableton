@@ -11,7 +11,6 @@ import {
   InputRightElement,
   Stack,
   useColorModeValue,
-  useToast,
 } from "@chakra-ui/react";
 import type { ActionFunction, MetaFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
@@ -24,9 +23,8 @@ import * as React from "react";
 import { useState } from "react";
 import {
   validateEmail,
-  validateFirstName,
-  validateLastName,
   validatePassword,
+  validateUsername,
 } from "~/utils/validateUser";
 
 export const meta: MetaFunction = () => {
@@ -39,8 +37,7 @@ interface ActionData {
   errors: {
     email?: string;
     password?: string;
-    firstName?: string;
-    lastName?: string;
+    userName?: string;
   };
 }
 
@@ -56,8 +53,7 @@ export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
   const email = formData.get("email");
   const password = formData.get("password");
-  const firstName = formData.get("firstName");
-  const lastName = formData.get("lastName");
+  const userName = formData.get("userName");
 
   if (!validateEmail(email)) {
     return json({ errors: { email: "Email is invalid" } }, { status: 400 });
@@ -68,15 +64,9 @@ export const action: ActionFunction = async ({ request }) => {
       { status: 400 }
     );
   }
-  if (!validateFirstName(firstName)) {
+  if (!validateUsername(userName)) {
     return json(
-      { errors: { firstName: "Firstname must contain at least 2 letters" } },
-      { status: 400 }
-    );
-  }
-  if (!validateLastName(lastName)) {
-    return json(
-      { errors: { lastName: "Lastname should only contain letters" } },
+      { errors: { userName: "Username must contain at least 2 letters" } },
       { status: 400 }
     );
   }
@@ -92,8 +82,7 @@ export const action: ActionFunction = async ({ request }) => {
 
   const user = await updateUser({
     email,
-    firstName,
-    lastName,
+    userName,
     password,
     userId,
   });
@@ -124,39 +113,19 @@ export default function SettingsIndexPage() {
             <HStack>
               <Box>
                 <FormControl
-                  id="firstName"
+                  id="userName"
                   isRequired
-                  isInvalid={!!actionData?.errors?.firstName}
+                  isInvalid={!!actionData?.errors?.userName}
                 >
-                  <FormLabel>First Name</FormLabel>
+                  <FormLabel>Username</FormLabel>
                   <Input
                     type="text"
-                    name="firstName"
-                    autoComplete="firstName"
-                    defaultValue={user.firstName}
+                    name="userName"
+                    defaultValue={user.userName}
                   />
-                  {actionData?.errors?.firstName && (
+                  {actionData?.errors?.userName && (
                     <FormErrorMessage>
-                      {actionData.errors.firstName}
-                    </FormErrorMessage>
-                  )}
-                </FormControl>
-              </Box>
-              <Box>
-                <FormControl
-                  id="lastName"
-                  isInvalid={!!actionData?.errors?.lastName}
-                >
-                  <FormLabel>Last Name</FormLabel>
-                  <Input
-                    type="text"
-                    name="lastName"
-                    autoComplete="lastName"
-                    defaultValue={user.lastName}
-                  />
-                  {actionData?.errors?.lastName && (
-                    <FormErrorMessage>
-                      {actionData.errors.lastName}
+                      {actionData.errors.userName}
                     </FormErrorMessage>
                   )}
                 </FormControl>

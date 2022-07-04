@@ -49,7 +49,7 @@ export default function UserAvatar({ user }: { user: User }) {
       <Avatar
         size="md"
         src={user.avatar || undefined}
-        name={`${user.firstName} ${user.lastName}`}
+        name={`${user.userName}`}
       />
       {showDetails ? (
         loader.type === "done" ? (

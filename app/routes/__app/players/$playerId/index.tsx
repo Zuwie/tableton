@@ -91,12 +91,12 @@ export default function PlayerDetailsPage() {
       <Stack align={"center"}>
         <HStack>
           <Heading as="h1" fontSize={"4xl"}>
-            Profile of {loader.user?.firstName}
+            Profile of {loader.user?.userName}
           </Heading>
           <Avatar
             size="md"
             src={loader.user?.avatar || undefined}
-            name={`${loader.user?.firstName} ${loader.user?.lastName}`}
+            name={`${loader.user?.userName}`}
           />{" "}
         </HStack>
       </Stack>

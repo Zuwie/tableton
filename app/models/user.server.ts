@@ -24,15 +24,14 @@ export async function getUserByEmail(email: User["email"]) {
 }
 
 /**
- * It returns all users from the database, but only the id, firstName, lastName, and avatar fields
- * @returns An array of objects with the following properties: id, firstName, lastName, avatar
+ * Get all users, but only return their id, userName, and avatar.
+ * @returns An array of objects with the id, userName, and avatar properties.
  */
 export async function getUsers() {
   return prisma.user.findMany({
     select: {
       id: true,
-      firstName: true,
-      lastName: true,
+      userName: true,
       avatar: true,
     },
   });
@@ -40,18 +39,16 @@ export async function getUsers() {
 
 /**
  * It creates a new user in the database
- * @param email - User["email"] - This is the email of the user.
- * @param {string} password - string - The password that the user will use to log in.
- * @param firstName - User["firstName"]
- * @param lastName - User["lastName"]
+ * @param email - User["email"]
+ * @param {string} password - string
+ * @param userName - User["userName"]
  * @param avatar - User["avatar"]
  * @returns A promise that resolves to a User object.
  */
 export async function createUser(
   email: User["email"],
   password: string,
-  firstName: User["firstName"],
-  lastName: User["lastName"],
+  userName: User["userName"],
   avatar: User["avatar"]
 ) {
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -59,8 +56,7 @@ export async function createUser(
   return prisma.user.create({
     data: {
       email,
-      firstName,
-      lastName,
+      userName,
       avatar,
       password: {
         create: {
@@ -78,8 +74,7 @@ export async function createUser(
  */
 export async function updateUser({
   email,
-  firstName,
-  lastName,
+  userName,
   avatar,
   password,
   userId,
@@ -93,8 +88,7 @@ export async function updateUser({
     where: { id: userId },
     data: {
       email: email || undefined,
-      firstName: firstName || undefined,
-      lastName: lastName || undefined,
+      userName: userName || undefined,
       avatar: avatar || undefined,
       password: {
         update: {

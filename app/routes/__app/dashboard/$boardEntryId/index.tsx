@@ -273,13 +273,13 @@ export default function BoardEntryDetailsPage() {
                   <Avatar
                     size="md"
                     src={loader.boardEntry?.user.avatar || undefined}
-                    name={`${loader.boardEntry?.user.firstName} ${loader.boardEntry?.user.lastName}`}
+                    name={`${loader.boardEntry?.user.userName}`}
                   />
                   {loader.boardEntry?.challenger ? (
                     <Avatar
                       size="md"
                       src={loader.boardEntry?.challenger.avatar || undefined}
-                      name={`${loader.boardEntry?.challenger.firstName} ${loader.boardEntry?.challenger.lastName}`}
+                      name={`${loader.boardEntry?.challenger.userName}`}
                     />
                   ) : (
                     <Avatar bg="gray.200" icon={<HiPlus />} />

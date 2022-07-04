@@ -56,7 +56,7 @@ export default function PlayersIndexPage() {
         <Table variant="simple">
           <Thead>
             <Tr>
-              <Th>Firstname</Th>
+              <Th>Username</Th>
               <Th>Preferred Game-System</Th>
             </Tr>
           </Thead>
@@ -73,9 +73,9 @@ export default function PlayersIndexPage() {
                           <Avatar
                             size="sm"
                             src={user.avatar || undefined}
-                            name={`${user.firstName} ${user.lastName}`}
+                            name={`${user.userName}`}
                           />{" "}
-                          <Text>{user.firstName}</Text>
+                          <Text>{user.userName}</Text>
                         </HStack>
                       </InternalLink>
                     </Td>

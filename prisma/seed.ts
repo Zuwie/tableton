@@ -27,17 +27,15 @@ async function seed() {
           hash: hashedPassword,
         },
       },
-      firstName: "Rafael",
-      lastName: "Seifert",
+      userName: "Aquila",
       avatar: faker.internet.avatar(),
     },
   });
   userArray.push(user1);
 
   /**
-   * It returns a fake user object with a fake email, password, first name, last name, and avatar
-   * @returns An object with a data property that contains an object with the following properties: email, password,
-   * firstName, lastName, and avatar.
+   * It returns a fake user object with a random email, password, userName, and avatar
+   * @returns An object with a data property that contains an object with email, password, userName, and avatar properties.
    */
   function getFakeUser() {
     return {
@@ -48,8 +46,9 @@ async function seed() {
             hash: faker.internet.password(),
           },
         },
-        firstName: faker.internet.userName("firstName"),
-        lastName: faker.internet.userName("lastName"),
+        userName: `${faker.internet.userName("Fake")}#${faker.random.numeric(
+          4
+        )}`,
         avatar: faker.internet.avatar(),
       },
     };

@@ -23,21 +23,12 @@ export function validatePassword(password: unknown): password is string {
 }
 
 /**
- * "If the firstName argument is not a string or is less than 2 characters, return true."
+ * "If the userName argument is not a string or is less than 2 characters, return true."
  *
- * The function returns true if the firstName argument is not a string or is less than 2 characters
- * @param {unknown} firstName - unknown - This is the parameter that we're going to validate.
- * @returns A function that takes a firstName and returns a boolean.
+ * The function returns true if the userName argument is not a string or is less than 2 characters
+ * @param {unknown} userName - unknown - This is the parameter that we're going to validate.
+ * @returns A function that takes a userName and returns a boolean.
  */
-export function validateFirstName(firstName: unknown): firstName is string {
-  return typeof firstName === "string" && firstName.length > 2;
-}
-
-/**
- * If the type of lastName is not a string, return true, otherwise return false.
- * @param {unknown} lastName - unknown
- * @returns A function that takes a string and returns a boolean.
- */
-export function validateLastName(lastName: unknown): lastName is string {
-  return typeof lastName === "string";
+export function validateUsername(userName: unknown): userName is string {
+  return typeof userName === "string" && userName.length > 2;
 }

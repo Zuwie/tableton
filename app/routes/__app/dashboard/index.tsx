@@ -75,7 +75,7 @@ export default function DashboardIndexPage() {
                   <Avatar
                     size={"sm"}
                     src={entry.user.avatar || undefined}
-                    name={`${entry.user.firstName} ${entry.user.lastName}`}
+                    name={`${entry.user.userName}`}
                     pos="absolute"
                     top={6}
                     right={6}

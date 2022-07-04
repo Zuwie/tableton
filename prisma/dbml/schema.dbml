@@ -5,8 +5,7 @@
 Table User {
   id String [pk]
   email String [unique, not null]
-  firstName String [not null]
-  lastName String [not null]
+  userName String [not null]
   avatar String
   password Password
   profile ExtendedProfile

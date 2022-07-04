@@ -1,8 +1,4 @@
-import {
-  validateEmail,
-  validateFirstName,
-  validateLastName,
-} from "./validateUser";
+import { validateEmail, validateUsername } from "./validateUser";
 import {
   validateBody,
   validateDate,
@@ -23,21 +19,13 @@ test("validateEmail returns true for emails", () => {
   expect(validateEmail("kody@example.com")).toBe(true);
 });
 
-test("validateFirstname returns false for non-names", () => {
-  expect(validateFirstName(undefined)).toBe(false);
-  expect(validateFirstName(null)).toBe(false);
-  expect(validateFirstName("")).toBe(false);
+test("validateAvatar returns false for non-names", () => {
+  expect(validateUsername(undefined)).toBe(false);
+  expect(validateUsername(null)).toBe(false);
+  expect(validateUsername("")).toBe(false);
 });
-test("validateFirstname returns true for names", () => {
-  expect(validateFirstName("Rafael")).toBe(true);
-});
-
-test("validateLastname returns false for non-names", () => {
-  expect(validateLastName(undefined)).toBe(false);
-  expect(validateLastName(null)).toBe(false);
-});
-test("validateLastname returns true for names", () => {
-  expect(validateLastName("Rafael")).toBe(true);
+test("validateAvatar returns true for names", () => {
+  expect(validateUsername("Rafael")).toBe(true);
 });
 
 test("validateTitle returns false for non-titles", () => {

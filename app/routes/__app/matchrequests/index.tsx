@@ -131,9 +131,9 @@ export default function MatchRequestsPage() {
                       <Avatar
                         size="sm"
                         src={matchRequest.fromUser.avatar || undefined}
-                        name={`${matchRequest.fromUser.firstName} ${matchRequest.fromUser.lastName}`}
+                        name={`${matchRequest.fromUser.userName}`}
                       />{" "}
-                      <Text>{matchRequest.fromUser.firstName}</Text>
+                      <Text>{matchRequest.fromUser.userName}</Text>
                     </HStack>
                   </InternalLink>
                 </Td>

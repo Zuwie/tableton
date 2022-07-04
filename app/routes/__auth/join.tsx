@@ -19,7 +19,6 @@ import {
   FormErrorMessage,
   FormLabel,
   Heading,
-  HStack,
   Input,
   InputGroup,
   InputRightElement,
@@ -31,9 +30,8 @@ import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import InternalLink from "~/components/InternalLink";
 import {
   validateEmail,
-  validateFirstName,
-  validateLastName,
   validatePassword,
+  validateUsername,
 } from "~/utils/validateUser";
 
 export const meta: MetaFunction = () => {
@@ -57,8 +55,7 @@ interface ActionData {
   errors: {
     email?: string;
     password?: string;
-    firstName?: string;
-    lastName?: string;
+    userName?: string;
   };
 }
 
@@ -73,8 +70,7 @@ export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
   const email = formData.get("email");
   const password = formData.get("password");
-  const firstName = formData.get("firstName");
-  const lastName = formData.get("lastName");
+  const userName = formData.get("userName");
   const redirectTo = safeRedirect(
     formData.get("redirectTo"),
     ROUTES.ONBOARDING
@@ -89,15 +85,9 @@ export const action: ActionFunction = async ({ request }) => {
       { status: 400 }
     );
   }
-  if (!validateFirstName(firstName)) {
+  if (!validateUsername(userName)) {
     return json(
-      { errors: { firstName: "Firstname must contain at least 2 letters" } },
-      { status: 400 }
-    );
-  }
-  if (!validateLastName(lastName)) {
-    return json(
-      { errors: { lastName: "Lastname should only contain letters" } },
+      { errors: { userName: "Username must contain at least 2 letters" } },
       { status: 400 }
     );
   }
@@ -111,13 +101,7 @@ export const action: ActionFunction = async ({ request }) => {
   }
 
   let avatar;
-  const user = await createUser(
-    email,
-    password,
-    firstName,
-    lastName,
-    (avatar = null)
-  );
+  const user = await createUser(email, password, userName, (avatar = null));
 
   return createUserSession({
     request,
@@ -147,7 +131,7 @@ export default function JoinPage() {
   }, [actionData]);
 
   return (
-    <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
+    <Stack spacing={8} mx={"auto"} maxW={"lg"} w={"100%"} py={12} px={6}>
       <Stack align={"center"}>
         <Heading fontSize={"4xl"} textAlign={"center"}>
           Sign up
@@ -166,33 +150,19 @@ export default function JoinPage() {
         <Form method="post">
           <input type="hidden" name="redirectTo" value={redirectTo} />
           <Stack spacing={4}>
-            <HStack>
-              <Box>
-                <FormControl
-                  id="firstName"
-                  isRequired
-                  isInvalid={!!actionData?.errors?.firstName}
-                >
-                  <FormLabel>First Name</FormLabel>
-                  <Input
-                    type="text"
-                    name="firstName"
-                    autoComplete="firstName"
-                  />
-                  {actionData?.errors?.firstName && (
-                    <FormErrorMessage>
-                      {actionData.errors.firstName}
-                    </FormErrorMessage>
-                  )}
-                </FormControl>
-              </Box>
-              <Box>
-                <FormControl id="lastName">
-                  <FormLabel>Last Name</FormLabel>
-                  <Input type="text" name="lastName" autoComplete="lastName" />
-                </FormControl>
-              </Box>
-            </HStack>
+            <FormControl
+              id="userName"
+              isRequired
+              isInvalid={!!actionData?.errors?.userName}
+            >
+              <FormLabel>Username</FormLabel>
+              <Input type="text" name="userName" autoComplete="userName" />
+              {actionData?.errors?.userName && (
+                <FormErrorMessage>
+                  {actionData.errors.userName}
+                </FormErrorMessage>
+              )}
+            </FormControl>
 
             <FormControl
               id="email"
@@ -241,7 +211,7 @@ export default function JoinPage() {
               )}
             </FormControl>
 
-            <Stack spacing={10} pt={2}>
+            <Stack pt={6}>
               <Button
                 type="submit"
                 loadingText="Submitting"
@@ -251,7 +221,7 @@ export default function JoinPage() {
                 Sign up
               </Button>
             </Stack>
-            <Stack pt={6}>
+            <Stack>
               <Text fontSize={"sm"} align={"center"}>
                 Already a user?{" "}
                 <InternalLink
