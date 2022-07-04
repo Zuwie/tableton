@@ -5,7 +5,6 @@ import {
   FormErrorMessage,
   FormLabel,
   Heading,
-  HStack,
   Input,
   InputGroup,
   InputRightElement,
@@ -110,27 +109,25 @@ export default function SettingsIndexPage() {
       >
         <Form method="post">
           <Stack spacing={4}>
-            <HStack>
-              <Box>
-                <FormControl
-                  id="userName"
-                  isRequired
-                  isInvalid={!!actionData?.errors?.userName}
-                >
-                  <FormLabel>Username</FormLabel>
-                  <Input
-                    type="text"
-                    name="userName"
-                    defaultValue={user.userName}
-                  />
-                  {actionData?.errors?.userName && (
-                    <FormErrorMessage>
-                      {actionData.errors.userName}
-                    </FormErrorMessage>
-                  )}
-                </FormControl>
-              </Box>
-            </HStack>
+            <Box>
+              <FormControl
+                id="userName"
+                isRequired
+                isInvalid={!!actionData?.errors?.userName}
+              >
+                <FormLabel>Username</FormLabel>
+                <Input
+                  type="text"
+                  name="userName"
+                  defaultValue={user.userName}
+                />
+                {actionData?.errors?.userName && (
+                  <FormErrorMessage>
+                    {actionData.errors.userName}
+                  </FormErrorMessage>
+                )}
+              </FormControl>
+            </Box>
 
             <FormControl
               id="email"
