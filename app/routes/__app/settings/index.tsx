@@ -107,8 +107,6 @@ export default function SettingsIndexPage() {
   const emailRef = React.useRef<HTMLInputElement>(null);
   const passwordRef = React.useRef<HTMLInputElement>(null);
 
-  console.log("actionData?.errors?.firstName", actionData?.errors?.firstName);
-
   return (
     <Stack spacing={8} mx={"auto"} maxW={"md"} py={12}>
       <Stack align={"center"}>
