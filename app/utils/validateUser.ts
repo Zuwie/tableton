@@ -19,7 +19,7 @@ export function validateEmail(email: unknown): email is string {
  * @returns A function that takes a password and returns a boolean.
  */
 export function validatePassword(password: unknown): password is string {
-  return typeof password === "string" && password.length > 8;
+  return typeof password === "string" && password.length >= 8;
 }
 
 /**

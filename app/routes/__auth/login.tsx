@@ -43,13 +43,23 @@ interface ActionData {
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
-  const email = formData.get("email") as string;
-  const password = formData.get("password") as string;
+  const email = formData.get("email");
+  const password = formData.get("password");
   const redirectTo = safeRedirect(formData.get("redirectTo"), ROUTES.DASHBOARD);
   const remember = formData.get("remember");
 
-  validateEmail(email);
-  validatePassword(password);
+  if (!validateEmail(email)) {
+    return json<ActionData>(
+      { errors: { email: "Email is invalid" } },
+      { status: 400 }
+    );
+  }
+  if (!validatePassword(password)) {
+    return json(
+      { errors: { password: "Password should contain at least 8 letters" } },
+      { status: 400 }
+    );
+  }
 
   const user = await verifyLogin(email, password);
 
