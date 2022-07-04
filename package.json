@@ -4,7 +4,8 @@
   "sideEffects": false,
   "scripts": {
     "build": "npm run && remix build",
-    "dev": "remix dev",
+    "dev": "run-p dev:*",
+    "dev:remix": "cross-env NODE_ENV=development binode --require ./mocks -- @remix-run/dev:remix dev",
     "format": "prettier --write .",
     "lint": "eslint --cache --cache-location ./node_modules/.cache/eslint .",
     "setup": "prisma migrate dev && prisma db seed",
@@ -27,7 +28,6 @@
   ],
   "dependencies": {
     "@chakra-ui/icons": "^2.0.2",
-    "@chakra-ui/provider": "^2.0.6",
     "@chakra-ui/react": "^2.2.1",
     "@emotion/cache": "^11.7.1",
     "@emotion/react": "^11.9.0",

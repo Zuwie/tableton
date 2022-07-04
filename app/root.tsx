@@ -12,12 +12,12 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
-import { getUser } from "./session.server";
 import { useContext, useEffect } from "react";
 import { ClientStyleContext, ServerStyleContext } from "~/context";
 import { withEmotionCache } from "@emotion/react";
-import { ChakraProvider } from "@chakra-ui/provider";
+import { ChakraProvider } from "@chakra-ui/react";
 import { theme } from "~/chakra-theme";
+import { getUser } from "~/session.server";
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
