@@ -17,10 +17,12 @@ const SocialButton = ({
   children,
   label,
   href,
+  target,
 }: {
   children: ReactNode;
   label: string;
   href: string;
+  target?: HTMLLinkElement["target"];
 }) => {
   return (
     <Button
@@ -31,6 +33,7 @@ const SocialButton = ({
       cursor={"pointer"}
       as={"a"}
       href={href}
+      target={target}
       display={"inline-flex"}
       alignItems={"center"}
       justifyContent={"center"}
@@ -85,10 +88,18 @@ export default function Footer() {
             © {new Date().getFullYear()} rs-webdev. All rights reserved
           </Text>
           <Stack direction={"row"} spacing={6}>
-            <SocialButton label={"Twitter"} href={CONTACT.TWITTER}>
+            <SocialButton
+              label={"Twitter"}
+              href={CONTACT.TWITTER}
+              target={"_blank"}
+            >
               <FaTwitter />
             </SocialButton>
-            <SocialButton label={"Discord"} href={CONTACT.DISCORD}>
+            <SocialButton
+              label={"Discord"}
+              href={`https://discord.com/channels/@me/${CONTACT.DISCORD}`}
+              target={"_blank"}
+            >
               <FaDiscord />
             </SocialButton>
           </Stack>

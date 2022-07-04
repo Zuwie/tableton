@@ -34,10 +34,12 @@ export default function ContactPage() {
           </Heading>
           <Text>
             You can either reach me on{" "}
-            <Text as={"span"} fontWeight={"bold"}>
+            <Link
+              href={`https://discord.com/channels/@me/${CONTACT.DISCORD}`}
+              fontWeight={"bold"}
+            >
               Discord
-            </Text>{" "}
-            ({CONTACT.DISCORD}),{" "}
+            </Link>{" "}
             <Link href={CONTACT.EMAIL} fontWeight={"bold"}>
               Email
             </Link>{" "}

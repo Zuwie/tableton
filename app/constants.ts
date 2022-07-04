@@ -69,7 +69,7 @@ export const NOTIFICATIONS: Notifications = {
 };
 
 export const CONTACT = {
-  DISCORD: "Aquila#3729",
+  DISCORD: "992115444322406510",
   EMAIL: "rs.frontend@gmail.com",
   TWITTER: "https://twitter.com/RS_Webdev",
 };
