@@ -83,7 +83,7 @@ export async function updateUser({
   lastName,
   avatar,
   userId,
-}: Pick<User, "email" | "firstName" | "lastName" | "avatar"> & {
+}: Partial<User> & {
   userId: User["id"];
 }) {
   return prisma.user.update({

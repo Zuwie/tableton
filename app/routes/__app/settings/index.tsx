@@ -67,7 +67,7 @@ export const action: ActionFunction = async ({ request }) => {
 
   const existingUser = await getUserByEmail(email);
 
-  if (existingUser) {
+  if (existingUser && existingUser.id !== userId) {
     return json<ActionData>(
       { errors: { email: "A user already exists with this email" } },
       { status: 400 }
@@ -112,7 +112,7 @@ export default function SettingsIndexPage() {
                     type="text"
                     name="firstName"
                     autoComplete="firstName"
-                    value={user.firstName}
+                    defaultValue={user.firstName}
                   />
                 </FormControl>
               </Box>
@@ -123,7 +123,7 @@ export default function SettingsIndexPage() {
                     type="text"
                     name="lastName"
                     autoComplete="lastName"
-                    value={user.lastName}
+                    defaultValue={user.lastName}
                   />
                 </FormControl>
               </Box>
@@ -140,7 +140,7 @@ export default function SettingsIndexPage() {
                 autoComplete="email"
                 type="email"
                 name="email"
-                value={user.email}
+                defaultValue={user.email}
               />
               {actionData?.errors?.email && (
                 <FormErrorMessage>{actionData.errors.email}</FormErrorMessage>
@@ -149,7 +149,6 @@ export default function SettingsIndexPage() {
 
             <FormControl
               id="password"
-              isRequired
               isInvalid={!!actionData?.errors?.password}
             >
               <FormLabel>Password</FormLabel>
