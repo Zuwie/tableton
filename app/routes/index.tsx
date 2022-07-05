@@ -34,7 +34,7 @@ export default function RootIndexPage() {
             fontWeight={"extrabold"}
             fontSize={{ base: "4xl", sm: "6xl", md: 100 }}
             lineHeight={"110%"}
-            bgGradient="linear(to-l, #7928CA, teal.500)"
+            bgGradient="linear(to-l, #7928CA, teal.300)"
             bgClip="text"
             className={"animate-bg-text"}
           >

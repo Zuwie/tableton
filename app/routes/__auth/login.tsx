@@ -106,7 +106,7 @@ export default function LoginPage() {
         <Heading fontSize={"4xl"} textAlign={"center"}>
           Sign in to your account
         </Heading>
-        <Text fontSize={"lg"} color={"gray.600"}>
+        <Text fontSize={"lg"} color={"gray"}>
           to continue where you left off 💪🏽
         </Text>
       </Stack>

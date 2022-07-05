@@ -24,6 +24,7 @@ import {
 } from "@chakra-ui/react";
 import { theme } from "~/chakra-theme";
 import { getUser } from "~/session.server";
+import stylesheetUrl from "./styles/index.css";
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
@@ -39,6 +40,7 @@ export let links: LinksFunction = () => {
       rel: "stylesheet",
       href: "https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Menlo:wght@300;400;500;600;700&display=swap",
     },
+    { rel: "stylesheet", href: stylesheetUrl },
   ];
 };
 
