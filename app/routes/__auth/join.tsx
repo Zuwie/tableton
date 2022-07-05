@@ -10,7 +10,7 @@ import { useState } from "react";
 import { createUserSession, getUserId } from "~/session.server";
 import { createUser, getUserByEmail } from "~/models/user.server";
 import { safeRedirect } from "~/utils/utils";
-import { ROUTES } from "~/constants";
+import { DEFAULT_CARD_COLOR, ROUTES } from "~/constants";
 
 import {
   Box,
@@ -121,6 +121,7 @@ export default function JoinPage() {
   const redirectTo = searchParams.get("redirectTo") ?? undefined;
   const emailRef = React.useRef<HTMLInputElement>(null);
   const passwordRef = React.useRef<HTMLInputElement>(null);
+  const background = useColorModeValue(...DEFAULT_CARD_COLOR);
 
   React.useEffect(() => {
     if (actionData?.errors?.email) {
@@ -141,12 +142,7 @@ export default function JoinPage() {
         </Text>
       </Stack>
 
-      <Box
-        rounded={"lg"}
-        bg={useColorModeValue("white", "gray.700")}
-        boxShadow={"lg"}
-        p={8}
-      >
+      <Box rounded={"lg"} bg={background} boxShadow={"lg"} p={8}>
         <Form method="post">
           <input type="hidden" name="redirectTo" value={redirectTo} />
           <Stack spacing={4}>

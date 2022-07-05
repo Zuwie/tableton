@@ -16,11 +16,6 @@ import MobileNav from "~/components/MobileNav";
 import NavItem from "../components/NavItem";
 import { Outlet, useLocation } from "@remix-run/react";
 import Logo from "~/components/Logo";
-import styles from "~/styles/nav.css";
-
-export function links() {
-  return [{ rel: "stylesheet", href: styles }];
-}
 
 interface LinkItemProps {
   name: string;

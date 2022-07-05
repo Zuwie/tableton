@@ -26,6 +26,7 @@ import {
   validatePassword,
   validateUsername,
 } from "~/utils/validateUser";
+import { DEFAULT_CARD_COLOR } from "~/constants";
 
 export const meta: MetaFunction = () => {
   return {
@@ -117,6 +118,7 @@ export default function SettingsIndexPage() {
   const emailRef = React.useRef<HTMLInputElement>(null);
   const passwordRef = React.useRef<HTMLInputElement>(null);
   const { colorMode, toggleColorMode } = useColorMode();
+  const background = useColorModeValue(...DEFAULT_CARD_COLOR);
 
   return (
     <Stack spacing={8} mx={"auto"} maxW={"md"} py={12}>
@@ -126,12 +128,7 @@ export default function SettingsIndexPage() {
           Toggle {colorMode === "light" ? "Dark" : "Light"}
         </Button>
       </Stack>
-      <Box
-        rounded={"lg"}
-        bg={useColorModeValue("white", "gray.700")}
-        boxShadow={"lg"}
-        p={8}
-      >
+      <Box rounded={"lg"} bg={background} boxShadow={"lg"} p={8}>
         <Form method="post">
           <Stack spacing={4}>
             <Box>

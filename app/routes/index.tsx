@@ -32,10 +32,11 @@ export default function RootIndexPage() {
         >
           <Heading
             fontWeight={"extrabold"}
-            fontSize={{ base: "2xl", sm: "4xl", md: 100 }}
+            fontSize={{ base: "4xl", sm: "6xl", md: 100 }}
             lineHeight={"110%"}
             bgGradient="linear(to-l, #7928CA, teal.500)"
             bgClip="text"
+            className={"animate-bg-text"}
           >
             Connect with <br />
             local players

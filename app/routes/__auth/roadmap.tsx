@@ -10,8 +10,11 @@ import {
 } from "@chakra-ui/react";
 import * as React from "react";
 import { SettingsIcon } from "@chakra-ui/icons";
+import { DEFAULT_CARD_COLOR } from "~/constants";
 
 export default function RoadmapPage() {
+  const background = useColorModeValue(...DEFAULT_CARD_COLOR);
+
   return (
     <Stack spacing={8} mx={"auto"} w="100%" maxW={"lg"} py={12} px={6}>
       <Stack align={"center"}>
@@ -23,12 +26,7 @@ export default function RoadmapPage() {
         </Text>
       </Stack>
 
-      <Box
-        rounded={"lg"}
-        bg={useColorModeValue("white", "gray.700")}
-        boxShadow={"lg"}
-        p={8}
-      >
+      <Box rounded={"lg"} bg={background} boxShadow={"lg"} p={8}>
         <List spacing={4}>
           <ListItem>
             <ListIcon as={SettingsIcon} color="orange.500" /> Filters for board

@@ -10,7 +10,7 @@ import * as React from "react";
 import { createUserSession, getUserId } from "~/session.server";
 import { verifyLogin } from "~/models/user.server";
 import { safeRedirect } from "~/utils/utils";
-import { ROUTES } from "~/constants";
+import { DEFAULT_CARD_COLOR, ROUTES } from "~/constants";
 
 import {
   Box,
@@ -90,6 +90,7 @@ export default function LoginPage() {
   const actionData = useActionData() as ActionData;
   const emailRef = React.useRef<HTMLInputElement>(null);
   const passwordRef = React.useRef<HTMLInputElement>(null);
+  const background = useColorModeValue(...DEFAULT_CARD_COLOR);
 
   React.useEffect(() => {
     if (actionData?.errors?.email) {
@@ -109,12 +110,7 @@ export default function LoginPage() {
           to continue where you left off 💪🏽
         </Text>
       </Stack>
-      <Box
-        rounded={"lg"}
-        bg={useColorModeValue("white", "gray.700")}
-        boxShadow={"lg"}
-        p={8}
-      >
+      <Box rounded={"lg"} bg={background} boxShadow={"lg"} p={8}>
         <Form method="post">
           <input type="hidden" name="redirectTo" value={redirectTo} />
           <Stack spacing={4}>

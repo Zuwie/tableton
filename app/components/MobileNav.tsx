@@ -28,6 +28,9 @@ interface MobileProps extends FlexProps {
 
 export default function MobileNav({ onOpen, ...rest }: MobileProps) {
   const user = useUser();
+  const activeStyle = {
+    textDecoration: "underline",
+  };
 
   return (
     <Flex
@@ -72,7 +75,7 @@ export default function MobileNav({ onOpen, ...rest }: MobileProps) {
                   ml="2"
                 >
                   <Text fontSize="sm">{user.email}</Text>
-                  <Text fontSize="xs" color="gray.600">
+                  <Text fontSize="xs" color="gray">
                     Admin
                   </Text>
                 </VStack>
@@ -86,12 +89,12 @@ export default function MobileNav({ onOpen, ...rest }: MobileProps) {
               borderColor={useColorModeValue("gray.200", "gray.700")}
               py={0}
             >
-              <NavLink to={ROUTES.PROFILE}>
-                <MenuItem as="span">Profile</MenuItem>
-              </NavLink>
-              <NavLink to={ROUTES.SETTINGS}>
-                <MenuItem as="span">Settings</MenuItem>
-              </NavLink>
+              <MenuItem as={NavLink} to={ROUTES.PROFILE}>
+                Profile
+              </MenuItem>
+              <MenuItem as={NavLink} to={ROUTES.SETTINGS}>
+                Settings
+              </MenuItem>
               <MenuDivider />
               <Form action="/logout" method="post">
                 <MenuItem type="submit">Sign Out</MenuItem>

@@ -13,7 +13,7 @@ export default function __auth() {
         minH={"100vh"}
         align={"center"}
         justify={"center"}
-        bg={useColorModeValue("gray.50", "gray.800")}
+        bg={useColorModeValue("gray.50", "gray.900")}
       >
         <Outlet />
       </Flex>

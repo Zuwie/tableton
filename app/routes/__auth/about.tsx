@@ -1,7 +1,10 @@
 import { Box, Heading, Stack, Text, useColorModeValue } from "@chakra-ui/react";
 import * as React from "react";
+import { DEFAULT_CARD_COLOR } from "~/constants";
 
 export default function AboutPage() {
+  const background = useColorModeValue(...DEFAULT_CARD_COLOR);
+
   return (
     <Stack spacing={8} mx={"auto"} w="100%" maxW={"xl"} py={12} px={6}>
       <Stack align={"center"}>
@@ -10,12 +13,7 @@ export default function AboutPage() {
         </Heading>
       </Stack>
 
-      <Box
-        rounded={"lg"}
-        bg={useColorModeValue("white", "gray.700")}
-        boxShadow={"lg"}
-        p={8}
-      >
+      <Box rounded={"lg"} bg={background} boxShadow={"lg"} p={8}>
         <Stack spacing={6}>
           <Heading>Why did I create this app?</Heading>
           <Text>

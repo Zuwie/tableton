@@ -17,7 +17,7 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { GAME_SYSTEM } from "~/constants";
+import { DEFAULT_CARD_COLOR, GAME_SYSTEM } from "~/constants";
 import * as React from "react";
 import InternalLink from "~/components/InternalLink";
 import { requireUserId } from "~/session.server";
@@ -46,7 +46,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 export default function DashboardIndexPage() {
   const loader = useLoaderData() as LoaderData;
-  const backGround = useColorModeValue("white", "gray.700");
+  const background = useColorModeValue(...DEFAULT_CARD_COLOR);
 
   return (
     <>
@@ -67,7 +67,7 @@ export default function DashboardIndexPage() {
             <GridItem
               rounded={"lg"}
               boxShadow={"lg"}
-              bg={backGround}
+              bg={background}
               key={entry.id}
             >
               <InternalLink to={entry.id}>

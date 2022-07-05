@@ -73,3 +73,5 @@ export const CONTACT = {
   EMAIL: "rs.frontend@gmail.com",
   TWITTER: "https://twitter.com/RS_Webdev",
 };
+
+export const DEFAULT_CARD_COLOR = ["white", "gray.800"] as const;

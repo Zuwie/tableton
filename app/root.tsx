@@ -11,11 +11,17 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLoaderData,
 } from "@remix-run/react";
 import { useContext, useEffect } from "react";
 import { ClientStyleContext, ServerStyleContext } from "~/context";
 import { withEmotionCache } from "@emotion/react";
-import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
+import {
+  ChakraProvider,
+  ColorModeScript,
+  cookieStorageManager,
+  localStorageManager,
+} from "@chakra-ui/react";
 import { theme } from "~/chakra-theme";
 import { getUser } from "~/session.server";
 
@@ -86,18 +92,26 @@ const Document = withEmotionCache(
 
 type LoaderData = {
   user: Awaited<ReturnType<typeof getUser>>;
+  cookies: string;
 };
 
 export const loader: LoaderFunction = async ({ request }) => {
   return json<LoaderData>({
     user: await getUser(request),
+    cookies: request.headers.get("Cookie") ?? "",
   });
 };
 
 export default function App() {
+  const loader = useLoaderData();
+  const colorModeManager =
+    typeof loader.cookies === "string"
+      ? cookieStorageManager
+      : localStorageManager;
+
   return (
     <Document>
-      <ChakraProvider theme={theme}>
+      <ChakraProvider theme={theme} colorModeManager={colorModeManager}>
         <Outlet />
       </ChakraProvider>
     </Document>

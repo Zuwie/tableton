@@ -9,7 +9,7 @@ import invariant from "tiny-invariant";
 
 import { requireUserId } from "~/session.server";
 import { deleteBoardEntry, getBoardEntry } from "~/models/board.server";
-import { GAME_SYSTEM, ROUTES } from "~/constants";
+import { DEFAULT_CARD_COLOR, GAME_SYSTEM, ROUTES } from "~/constants";
 import * as React from "react";
 import {
   Avatar,
@@ -112,7 +112,7 @@ export default function BoardEntryDetailsPage() {
     (matchRequest) => matchRequest.status === 0
   ).length;
 
-  const boxBg = useColorModeValue("white", "gray.700");
+  const background = useColorModeValue(...DEFAULT_CARD_COLOR);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -135,7 +135,7 @@ export default function BoardEntryDetailsPage() {
           <VStack spacing={4} alignSelf="flex-start">
             <Box
               rounded={"lg"}
-              bg={boxBg}
+              bg={background}
               boxShadow={"lg"}
               py={12}
               px={6}
@@ -158,7 +158,7 @@ export default function BoardEntryDetailsPage() {
             </Box>
             <Box
               rounded={"lg"}
-              bg={boxBg}
+              bg={background}
               boxShadow={"lg"}
               py={12}
               px={6}
@@ -216,7 +216,7 @@ export default function BoardEntryDetailsPage() {
 
         <Box
           rounded={"lg"}
-          bg={boxBg}
+          bg={background}
           boxShadow={"lg"}
           maxW={"xl"}
           flexGrow={2}

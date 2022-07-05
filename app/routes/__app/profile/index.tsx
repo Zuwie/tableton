@@ -12,7 +12,7 @@ import * as React from "react";
 import { getBoardEntryListItemsFromUser } from "~/models/board.server";
 import { requireUserId } from "~/session.server";
 import { useLoaderData } from "@remix-run/react";
-import { ROUTES } from "~/constants";
+import { DEFAULT_CARD_COLOR, ROUTES } from "~/constants";
 import {
   getContactInformationForUser,
   getExtendedProfileForUser,
@@ -56,9 +56,9 @@ export const loader: LoaderFunction = async ({ request }) => {
  * entries
  */
 export default function ProfileIndexPage() {
-  const background = useColorModeValue("white", "gray.700");
   const loader = useLoaderData() as LoaderData;
   const { hasCopied, onCopy } = useClipboard(loader.contact?.discord || "");
+  const background = useColorModeValue(...DEFAULT_CARD_COLOR);
   const toast = useToast();
 
   return (

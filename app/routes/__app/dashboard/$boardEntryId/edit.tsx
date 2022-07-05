@@ -9,7 +9,7 @@ import * as React from "react";
 import { useEffect } from "react";
 import { requireUserId } from "~/session.server";
 import { getBoardEntry, updateBoardEntry } from "~/models/board.server";
-import { GAME_SYSTEM, ROUTES } from "~/constants";
+import { DEFAULT_CARD_COLOR, GAME_SYSTEM, ROUTES } from "~/constants";
 import {
   Box,
   Button,
@@ -140,6 +140,7 @@ export default function EditBoardEntryPage() {
   const titleRef = React.useRef<HTMLInputElement>(null);
   const bodyRef = React.useRef<HTMLTextAreaElement>(null);
   const locationRef = React.useRef<HTMLInputElement>(null);
+  const background = useColorModeValue(...DEFAULT_CARD_COLOR);
 
   useEffect(() => {
     if (actionData?.errors?.title) {
@@ -161,7 +162,7 @@ export default function EditBoardEntryPage() {
 
       <Box
         rounded={"lg"}
-        bg={useColorModeValue("white", "gray.700")}
+        bg={background}
         boxShadow={"lg"}
         maxW={"xl"}
         mx="auto"

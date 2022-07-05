@@ -18,7 +18,7 @@ import {
   useColorModeValue,
   useToast,
 } from "@chakra-ui/react";
-import { ROUTES } from "~/constants";
+import { DEFAULT_CARD_COLOR, ROUTES } from "~/constants";
 import * as React from "react";
 import { getUserId } from "~/session.server";
 import InternalLink from "~/components/InternalLink";
@@ -73,7 +73,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
  */
 export default function PlayerDetailsPage() {
   const loader = useLoaderData() as LoaderData;
-  const background = useColorModeValue("white", "gray.700");
+  const background = useColorModeValue(...DEFAULT_CARD_COLOR);
   const { hasCopied, onCopy } = useClipboard(loader.contact?.discord || "");
   const toast = useToast();
 

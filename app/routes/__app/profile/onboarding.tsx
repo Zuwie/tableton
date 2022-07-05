@@ -26,7 +26,7 @@ import type {
   MetaFunction,
 } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
-import { FACTIONS, ROUTES } from "~/constants";
+import { DEFAULT_CARD_COLOR, FACTIONS, ROUTES } from "~/constants";
 import { useOptionalUser } from "~/utils/utils";
 import { requireUserId } from "~/session.server";
 import {
@@ -112,6 +112,7 @@ export const loader: LoaderFunction = async ({ request }) => {
  */
 export default function OnboardingPage() {
   const user = useOptionalUser();
+  const background = useColorModeValue(...DEFAULT_CARD_COLOR);
 
   return (
     <Stack spacing={8} mx={"auto"} maxW={"lg"} w="100%" py={12}>
@@ -130,12 +131,7 @@ export default function OnboardingPage() {
         </Text>
       </Stack>
 
-      <Box
-        rounded={"lg"}
-        bg={useColorModeValue("white", "gray.700")}
-        boxShadow={"lg"}
-        p={8}
-      >
+      <Box rounded={"lg"} bg={background} boxShadow={"lg"} p={8}>
         <Form method="post">
           <Stack spacing={4}>
             <FormControl id="factions">
