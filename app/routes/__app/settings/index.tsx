@@ -9,6 +9,7 @@ import {
   InputGroup,
   InputRightElement,
   Stack,
+  useColorMode,
   useColorModeValue,
 } from "@chakra-ui/react";
 import type { ActionFunction, MetaFunction } from "@remix-run/node";
@@ -115,13 +116,15 @@ export default function SettingsIndexPage() {
   const [showPassword, setShowPassword] = useState(false);
   const emailRef = React.useRef<HTMLInputElement>(null);
   const passwordRef = React.useRef<HTMLInputElement>(null);
-
-  console.log(actionData);
+  const { colorMode, toggleColorMode } = useColorMode();
 
   return (
     <Stack spacing={8} mx={"auto"} maxW={"md"} py={12}>
       <Stack align={"center"}>
         <Heading fontSize={"4xl"}>Account Settings</Heading>
+        <Button onClick={toggleColorMode}>
+          Toggle {colorMode === "light" ? "Dark" : "Light"}
+        </Button>
       </Stack>
       <Box
         rounded={"lg"}

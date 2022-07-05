@@ -31,16 +31,16 @@ export default function RootIndexPage() {
           py={{ base: 20, md: 36 }}
         >
           <Heading
-            fontWeight={600}
-            fontSize={{ base: "2xl", sm: "4xl", md: "6xl" }}
+            fontWeight={"extrabold"}
+            fontSize={{ base: "2xl", sm: "4xl", md: 100 }}
             lineHeight={"110%"}
+            bgGradient="linear(to-l, #7928CA, teal.500)"
+            bgClip="text"
           >
             Connect with <br />
-            <Text as={"span"} color={"teal.400"}>
-              local players
-            </Text>
+            local players
           </Heading>
-          <Text color={"gray.500"}>
+          <Text color={"gray"} fontSize={{ base: "lg", md: "xl" }}>
             You want to satisfy your urge of playing your favorite tabletop
             game? Find players, battle with or against each other and stay in
             contact!
