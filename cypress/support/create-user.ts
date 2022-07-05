@@ -8,6 +8,7 @@ import { parse } from "cookie";
 import { installGlobals } from "@remix-run/node/globals";
 import { createUserSession } from "~/session.server";
 import { createUser } from "~/models/user.server";
+import faker from "@faker-js/faker";
 
 installGlobals();
 
@@ -23,8 +24,7 @@ async function createAndLogin(email: string) {
     email,
     "myreallystrongpassword",
     "Rafael",
-    "Seifert",
-    ""
+    faker.internet.avatar()
   );
 
   const response = await createUserSession({
