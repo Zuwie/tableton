@@ -57,12 +57,32 @@ export const action: ActionFunction = async ({ request }) => {
   if (!validateEmail(email)) {
     return json({ errors: { email: "Email is invalid" } }, { status: 400 });
   }
-  if (!validatePassword(password)) {
-    return json(
-      { errors: { password: "Password should contain at least 8 letters" } },
-      { status: 400 }
-    );
+
+  /**
+   * Only attempt to change password if user
+   * added a value to the input-element
+   */
+  if (typeof password !== "string")
+    return json({
+      errors: {
+        password: "Password must be a string.",
+      },
+    });
+  if (password?.length > 0) {
+    if (!validatePassword(password)) {
+      return json(
+        {
+          errors: {
+            password:
+              "Password should contain at least 8 letters. " +
+              "Leave empty if you didn't intend to change it.",
+          },
+        },
+        { status: 400 }
+      );
+    }
   }
+
   if (!validateUsername(userName)) {
     return json(
       { errors: { userName: "Username must contain at least 2 letters" } },
@@ -95,6 +115,8 @@ export default function SettingsIndexPage() {
   const [showPassword, setShowPassword] = useState(false);
   const emailRef = React.useRef<HTMLInputElement>(null);
   const passwordRef = React.useRef<HTMLInputElement>(null);
+
+  console.log(actionData);
 
   return (
     <Stack spacing={8} mx={"auto"} maxW={"md"} py={12}>
