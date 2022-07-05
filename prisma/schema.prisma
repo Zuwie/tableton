@@ -14,7 +14,7 @@ generator dbml {
 model User {
   id       String           @id @default(cuid())
   email    String           @unique
-  userName String
+  userName String           @default("whatever")
   avatar   String?
   password Password?
   profile  ExtendedProfile?
