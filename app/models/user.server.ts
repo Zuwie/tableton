@@ -14,6 +14,11 @@ export async function getUserById(id: User["id"]) {
   return prisma.user.findUnique({ where: { id } });
 }
 
+export async function getUserByDiscordId(discordId: User["discordId"]) {
+  // @ts-ignore
+  return prisma.user.findUnique({ where: { discordId } });
+}
+
 /**
  * It returns a user with a given email
  * @param email - User["email"]

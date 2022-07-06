@@ -20,7 +20,7 @@ model User {
   profile  ExtendedProfile?
   contact  Contact?
 
-  discordId           String?
+  discordId           String? @unique
   discordRefreshToken String?
 
   createdAt DateTime @default(now())
