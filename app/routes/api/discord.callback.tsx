@@ -1,6 +1,6 @@
 import type { LoaderFunction } from "@remix-run/node";
 import { createUser, getUserByEmail } from "~/models/user.server";
-import { ROUTES } from "~/constants";
+import { BASE_URL, ROUTES } from "~/constants";
 import { createUserSession } from "~/session.server";
 import type { TokenRequestResult, User as DiscordUser } from "discord-oauth2";
 
@@ -26,7 +26,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     code: code,
     scope: "identify",
     grantType: "authorization_code",
-    redirectUri: "http://localhost:3000/api/discord/callback",
+    redirectUri: `${BASE_URL}/api/discord/callback`,
   });
 
   const userResult: DiscordUser = await oauth.getUser(
@@ -34,7 +34,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   );
 
   const existingUser = await getUserByEmail(userResult.email as string);
-  /* Check if user already exists and if so, login when discordId matches otherwise 
+  /* Check if user already exists and if so, login when discordId matches otherwise
   let user know that someone has already registered with this email */
   if (existingUser) {
     if (existingUser.discordId === userResult.id) {
