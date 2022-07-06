@@ -26,7 +26,12 @@ import type {
   MetaFunction,
 } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
-import { DEFAULT_CARD_COLOR, FACTIONS, ROUTES } from "~/constants";
+import {
+  DEFAULT_CARD_COLOR,
+  DEFAULT_SUBTITLE_COLOR,
+  FACTIONS,
+  ROUTES,
+} from "~/constants";
 import { useOptionalUser } from "~/utils/utils";
 import { requireUserId } from "~/session.server";
 import {
@@ -113,6 +118,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 export default function OnboardingPage() {
   const user = useOptionalUser();
   const background = useColorModeValue(...DEFAULT_CARD_COLOR);
+  const subtitleColor = useColorModeValue(...DEFAULT_SUBTITLE_COLOR);
 
   return (
     <Stack spacing={8} mx={"auto"} maxW={"lg"} w="100%" py={12}>
@@ -120,7 +126,7 @@ export default function OnboardingPage() {
         <Heading fontSize={"4xl"} textAlign={"center"}>
           Setup your profile now
         </Heading>
-        <Text fontSize={"lg"} color={"gray.600"} textAlign={"center"}>
+        <Text fontSize={"lg"} color={subtitleColor} textAlign={"center"}>
           or do it later in your{" "}
           <InternalLink
             to={ROUTES.PROFILE}

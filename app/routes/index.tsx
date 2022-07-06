@@ -1,11 +1,19 @@
 import Header from "~/components/Header";
-import { Box, Button, Container, Heading, Stack, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Container,
+  Heading,
+  Stack,
+  Text,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import LandingFeatures from "~/components/LandingFeatures";
 import Footer from "~/components/Footer";
 import { getUserId } from "~/session.server";
 import type { LoaderFunction } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
-import { ROUTES } from "~/constants";
+import { DEFAULT_SUBTITLE_COLOR, ROUTES } from "~/constants";
 import InternalLink from "~/components/InternalLink";
 
 /**
@@ -20,6 +28,8 @@ export const loader: LoaderFunction = async ({ request }) => {
 };
 
 export default function RootIndexPage() {
+  const subtitleColor = useColorModeValue(...DEFAULT_SUBTITLE_COLOR);
+
   return (
     <>
       <Header />
@@ -41,7 +51,7 @@ export default function RootIndexPage() {
             Connect with <br />
             local players
           </Heading>
-          <Text color={"gray"} fontSize={{ base: "lg", md: "xl" }}>
+          <Text color={subtitleColor} fontSize={{ base: "lg", md: "xl" }}>
             You want to satisfy your urge of playing your favorite tabletop
             game? Find players, battle with or against each other and stay in
             contact!
@@ -65,7 +75,7 @@ export default function RootIndexPage() {
                 Get Started
               </Button>
             </InternalLink>
-            <Button variant={"link"} colorScheme={"blue"} size={"sm"}>
+            <Button variant={"link"} colorScheme={"purple"} size={"sm"}>
               Learn more
             </Button>
           </Stack>

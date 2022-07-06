@@ -10,7 +10,11 @@ import { useState } from "react";
 import { createUserSession, getUserId } from "~/session.server";
 import { createUser, getUserByEmail } from "~/models/user.server";
 import { safeRedirect } from "~/utils/utils";
-import { DEFAULT_CARD_COLOR, ROUTES } from "~/constants";
+import {
+  DEFAULT_CARD_COLOR,
+  DEFAULT_SUBTITLE_COLOR,
+  ROUTES,
+} from "~/constants";
 
 import {
   Box,
@@ -125,6 +129,7 @@ export default function JoinPage() {
   const emailRef = React.useRef<HTMLInputElement>(null);
   const passwordRef = React.useRef<HTMLInputElement>(null);
   const background = useColorModeValue(...DEFAULT_CARD_COLOR);
+  const subtitleColor = useColorModeValue(...DEFAULT_SUBTITLE_COLOR);
 
   React.useEffect(() => {
     if (actionData?.errors?.email) {
@@ -140,7 +145,7 @@ export default function JoinPage() {
         <Heading fontSize={"4xl"} textAlign={"center"}>
           Sign up
         </Heading>
-        <Text fontSize={"lg"} color={"gray"}>
+        <Text fontSize={"lg"} color={subtitleColor}>
           to enjoy all of our cool features ✌️
         </Text>
       </Stack>

@@ -12,7 +12,11 @@ import * as React from "react";
 import { getBoardEntryListItemsFromUser } from "~/models/board.server";
 import { requireUserId } from "~/session.server";
 import { useLoaderData } from "@remix-run/react";
-import { DEFAULT_CARD_COLOR, ROUTES } from "~/constants";
+import {
+  DEFAULT_CARD_COLOR,
+  DEFAULT_SUBTITLE_COLOR,
+  ROUTES,
+} from "~/constants";
 import {
   getContactInformationForUser,
   getExtendedProfileForUser,
@@ -59,6 +63,7 @@ export default function ProfileIndexPage() {
   const loader = useLoaderData() as LoaderData;
   const { hasCopied, onCopy } = useClipboard(loader.contact?.discord || "");
   const background = useColorModeValue(...DEFAULT_CARD_COLOR);
+  const subtitleColor = useColorModeValue(...DEFAULT_SUBTITLE_COLOR);
   const toast = useToast();
 
   return (
@@ -67,7 +72,7 @@ export default function ProfileIndexPage() {
         <Heading as="h1" fontSize={"4xl"}>
           Profile
         </Heading>
-        <Text fontSize={"lg"} color={"gray.600"}>
+        <Text fontSize={"lg"} color={subtitleColor}>
           give other players a heads-up about you 🥸
         </Text>
       </Stack>

@@ -76,3 +76,4 @@ export const CONTACT = {
 };
 
 export const DEFAULT_CARD_COLOR = ["white", "gray.800"] as const;
+export const DEFAULT_SUBTITLE_COLOR = ["gray.600", "gray.200"] as const;

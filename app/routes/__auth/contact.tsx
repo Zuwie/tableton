@@ -7,10 +7,15 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import * as React from "react";
-import { CONTACT, DEFAULT_CARD_COLOR } from "~/constants";
+import {
+  CONTACT,
+  DEFAULT_CARD_COLOR,
+  DEFAULT_SUBTITLE_COLOR,
+} from "~/constants";
 
 export default function ContactPage() {
   const background = useColorModeValue(...DEFAULT_CARD_COLOR);
+  const subtitleColor = useColorModeValue(...DEFAULT_SUBTITLE_COLOR);
 
   return (
     <Stack spacing={8} mx={"auto"} w="100%" maxW={"xl"} py={12} px={6}>
@@ -18,7 +23,7 @@ export default function ContactPage() {
         <Heading as="h1" fontSize={"4xl"} textAlign={"center"}>
           Contact
         </Heading>
-        <Text fontSize={"lg"} color={"gray.600"}>
+        <Text fontSize={"lg"} color={subtitleColor}>
           the sole developer and owner of this project 💬
         </Text>
       </Stack>

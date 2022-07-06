@@ -10,7 +10,11 @@ import * as React from "react";
 import { createUserSession, getUserId } from "~/session.server";
 import { verifyLogin } from "~/models/user.server";
 import { safeRedirect } from "~/utils/utils";
-import { DEFAULT_CARD_COLOR, ROUTES } from "~/constants";
+import {
+  DEFAULT_CARD_COLOR,
+  DEFAULT_SUBTITLE_COLOR,
+  ROUTES,
+} from "~/constants";
 
 import {
   Box,
@@ -91,6 +95,7 @@ export default function LoginPage() {
   const emailRef = React.useRef<HTMLInputElement>(null);
   const passwordRef = React.useRef<HTMLInputElement>(null);
   const background = useColorModeValue(...DEFAULT_CARD_COLOR);
+  const subtitleColor = useColorModeValue(...DEFAULT_SUBTITLE_COLOR);
 
   React.useEffect(() => {
     if (actionData?.errors?.email) {
@@ -106,7 +111,7 @@ export default function LoginPage() {
         <Heading fontSize={"4xl"} textAlign={"center"}>
           Sign in to your account
         </Heading>
-        <Text fontSize={"lg"} color={"gray"}>
+        <Text fontSize={"lg"} color={subtitleColor}>
           to continue where you left off 💪🏽
         </Text>
       </Stack>
