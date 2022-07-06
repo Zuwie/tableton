@@ -100,8 +100,11 @@ export const action: ActionFunction = async ({ request }) => {
     );
   }
 
-  let avatar;
-  const user = await createUser(email, password, userName, (avatar = null));
+  const user = await createUser({
+    email,
+    password,
+    userName,
+  });
 
   return createUserSession({
     request,

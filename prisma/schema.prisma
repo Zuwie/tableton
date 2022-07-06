@@ -12,14 +12,16 @@ generator dbml {
 }
 
 model User {
-  id        String           @id @default(cuid())
-  email     String           @unique
-  userName  String           @default("whatever")
-  avatar    String?
-  password  Password?
-  profile   ExtendedProfile?
-  contact   Contact?
-  discordId String?
+  id       String           @id @default(cuid())
+  email    String           @unique
+  userName String           @default("whatever")
+  avatar   String?
+  password Password?
+  profile  ExtendedProfile?
+  contact  Contact?
+
+  discordId           String?
+  discordRefreshToken String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

@@ -28,6 +28,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     grantType: "authorization_code",
     redirectUri: "http://localhost:3000/api/discord/callback",
   });
+
   const userResult: DiscordUser = await oauth.getUser(
     tokenRequest.access_token
   );
@@ -37,18 +38,19 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     throw new Error("A user already exists with this email");
   }
 
-  const user = await createUser(
-    userResult.email as string,
-    "",
-    userResult.username,
-    userResult.avatar || null,
-    userResult.id
-  );
+  const user = await createUser({
+    email: userResult.email as string,
+    password: "",
+    userName: userResult.username,
+    avatar: userResult.avatar?.toString(),
+    discordId: userResult.id,
+    discordRefreshToken: tokenRequest.refresh_token,
+  });
 
   return createUserSession({
     request,
     userId: user.id,
     remember: false,
-    redirectTo: ROUTES.DASHBOARD,
+    redirectTo: ROUTES.ONBOARDING,
   });
 };

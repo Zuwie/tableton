@@ -44,15 +44,22 @@ export async function getUsers() {
  * @param userName - User["userName"]
  * @param avatar - User["avatar"]
  * @param discordId
+ * @param discordRefreshToken
  * @returns A promise that resolves to a User object.
  */
-export async function createUser(
-  email: User["email"],
-  password: string,
-  userName: User["userName"],
-  avatar: User["avatar"],
-  discordId?: string
-) {
+export async function createUser({
+  email,
+  password,
+  userName,
+  avatar,
+  discordId,
+  discordRefreshToken,
+}: Pick<User, "email" | "userName"> & {
+  password: string;
+  avatar?: string;
+  discordId?: string;
+  discordRefreshToken?: string;
+}) {
   const hashedPassword = await bcrypt.hash(password, 10);
 
   return prisma.user.create({
@@ -61,6 +68,7 @@ export async function createUser(
       userName,
       avatar,
       discordId,
+      discordRefreshToken,
       password: {
         create: {
           hash: hashedPassword,
