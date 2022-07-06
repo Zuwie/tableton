@@ -4,7 +4,7 @@ import type {
   MetaFunction,
 } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
-import { Form, Link, useActionData, useSearchParams } from "@remix-run/react";
+import { Form, useActionData, useSearchParams } from "@remix-run/react";
 import * as React from "react";
 import { useState } from "react";
 import { createUserSession, getUserId } from "~/session.server";
@@ -37,7 +37,7 @@ import {
   validatePassword,
   validateUsername,
 } from "~/utils/validateUser";
-import { FaDiscord } from "react-icons/fa";
+import DiscordButton from "~/components/DiscordButton";
 
 export const meta: MetaFunction = () => {
   return {
@@ -152,18 +152,7 @@ export default function JoinPage() {
       </Stack>
 
       <Box rounded={"lg"} bg={background} boxShadow={"lg"} p={8}>
-        <Button
-          size={"lg"}
-          w={"100%"}
-          as={Link}
-          to={ROUTES.DISCORD_AUTH}
-          leftIcon={<FaDiscord />}
-          bgGradient="linear(to-r, #5865F2, #7928CA)"
-          mb={4}
-          _hover={{ bgGradient: "linear(to-r, teal.500, #7928CA)" }}
-        >
-          Signup with Discord
-        </Button>
+        <DiscordButton buttonText={"Sign up with Discord"} />
 
         <Form method="post">
           <input type="hidden" name="redirectTo" value={redirectTo} />

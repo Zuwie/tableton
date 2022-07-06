@@ -31,6 +31,7 @@ import {
 } from "@chakra-ui/react";
 import InternalLink from "~/components/InternalLink";
 import { validateEmail, validatePassword } from "~/utils/validateUser";
+import DiscordButton from "~/components/DiscordButton";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request);
@@ -116,6 +117,8 @@ export default function LoginPage() {
         </Text>
       </Stack>
       <Box rounded={"lg"} bg={background} boxShadow={"lg"} p={8}>
+        <DiscordButton buttonText={"Login with Discord"} />
+
         <Form method="post">
           <input type="hidden" name="redirectTo" value={redirectTo} />
           <Stack spacing={4}>
