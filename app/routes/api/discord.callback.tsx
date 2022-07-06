@@ -34,8 +34,19 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   );
 
   const existingUser = await getUserByEmail(userResult.email as string);
+  /* Check if user already exists and if so, login when discordId matches otherwise 
+  let user know that someone has already registered with this email */
   if (existingUser) {
-    throw new Error("A user already exists with this email");
+    if (existingUser.discordId === userResult.id) {
+      return createUserSession({
+        request,
+        userId: existingUser.id,
+        remember: false,
+        redirectTo: ROUTES.PROFILE,
+      });
+    } else {
+      throw new Error("A user already exists with this email");
+    }
   }
 
   const user = await createUser({
@@ -51,6 +62,6 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     request,
     userId: user.id,
     remember: false,
-    redirectTo: ROUTES.ONBOARDING,
+    redirectTo: ROUTES.PROFILE,
   });
 };
