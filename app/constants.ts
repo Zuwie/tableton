@@ -14,6 +14,7 @@ export const ROUTES = {
   ONBOARDING: "/profile/onboarding",
   SETTINGS: "/settings",
   NOTIFICATIONS: "/notifications",
+  DISCORD_AUTH: "/api/discord",
 };
 
 export const GAME_SYSTEM = {

@@ -43,13 +43,15 @@ export async function getUsers() {
  * @param {string} password - string
  * @param userName - User["userName"]
  * @param avatar - User["avatar"]
+ * @param discordId
  * @returns A promise that resolves to a User object.
  */
 export async function createUser(
   email: User["email"],
   password: string,
   userName: User["userName"],
-  avatar: User["avatar"]
+  avatar: User["avatar"],
+  discordId?: string
 ) {
   const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -58,6 +60,7 @@ export async function createUser(
       email,
       userName,
       avatar,
+      discordId,
       password: {
         create: {
           hash: hashedPassword,

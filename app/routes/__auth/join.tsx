@@ -4,7 +4,7 @@ import type {
   MetaFunction,
 } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
-import { Form, useActionData, useSearchParams } from "@remix-run/react";
+import { Form, Link, useActionData, useSearchParams } from "@remix-run/react";
 import * as React from "react";
 import { useState } from "react";
 import { createUserSession, getUserId } from "~/session.server";
@@ -143,6 +143,10 @@ export default function JoinPage() {
       </Stack>
 
       <Box rounded={"lg"} bg={background} boxShadow={"lg"} p={8}>
+        <Button as={Link} to={ROUTES.DISCORD_AUTH}>
+          Discord SSO
+        </Button>
+
         <Form method="post">
           <input type="hidden" name="redirectTo" value={redirectTo} />
           <Stack spacing={4}>
