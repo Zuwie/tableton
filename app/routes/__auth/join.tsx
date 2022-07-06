@@ -37,6 +37,7 @@ import {
   validatePassword,
   validateUsername,
 } from "~/utils/validateUser";
+import { FaDiscord } from "react-icons/fa";
 
 export const meta: MetaFunction = () => {
   return {
@@ -151,8 +152,17 @@ export default function JoinPage() {
       </Stack>
 
       <Box rounded={"lg"} bg={background} boxShadow={"lg"} p={8}>
-        <Button as={Link} to={ROUTES.DISCORD_AUTH}>
-          Discord SSO
+        <Button
+          size={"lg"}
+          w={"100%"}
+          as={Link}
+          to={ROUTES.DISCORD_AUTH}
+          leftIcon={<FaDiscord />}
+          bgGradient="linear(to-r, #5865F2, #7928CA)"
+          mb={4}
+          _hover={{ bgGradient: "linear(to-r, teal.500, #7928CA)" }}
+        >
+          Signup with Discord
         </Button>
 
         <Form method="post">
