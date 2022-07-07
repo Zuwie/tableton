@@ -91,6 +91,15 @@ Prior to your first deployment, you'll need to do a few things:
   fly secrets set SESSION_SECRET=$(openssl rand -hex 32) --app tableton-staging
   ```
 
+  Don't forget to add `DISCORD_CLIENT_ID` and `DISCORD_CLIENT_SECRET` as well for the bot to work.
+
+  ```sh
+  fly secrets set DISCORD_CLIENT_ID=YOUR_ID --app tableton
+  fly secrets set DISCORD_CLIENT_SECRET=YOUR_SECRET --app tableton
+  fly secrets set DISCORD_CLIENT_ID=YOUR_ID --app tableton-staging
+  fly secrets set DISCORD_CLIENT_SECRET=YOUR_SECRET --app tableton-staging
+  ```
+
   If you don't have openssl installed, you can also use [1password](https://1password.com/password-generator/) to
   generate a random secret, just replace `$(openssl rand -hex 32)` with the generated secret.
 
