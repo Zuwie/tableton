@@ -14,7 +14,7 @@ type ActionData = {
  * @returns A function that returns a promise that resolves to a response object.
  */
 export const action: ActionFunction = async ({ request, params }) => {
-  const { id, title, content } = await request.json();
+  const { id, title, location, date, content } = await request.json();
 
   const user = await getUserByDiscordId(id);
 
@@ -23,9 +23,9 @@ export const action: ActionFunction = async ({ request, params }) => {
   const boardEntry = await createBoardEntry({
     title,
     body: content,
-    gameSystem: "WARHAMMER_40k",
-    location: "Bot Town",
-    date: new Date(),
+    gameSystem: "WARHAMMER_40K",
+    location,
+    date,
     status: 0,
     userId: user.id,
   });
