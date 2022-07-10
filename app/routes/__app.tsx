@@ -9,7 +9,7 @@ import {
   useColorModeValue,
   useDisclosure,
 } from "@chakra-ui/react";
-import { FiClipboard, FiSettings, FiStar, FiUsers } from "react-icons/fi";
+import { FiClipboard, FiSettings, FiUsers } from "react-icons/fi";
 import type { IconType } from "react-icons";
 import { ROUTES } from "~/constants";
 import MobileNav from "~/components/MobileNav";
@@ -26,7 +26,7 @@ interface LinkItemProps {
 const LinkItems: Array<LinkItemProps> = [
   { name: "Dashboard", icon: FiClipboard, href: ROUTES.DASHBOARD },
   { name: "Players", icon: FiUsers, href: ROUTES.PLAYERS },
-  { name: "League", icon: FiStar, href: ROUTES.PLAYERS },
+  // { name: "League", icon: FiStar, href: ROUTES.PLAYERS },
   { name: "Settings", icon: FiSettings, href: ROUTES.SETTINGS },
 ];
 
