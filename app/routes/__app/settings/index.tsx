@@ -9,6 +9,7 @@ import {
   InputGroup,
   InputRightElement,
   Stack,
+  Tag,
   useColorMode,
   useColorModeValue,
 } from "@chakra-ui/react";
@@ -130,7 +131,11 @@ export default function SettingsIndexPage() {
         </Button>
       </Stack>
       <Box rounded={"lg"} bg={background} boxShadow={"lg"} p={8}>
-        {!user.discordId && (
+        {user.discordId ? (
+          <Tag size={"lg"} colorScheme={"green"} variant={"subtle"} mb={4}>
+            Your profile is successfully linked to Discord
+          </Tag>
+        ) : (
           <DiscordButton buttonText={"Connect with Discord"} />
         )}
         <Form method="post">
