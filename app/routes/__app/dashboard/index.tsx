@@ -119,26 +119,26 @@ export default function DashboardIndexPage() {
             onChange={(value) => setDateFilter(value.target.value)}
           />
         </FormControl>
-        <FormControl>
-          <FormLabel>
-            Time: {timeFilter[0]}:00 - {timeFilter[1]}:00
-          </FormLabel>
-          {/*<RangeSlider*/}
-          {/*  name="time"*/}
-          {/*  min={0}*/}
-          {/*  max={24}*/}
-          {/*  step={1}*/}
-          {/*  colorScheme={"teal"}*/}
-          {/*  defaultValue={timeFilter}*/}
-          {/*  onChangeEnd={(value) => setTimeFilter(value)}*/}
-          {/*>*/}
-          {/*  <RangeSliderTrack>*/}
-          {/*    <RangeSliderFilledTrack />*/}
-          {/*  </RangeSliderTrack>*/}
-          {/*  <RangeSliderThumb boxSize={6} index={0} />*/}
-          {/*  <RangeSliderThumb boxSize={6} index={1} />*/}
-          {/*</RangeSlider>*/}
-        </FormControl>
+        {/*<FormControl>*/}
+        {/*  <FormLabel>*/}
+        {/*    Time: {timeFilter[0]}:00 - {timeFilter[1]}:00*/}
+        {/*  </FormLabel>*/}
+        {/*  <RangeSlider*/}
+        {/*    name="time"*/}
+        {/*    min={0}*/}
+        {/*    max={24}*/}
+        {/*    step={1}*/}
+        {/*    colorScheme={"teal"}*/}
+        {/*    defaultValue={timeFilter}*/}
+        {/*    onChangeEnd={(value) => setTimeFilter(value)}*/}
+        {/*  >*/}
+        {/*    <RangeSliderTrack>*/}
+        {/*      <RangeSliderFilledTrack />*/}
+        {/*    </RangeSliderTrack>*/}
+        {/*    <RangeSliderThumb boxSize={6} index={0} />*/}
+        {/*    <RangeSliderThumb boxSize={6} index={1} />*/}
+        {/*  </RangeSlider>*/}
+        {/*</FormControl>*/}
       </HStack>
 
       {loader.userBoardEntries.length === 0 ? (
