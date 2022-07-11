@@ -9,7 +9,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import * as React from "react";
-import { SettingsIcon } from "@chakra-ui/icons";
+import { CheckIcon, SettingsIcon } from "@chakra-ui/icons";
 import { DEFAULT_CARD_COLOR, DEFAULT_SUBTITLE_COLOR } from "~/constants";
 
 export default function RoadmapPage() {
@@ -30,14 +30,21 @@ export default function RoadmapPage() {
       <Box rounded={"lg"} bg={background} boxShadow={"lg"} p={8}>
         <List spacing={4}>
           <ListItem>
-            <ListIcon as={SettingsIcon} color="orange.500" /> Filters for board
+            <ListIcon as={CheckIcon} color="green.500" /> Filters for board
           </ListItem>
           <ListItem>
-            <ListIcon as={SettingsIcon} color="orange.500" /> Notifications
+            <ListIcon as={CheckIcon} color="green.500" /> Connect with Discord
+          </ListItem>
+          <ListItem>
+            <ListIcon as={CheckIcon} color="green.500" /> Notifications
           </ListItem>
           <ListItem>
             <ListIcon as={SettingsIcon} color="orange.500" /> Player Profile
             Factions
+          </ListItem>
+          <ListItem>
+            <ListIcon as={SettingsIcon} color="orange.500" /> Share
+            Board-Entries on Social-Media
           </ListItem>
           <ListItem>
             <ListIcon as={SettingsIcon} color="orange.500" /> Support multiple
