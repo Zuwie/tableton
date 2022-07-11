@@ -7,10 +7,14 @@ import {
   Box,
   Button,
   Flex,
+  FormControl,
+  FormLabel,
   Grid,
   GridItem,
   Heading,
   HStack,
+  Input,
+  Select,
   Spacer,
   Stack,
   Tag,
@@ -19,9 +23,11 @@ import {
 } from "@chakra-ui/react";
 import { DEFAULT_CARD_COLOR, GAME_SYSTEM } from "~/constants";
 import * as React from "react";
+import { useState } from "react";
 import InternalLink from "~/components/InternalLink";
 import { requireUserId } from "~/session.server";
 import { ClientOnly } from "remix-utils";
+import dayjs from "dayjs";
 
 export const meta: MetaFunction = () => {
   return {
@@ -48,9 +54,28 @@ export default function DashboardIndexPage() {
   const loader = useLoaderData() as LoaderData;
   const background = useColorModeValue(...DEFAULT_CARD_COLOR);
 
+  const [gameFilter, setGameFilter] = useState("");
+  const [locationFilter, setLocationFilter] = useState("");
+  const [dateFilter, setDateFilter] = useState("");
+  // const [timeFilter, setTimeFilter] = useState([0, 24]);
+
+  const filteredBoardEntries = loader.userBoardEntries
+    .filter((entry) => entry.gameSystem.includes(gameFilter))
+    .filter((entry) =>
+      entry.location.toLowerCase().includes(locationFilter.toLowerCase())
+    )
+    .filter((entry) => {
+      return dateFilter === ""
+        ? entry
+        : dayjs(entry.date).diff(dayjs(dateFilter), "day") === 0;
+    })
+    .filter((entry) => {
+      return entry;
+    });
+
   return (
     <>
-      <Flex justifyContent="space-between" mt="10" mb="20">
+      <Flex justifyContent="space-between" mt="10" mb="16">
         <Heading as="h1">Find matches</Heading>
         <InternalLink to="new">
           <Button as={"span"} colorScheme="teal">
@@ -59,11 +84,68 @@ export default function DashboardIndexPage() {
         </InternalLink>
       </Flex>
 
+      <HStack spacing={4} mb="8">
+        <FormControl>
+          <FormLabel>Game</FormLabel>
+          <Select
+            name="gameSystem"
+            bg={gameFilter ? "gray.700" : "gray.900"}
+            value={gameFilter}
+            onChange={(value) => setGameFilter(value.target.value)}
+          >
+            <option value="">All</option>
+            {Object.entries(GAME_SYSTEM).map(([key, value]) => (
+              <option key={key} value={key}>
+                {value}
+              </option>
+            ))}
+          </Select>
+        </FormControl>
+        <FormControl>
+          <FormLabel>Location</FormLabel>
+          <Input
+            type="text"
+            name="location"
+            value={locationFilter}
+            onChange={(value) => setLocationFilter(value.target.value)}
+          />
+        </FormControl>
+        <FormControl>
+          <FormLabel>Date</FormLabel>
+          <Input
+            type="date"
+            name="date"
+            value={dateFilter}
+            onChange={(value) => setDateFilter(value.target.value)}
+          />
+        </FormControl>
+        <FormControl>
+          <FormLabel>
+            Time: {timeFilter[0]}:00 - {timeFilter[1]}:00
+          </FormLabel>
+          {/*<RangeSlider*/}
+          {/*  name="time"*/}
+          {/*  min={0}*/}
+          {/*  max={24}*/}
+          {/*  step={1}*/}
+          {/*  colorScheme={"teal"}*/}
+          {/*  defaultValue={timeFilter}*/}
+          {/*  onChangeEnd={(value) => setTimeFilter(value)}*/}
+          {/*>*/}
+          {/*  <RangeSliderTrack>*/}
+          {/*    <RangeSliderFilledTrack />*/}
+          {/*  </RangeSliderTrack>*/}
+          {/*  <RangeSliderThumb boxSize={6} index={0} />*/}
+          {/*  <RangeSliderThumb boxSize={6} index={1} />*/}
+          {/*</RangeSlider>*/}
+        </FormControl>
+      </HStack>
+
       {loader.userBoardEntries.length === 0 ? (
         <Text>No board-entries yet</Text>
       ) : (
         <Grid templateColumns="repeat(auto-fit, minmax(20rem, 1fr))" gap={6}>
-          {loader.userBoardEntries.map((entry) => (
+          {filteredBoardEntries.map((entry) => (
             <GridItem
               rounded={"lg"}
               boxShadow={"lg"}
