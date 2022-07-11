@@ -1,7 +1,7 @@
 import { useColorModeValue } from "@chakra-ui/react";
 
 export default function Logo(props: any) {
-  const color = useColorModeValue("rgba(255, 255, 255, 0.92)", "white");
+  const color = useColorModeValue("#1a202c", "white");
 
   return (
     <svg
