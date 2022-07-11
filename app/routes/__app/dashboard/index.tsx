@@ -15,6 +15,7 @@ import {
   HStack,
   Input,
   Select,
+  SimpleGrid,
   Spacer,
   Stack,
   Tag,
@@ -84,7 +85,7 @@ export default function DashboardIndexPage() {
         </InternalLink>
       </Flex>
 
-      <HStack spacing={4} mb="8">
+      <SimpleGrid columns={{ sm: 2, md: 3, lg: 4 }} spacing={4} mb="8">
         <FormControl>
           <FormLabel>Game</FormLabel>
           <Select
@@ -139,7 +140,7 @@ export default function DashboardIndexPage() {
         {/*    <RangeSliderThumb boxSize={6} index={1} />*/}
         {/*  </RangeSlider>*/}
         {/*</FormControl>*/}
-      </HStack>
+      </SimpleGrid>
 
       {loader.userBoardEntries.length === 0 ? (
         <Text>No board-entries yet</Text>
