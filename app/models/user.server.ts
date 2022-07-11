@@ -116,6 +116,25 @@ export async function updateUser({
 }
 
 /**
+ * It updates a user's discordId and discordRefreshToken
+ * @param  - Pick<User, "discordId" | "discordRefreshToken"> & { userId: User["id"] }
+ * @returns User
+ */
+export async function addDiscordToUser({
+  userId,
+  discordId,
+  discordRefreshToken,
+}: Pick<User, "discordId" | "discordRefreshToken"> & { userId: User["id"] }) {
+  return prisma.user.update({
+    where: { id: userId },
+    data: {
+      discordId,
+      discordRefreshToken,
+    },
+  });
+}
+
+/**
  * It creates an extended profile for a user
  * @param  - Pick<ExtendedProfile, "faction" | "biography"> & {
  * @returns A promise that resolves to the created extended profile.

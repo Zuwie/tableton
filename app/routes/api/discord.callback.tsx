@@ -1,7 +1,12 @@
 import type { LoaderFunction } from "@remix-run/node";
-import { createUser, getUserByEmail } from "~/models/user.server";
+import { redirect } from "@remix-run/node";
+import {
+  addDiscordToUser,
+  createUser,
+  getUserByEmail,
+} from "~/models/user.server";
 import { BASE_URL, ROUTES } from "~/constants";
-import { createUserSession } from "~/session.server";
+import { createUserSession, getUserId } from "~/session.server";
 import type { TokenRequestResult, User as DiscordUser } from "discord-oauth2";
 
 const DiscordOauth2 = require("discord-oauth2");
@@ -19,6 +24,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const oauth = new DiscordOauth2();
   const DISCORD_CLIENT_ID = process.env.DISCORD_CLIENT_ID;
   const DISCORD_CLIENT_SECRET = process.env.DISCORD_CLIENT_SECRET;
+  const currentUserId = await getUserId(request);
 
   const tokenRequest: TokenRequestResult = await oauth.tokenRequest({
     clientId: DISCORD_CLIENT_ID,
@@ -33,9 +39,21 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     tokenRequest.access_token
   );
 
-  const existingUser = await getUserByEmail(userResult.email as string);
+  /* If the user is already logged in, then we add the discord information to their
+  account and redirect them back to the settings page. */
+  if (currentUserId) {
+    await addDiscordToUser({
+      userId: currentUserId,
+      discordId: userResult.id,
+      discordRefreshToken: tokenRequest.refresh_token,
+    });
+    throw redirect(ROUTES.SETTINGS);
+  }
+
   /* Check if user already exists and if so, login when discordId matches otherwise
-  let user know that someone has already registered with this email */
+    let user know that someone has already registered with this email */
+  const existingUser = await getUserByEmail(userResult.email as string);
+
   if (existingUser) {
     if (existingUser.discordId === userResult.id) {
       return createUserSession({
@@ -49,6 +67,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     }
   }
 
+  /* Creating a user with the discord information and then creating a session for them. */
   const user = await createUser({
     email: userResult.email as string,
     password: "",

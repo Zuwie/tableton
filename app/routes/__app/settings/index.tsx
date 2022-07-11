@@ -27,6 +27,7 @@ import {
   validateUsername,
 } from "~/utils/validateUser";
 import { DEFAULT_CARD_COLOR } from "~/constants";
+import DiscordButton from "~/components/DiscordButton";
 
 export const meta: MetaFunction = () => {
   return {
@@ -129,6 +130,9 @@ export default function SettingsIndexPage() {
         </Button>
       </Stack>
       <Box rounded={"lg"} bg={background} boxShadow={"lg"} p={8}>
+        {!user.discordId && (
+          <DiscordButton buttonText={"Connect with Discord"} />
+        )}
         <Form method="post">
           <Stack spacing={4}>
             <Box>
